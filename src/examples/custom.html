@@ -16,26 +16,21 @@
 </head>
 
 <body>
-    <h1>Custom example</h1>
-    <p>Shows you how to use the core plupload API.</p>
-    <div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+    
+   <!--  <div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
     <div id="container">
         <a id="pickfiles" href="javascript:;">[Select files]</a>
         <a id="uploadfiles" href="javascript:;">[Upload files]</a>
-    </div>
+    </div> -->
 
 
 
-    <div class="wangeditor-imgupload-dialog" data-relateto="J_xy-editor-textarea" style="top:20%;display:block;">
+    <div class="wangeditor-imgupload-dialog" id="x1-dialog" data-relateto="J_xy-editor-textarea" style="top:20%;display:block;">
         <ul class="imgupload-tab-hd">
             <li class="active"><a href="#tabbd-localupload-container">本地上传</a></li>
             <li><a href="#tabbd-gallery-container">相册图片</a></li>
         </ul>
         <div class="wangeditor-localupload-container active" data-relateto="#tabbd-localupload-container">
-            <div class="wangeditor-localupload-start" id="J_wangeditor-localupload-start">
-                <div class="filePicker-btn-1" id="J_filePicker_1">点击上传</div>
-                <p class="tip-1">或将照片拖到这里，单次最多可选30张</p>
-            </div>
             <div class="wangeditor-uploadfile-container">
                 <div class="wangeditor-uploadfile-hd">
                     <div class="img-upload-allprogress">
@@ -44,9 +39,11 @@
                     </div>
                     <div class="img-upload-info"></div>
                     <a href="#" class="img-upload-btn">开始上传</a>
-                    <div class="img-add-btn" id="J_filePicker_2">继续添加</div>
+                    <div class="img-add-btn" id="img-add-btn-1">添加文件</div>
                 </div>
-                <ul class="wangeditor-uploadfile-list"></ul>
+                <ul class="wangeditor-uploadfile-list">
+                   
+                </ul>
                 <div class="wangeditor-uploadfile-ft">
                     <label class="ft-save-checkbox">
                         <input type="checkbox" name="" />保存到相册</label>
@@ -86,11 +83,13 @@
     </div>
     <script type="text/javascript">
     // Custom example logic
+    // 
+   
 
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
-        browse_button: 'pickfiles', // you can pass an id...
-        container: document.getElementById('container'), // ... or DOM Element itself
+        browse_button: 'img-add-btn-1', // you can pass an id...
+        
         url: 'upload.php',
         flash_swf_url: '../js/Moxie.swf',
         silverlight_xap_url: '../js/Moxie.xap',
@@ -105,28 +104,27 @@
 
         init: {
             PostInit: function() {
-                document.getElementById('filelist').innerHTML = '';
+              
 
-                document.getElementById('uploadfiles').onclick = function() {
-                    uploader.start();
-                    return false;
-                };
+                
             },
 
             FilesAdded: function(up, files) {
-                plupload.each(files, function(file) {
-                    document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
-                });
+                alert("ASdfasdf")
+                 $.each(files,function(index,file){
+                   preloadThumb(file)
+                })
+              
             },
 
             UploadProgress: function(up, file) {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+                
             },
 
             FileUploaded: function(up, file, info) {
-                console.dir(info);
+
                 // Called when file has finished uploading
-                $("#img-1").attr("src", info.response);
+                
             },
 
 

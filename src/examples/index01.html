@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="../js/moxie.js"></script>
+    <script type="text/javascript" src="../js/plupload.dev.js"></script>
+</head>
+
+<body>
+    <div class="list">
+    </div>
+    <button id="btn-add">添加文件</button>
+    <button id="btn-upload">上传文件</button>
+    <script type="text/javascript">
+
+    	 
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'btn-add', // you can pass an id...
+        url: 'upload.php',
+        flash_swf_url: '../js/Moxie.swf',
+        silverlight_xap_url: '../js/Moxie.xap',
+        filters: {
+            max_file_size: '10mb',
+            mime_types: [
+                { title: "Image files", extensions: "jpg,gif,png" }
+            ]
+        }
+    });
+
+    uploader.bind("Init",function(uploader){
+    	console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
+    });
+
+    uploader.bind("PostInit",function(){
+    	console.group("PostInit事件:当Init事件发生后触发监听函数参数：(uploader)")
+    });
+
+    uploader.bind("Browse",function(){
+    	console.group("Browse事件")
+    })
+
+
+    uploader.bind('FilesAdded',function(){
+    	console.group("FilesAdded事件")
+    })
+
+
+
+    uploader.init();
+    </script>
+</body>
+
+</html>

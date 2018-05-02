@@ -33,30 +33,10 @@
     }
 }
 
-.wangeditor-localupload-start {
-    margin: 10px;
-    border: 2px dashed #e6e6e6;
-    height: 208px;
-    padding-top: 175px;
-    text-align: center;
-    background: url(../images/webuploader/not_file_image.png) center 70px no-repeat #fafafa;
-    color: #cccccc;
-    font-size: 18px;
-    position: relative;
-    top: 0;
-
-    .tip-1 {
-        margin-top: 10px;
-        color: #cccccc;
-    }
-    &.webuploader-dnd-over {
-        border-color: #999;
-    }
-}
 
 .wangeditor-uploadfile-container {
     position: relative;
-    display: none;
+    
 }
 
 .wangeditor-uploadfile-list {
@@ -176,37 +156,23 @@
     vertical-align: middle;
     position: relative;
     .img-upload-btn {
-        
        
+        margin-top: 6px;
+        background: #00b7ee;
+        color: #fff;
         text-decoration: none;
-        padding: 0 18px;
+        padding: 0 15px;
         display: inline-block;
         border-radius: 3px;
         margin-left: 10px;
         cursor: pointer;
         font-size: 14px;
         float: right;
-        height: 32px;
-        line-height: 32px;
-        margin-top: 6px;
+        height: 35px;
+        line-height: 35px;
         
        
-        &.state-ready,&.state-finish,&.state-confirm,&.state-pedding{
-            background: #00b7ee;
-            border: 1px solid #00b7ee;
-             color: #fff;
-            &:hover{
-                background: #00a2d4;
-            }
-        }
-        &.state-uploading,&.state-paused{
-            background: #fff;
-            border: 1px solid #cfcfcf;
-                color: #565656; 
-            &:hover{
-                background: #f0f0f0;
-            }
-        }
+      
         &.disabled{
              opacity: 0.5;
             
@@ -216,27 +182,20 @@
     }
 
     .img-add-btn {
-        float: right;
-        margin-top: 6px;
-        position:relative;
-     
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    height: 33px;
+    line-height: 33px;
+    text-decoration: none;
+    margin-top:6px;
+        
            
-        .webuploader-pick {
-            background: #ffffff;
-            border: 1px solid #cfcfcf;
-            height: 32px;
-           
-            line-height: 32px;
-            color: #565656;
-            padding: 0 18px;
-            border-radius: 3px;
-            cursor: pointer;
-            display:block; 
-            text-decoration: none;
-            &:hover {
-                background: #f0f0f0;
-            }
-        }
+
     }
     .img-upload-info {
         float: left;
@@ -461,4 +420,21 @@
             background: #00a2d4;
         }
     }
+}
+
+
+.filePicker-btn-1{
+        float: right;
+    background: #00b7ee;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 30px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    height: 35px;
+    line-height: 35px;
 }

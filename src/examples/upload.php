@@ -180,16 +180,16 @@ if ($done) {
     }
     @fclose($out);
 
-    $response = [
-        'success' => true,
-        'oldName' => $oldName,
-        'filePath' => "http://localhost/plopupload/" . $uploadDir . "/" . $fileName,
-        'fileSize' => $_REQUEST['size'],
-        'fileSuffixes' => $pathInfo['extension'],
-        'file_id' => $_REQUEST['id'],
-    ];
+    // $response = [
+    //     'success' => true,
+    //     'oldName' => $oldName,
+    //     'filePath' =>
+    //     'fileSize' => $_REQUEST['size'],
+    //     'fileSuffixes' => $pathInfo['extension'],
+    //     'file_id' => $_REQUEST['id'],
+    // ];
 
-    echo $response["filePath"];
+    echo "http://localhost/plopupload/" . $uploadDir . "/" . $fileName;
 }
 
 // Return Success JSON-RPC response
