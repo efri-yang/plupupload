@@ -87,8 +87,12 @@ if (isset($_REQUEST["name"])) {
 
 $oldName = $fileName;
 
-$filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
-$uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
+// $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+// $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
+
+
+$filePath = $targetDir ."/". $fileName;
+$uploadPath = $uploadDir ."/". $fileName;
 //DIRECTORY_SEPARATOR>\  就是反斜杠的意思
 // Chunking might be enabled
 // 获取变量的整数值

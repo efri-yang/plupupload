@@ -167,7 +167,8 @@
    });
 
    uploader.bind('UploadComplete', function(up, files) {
-       console.group("UploadComplete事件")
+       console.group("UploadComplete事件");
+
    });
 
 
@@ -176,7 +177,16 @@
 
 
    uploader.bind('FilesRemoved', function(up, files) {
-       console.group("FilesRemoved事件")
+       console.group("FilesRemoved事件");
+
+           $.each(files,function(index,file){
+                 
+                    $("#"+file.id).remove();
+                  
+           })
+       
+
+
    });
 
    uploader.bind('ChunkUploaded', function(up, file, info) {
