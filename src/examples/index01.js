@@ -1,5 +1,8 @@
-   
 
+
+
+
+    
    var uploader = new plupload.Uploader({
        runtimes: 'html5,flash,silverlight,html4',
        browse_button: 'img-add-btn-1', // you can pass an id...
@@ -17,6 +20,10 @@
    });
 
 
+   var $uploadBtn=$(".img-upload-btn");
+   var $addBtn=$("#img-add-btn-1");
+   var $insertBtn=$(".ft-btn-insert");
+   var $fileListUL=$(".wangeditor-uploadfile-ft");
 
 
 
@@ -49,6 +56,7 @@
        var resolveUrl = moxie.core.utils.Url.resolveUrl;
        img.onload = function() {
            var thumb = $('#' + file.id);
+           thumb.find(".img-before-preview").hide();
            this.embed(thumb[0], {
                // width: self.options.thumb_width,
                // height: self.options.thumb_height,
@@ -129,11 +137,17 @@
 
 
    uploader.bind('QueueChanged', function(up) {
-       console.group("QueueChanged事件")
+       console.group("QueueChanged事件");
+
    });
 
    uploader.bind('Refresh', function(up) {
-       console.group("Refresh事件")
+       console.group("Refresh事件");
+       if(!up.total.queued){
+            $insertBtn.addClass("disabled");
+       }else{
+        $insertBtn.removeClass("disabled");
+       }
    });
 
 
@@ -183,6 +197,14 @@
                  
                     $("#"+file.id).remove();
                   
+           });
+          
+
+           setTimeout(function(){
+            alert(uploader.total.queued)
+                if(!uploader.total.queued){
+                 $uploadBtn.addClass("disabled");
+               }
            })
        
 
