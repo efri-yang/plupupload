@@ -1,4 +1,4 @@
-.wangeditor-imgupload-dialog {
+.ckeditor-imgupload-dialog {
    float:left;
     width: 700px;
     background: #fff;
@@ -34,12 +34,12 @@
 }
 
 
-.wangeditor-uploadfile-container {
+.ckeditor-uploadfile-container {
     position: relative;
     
 }
 
-.wangeditor-uploadfile-list {
+.ckeditor-uploadfile-list {
 
     overflow-x: hidden;
     overflow-y: auto;
@@ -179,7 +179,7 @@
     }
 }
 
-.wangeditor-uploadfile-hd {
+.ckeditor-uploadfile-hd {
     height: 45px;
     border-bottom: 1px solid #dadada;
     margin: 0 10px;
@@ -265,7 +265,7 @@
 }
 
 
-.wangeditor-uploadfile-ft {
+.ckeditor-uploadfile-ft {
     padding: 12px 15px;
     &:after {
         content: ".";
@@ -328,30 +328,30 @@
     }
 }
 
-.wangeditor-gallery-nodata {
+.ckeditor-gallery-nodata {
     text-align: center;
     font-size: 16px;
     color: #666;
     padding-top: 120px;
 }
-.wangeditor-localupload-container{
+.ckeditor-localupload-container{
   display:none;
   &.active{
     display:block; 
   } 
 }
-.wangeditor-gallery-container {
+.ckeditor-gallery-container {
     display: none;
     &.active{
     display:block; 
   } 
 }
 
-.wangeditor-gallery-hasdata{
+.ckeditor-gallery-hasdata{
   display:none; 
 }
 
-.wangeditor-gallery-list {
+.ckeditor-gallery-list {
     height: 315px;
     padding: 15px 10px;
     overflow-x: hidden;
@@ -402,7 +402,7 @@
     }
 }
 
-.wangeditor-gallery-ft {
+.ckeditor-gallery-ft {
     border-top: 1px solid #eee;
     padding: 12px 15px;
     &:after {
