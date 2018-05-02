@@ -188,9 +188,11 @@ if ($done) {
     //     'fileSuffixes' => $pathInfo['extension'],
     //     'file_id' => $_REQUEST['id'],
     // ];
+   
 
-    echo "http://localhost/plupupload/" . $uploadDir . "/" . $fileName;
 }
 
+
 // Return Success JSON-RPC response
-// die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+ $filePath="http://localhost/plupupload/" . $uploadDir . "/" . $fileName
+    die('{"jsonrpc" : "2.0", "result"'.$filePath.':, "id" : "id"}');
