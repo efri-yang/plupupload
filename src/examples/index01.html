@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/plupload.dev.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/upload.css">
+    <link rel="stylesheet" type="text/css" href="../../dev/css/upload.css">
 </head>
 
 <body>
@@ -25,12 +26,34 @@
                         <span class="percentage"></span>
                     </div>
                     <div class="img-upload-info"></div>
-                    <a href="#" class="img-upload-btn">开始上传</a>
+                    <a href="javascript:void(0);" class="img-upload-btn disabled">开始上传</a>
                     <div class="img-add-btn" id="img-add-btn-1">添加文件</div>
                 </div>
                 <ul class="wangeditor-uploadfile-list">
-                   
+                   <!-- <li>
+                        <div class="img-before-preview">
+                            <p class="title">图片名称图片名称图片名称.png</p>
+                            <p class="img-loading" style="display:block;"></p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="img-before-preview">
+                            <p class="title">图片名称图片名称图片名称.png</p>
+                            <p class="txt-error-tip" style="display:block;">该浏览器不支持图片预览</p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="img-after-preview" style="display: block;">
+                             <img src="../images/webuploader/not_file_image.png" class="img-upload" />
+                        </div>
+                        <a href="#" class="img-del-btn"></a>
+                        <div class="img-progress" style="display: block;"><span style="width:50%;"></span></div>
+                    </li> -->
                 </ul>
+
+                
                 <div class="wangeditor-uploadfile-ft">
                     <label class="ft-save-checkbox">
                         <input type="checkbox" name="" />保存到相册</label>
@@ -72,164 +95,9 @@
 <!-- ************************************************** -->
     <button id="btn-add">添加文件</button>
     <button id="btn-upload">上传文件</button>
-    <script type="text/javascript">
-    var uploader = new plupload.Uploader({
-        runtimes: 'html5,flash,silverlight,html4',
-        browse_button: 'btn-add', // you can pass an id...
-        url: 'upload.php',
-        flash_swf_url: '../js/Moxie.swf',
-        silverlight_xap_url: '../js/Moxie.xap',
-        filters: {
-            prevent_duplicates: true,
-            max_file_size: '10mb',
-            mime_types: [
-                { title: "Image files", extensions: "jpg,gif,png" }
-            ]
-        }
-    });
 
-    uploader.bind("Init", function(uploader) {
-        console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
-    });
+    <script type="text/javascript" src="index01.js"></script>
 
-    uploader.bind("PostInit", function() {
-        console.group("PostInit事件:当Init事件发生后触发监听函数参数：(uploader)");
-        $("#btn-upload").on("click", function() {
-            uploader.start();
-        });
-    });
-
-    uploader.bind("Browse", function(up) {
-        console.group("Browse事件")
-    });
-
-
-
-    uploader.bind('FileFiltered', function(up, file) {
-        console.group("FileFiltered事件")
-    });
-
-
-    function previewImage(file, callback) {
-        if (!file || !/image\//.test(file.type)) return; //确保文件是图片
-        if (file.type == 'image/gif') { //gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
-            var gif = new moxie.file.FileReader();
-            gif.onload = function() {
-                callback(gif.result);
-                gif.destroy();
-                gif = null;
-            };
-            gif.readAsDataURL(file.getSource());
-        } else {
-            var image = new moxie.image.Image();
-            image.onload = function() {
-                image.downsize(150, 150); //先压缩一下要预览的图片,宽300，高300
-                var imgsrc = image.type == 'image/jpeg' ? image.getAsDataURL('image/jpeg', 80) : image.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
-                callback && callback(imgsrc); //callback传入的参数为预览图片的url
-                image.destroy();
-                image = null;
-            };
-            image.load(file.getSource());
-        }
-    }
-
-
-    uploader.bind('FilesAdded', function(up, files) {
-        console.group("FilesAdded事件");
-        console.dir(files);
-        var str="";
-        var $beforePreview;
-        plupload.each(files,function(file) {
-            var str='<li id="'+file.id+'">'+
-                    '<div class="img-before-preview">'+
-                        '<p class="title">'+file.name+'</p>'+
-                        '<p class="txt-1">预览中...</p>'+
-                    '</div>'+
-                '</li>';
-            $(str).appendTo($('.wangeditor-uploadfile-list'));
-            
-            previewImage(file,function(imgsrc){
-                $('<img src="'+ imgsrc +'" />').appendTo($(".list"));
-            })
-        });
-    });
-
-
-
-
-
-    uploader.bind('QueueChanged', function(up) {
-        console.group("QueueChanged事件")
-    });
-
-    uploader.bind('Refresh', function(up) {
-        console.group("Refresh事件")
-    });
-
-
-
-
-    uploader.bind('BeforeUpload', function(up, file) {
-        console.group("BeforeUpload事件")
-    });
-    uploader.bind('UploadProgress', function(up, file) {
-        console.group("UploadProgress事件")
-    });
-
-
-
-
-    uploader.bind('FileUploaded', function(up, file, info) {
-        console.group("FileUploaded事件")
-    });
-
-    uploader.bind('StateChanged', function(up) {
-    //当前的上传状态，可能的值为plupload.STARTED或plupload.STOPPED，该值由Plupload实例的stop()或statr()方法控制。默认为plupload.STOPPED
-        console.group("StateChanged事件");
-        console.dir(up.state);
-    });
-
-    uploader.bind('UploadComplete', function(up, files) {
-        console.group("UploadComplete事件")
-    });
-
-
-
-
-
-
-    uploader.bind('FilesRemoved', function(up, files) {
-        console.group("FilesRemoved事件")
-    });
-
-    uploader.bind('ChunkUploaded', function(up, file, info) {
-        console.group("ChunkUploaded事件")
-    });
-
-    uploader.bind('Destroy', function() {
-        console.group("Destroy事件")
-    });
-
-    uploader.bind('OptionChanged', function(up, name, value, oldValue) {
-        console.group("OptionChanged事件")
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    uploader.init();
-    </script>
 </body>
 
 </html>

@@ -60,21 +60,54 @@
         height: 110px;
         position: relative;
         border: 1px solid #e5e5e5;
+        &.plupload_thumb_loading{
+            .img-before-preview{
+                .img-loading{
+                    display:block;
+                }
+            }
+        }
+        &.plupload_thumb_error{
+            .img-before-preview{
+                .txt-error-tip{
+                    display:block;
+                }
+            }
+        }
     }
     .img-before-preview {
         width: 100%;
         height: 100%;
         background: url("../images/webuploader/bg.png") repeat;
-        .txt-1 {
+        .txt-error-tip{
             text-align: center;
-            margin-top: 15px;
+            margin-top: 0px;
             color: #999;
+            font-size:12px;
+            padding:0 10px;
+            text-align:center;
+            display:none;
+        }
+        .img-loading{
+            width:24px;
+            height:24px;
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:-12px;
+            margin-top:-12px;
+            display:none;
+            background:url("../images/webuploader/loading.gif") no-repeat center;
         }
     }
     .title {
-        white-space: nowrap;
+       
         text-overflow: ellipsis;
-        padding: 10px;
+        text-overflow: hidden;
+        padding: 5px 10px 10px;
+        height:32px;
+        line-height:16px;
+        font-size:12px;
         overflow: hidden;
         text-align: center;
         color: #999;

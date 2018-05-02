@@ -189,7 +189,7 @@ if ($done) {
     //     'file_id' => $_REQUEST['id'],
     // ];
 
-    echo "http://localhost/plopupload/" . $uploadDir . "/" . $fileName;
+    echo "http://localhost/plupupload/" . $uploadDir . "/" . $fileName;
 }
 
 // Return Success JSON-RPC response

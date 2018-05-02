@@ -1069,10 +1069,13 @@ $.widget("ui.plupload", {
 			var resolveUrl = o.core.utils.Url.resolveUrl;
 
 			img.onload = function() {
+
 				var thumb = $('#' + file.id + ' .plupload_file_thumb', self.filelist);
 				this.embed(thumb[0], {
-					width: self.options.thumb_width,
-					height: self.options.thumb_height,
+					// width: self.options.thumb_width,
+					// height: self.options.thumb_height,
+					width:100,
+					height:30,
 					crop: true,
 					fit: true,
 					preserveHeaders: false,
@@ -1082,6 +1085,7 @@ $.widget("ui.plupload", {
 			};
 
 			img.bind("embedded error", function(e) {
+
 				$('#' + file.id, self.filelist)
 					.find('.plupload_file_thumb')
 						.removeClass('plupload_thumb_loading')
