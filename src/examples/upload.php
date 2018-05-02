@@ -19,6 +19,9 @@
 #!! revise it and customize to your needs.
 
 // Make sure file is not cached (as it happens for example on iOS devices)
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST');
+header("Access-Control-Allow-Headers: X-Requested-With"); 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -194,5 +197,5 @@ if ($done) {
 
 
 // Return Success JSON-RPC response
- $filePath="http://localhost/plupupload/" . $uploadDir . "/" . $fileName
+ $filePath="http://localhost/plupupload/" . $uploadDir . "/" . $fileName;
     die('{"jsonrpc" : "2.0", "result"'.$filePath.':, "id" : "id"}');
