@@ -1,0 +1,217 @@
+/* CSS Document */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+margin: 0;
+padding: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+display: block;
+}
+ul, ol {
+list-style: none;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+body, button,select,  textarea  {
+font: 14px/1.5 '\5FAE\8F6F\96C5\9ED1',Tahoma,Arial,Helvetica,sans-serif;
+}
+input{
+	font-family:'\5FAE\8F6F\96C5\9ED1',Tahoma,Arial,Helvetica,sans-serif;
+}
+button, input, select, textarea {
+font-size: 100%;
+}
+:focus{
+	outline: none;
+}
+blockquote, q {
+quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+content: '';
+content: none;
+}
+a {
+color:#0066cc;
+text-decoration: none;
+}
+a:hover {
+text-decoration:underline;
+}
+fieldset, img {
+border: none;
+}
+address, cite, dfn, em, var {
+font-style: normal;
+}
+code, kbd, pre, samp, tt {
+font-family: "Courier New", Courier, monospace;
+}
+small {
+font-size: 12px;
+}
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
+}
+
+html {
+overflow-y: scroll;
+}
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+}
+input[type="search"] {
+-webkit-appearance: textfield;
+/* 1 */ box-sizing: content-box;
+
+}
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+-webkit-appearance: none;
+}
+.relative{
+	position: relative;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+
+.mt5{ 
+	margin-top:5px;
+}
+.mt10{ 
+	margin-top:10px;
+}
+.mt15{ 
+	margin-top:15px;
+}
+.mt20{ 
+	margin-top:20px;
+}
+.mt25{ 
+	margin-top: 25px;
+}
+.mt30{ 
+	margin-top: 30px;
+}
+
+.pt15{
+	padding-top: 15px;
+}
+
+.pl5{
+	padding-left: 5px;
+}
+.pl10{
+	padding-left: 10px;
+}
+.pl15{
+	padding-left: 15px;
+}
+.pl20{
+	padding-left: 20px;
+}
+.pl25{
+	padding-left: 25px;
+}
+.pl30{
+	padding-left: 30px;
+}
+
+.pr5{
+	padding-right: 5px;
+}
+.pr10{
+	padding-right: 10px;
+}
+.pr15{
+	padding-right: 15px;
+}
+.pr20{
+	padding-right: 20px;
+}
+.pr25{
+	padding-right: 25px;
+}
+.pr30{
+	padding-right: 30px;
+}
+
+.mb5{ 
+	margin-bottom:5px;
+}
+.mb10{ 
+	margin-bottom:10px;
+}
+.mb15{ 
+	margin-bottom:15px;
+}
+.mb20{ 
+	margin-bottom:20px;
+}
+.mb25{ 
+	margin-bottom:25px;
+}
+.mb30{ 
+	margin-bottom:30px;
+}
+.pb10{
+	padding-bottom:10px;
+}
+.pb20{
+	padding-bottom:20px;
+}
+.pb30{
+	padding-bottom:30px;
+}
+.pb40{
+	padding-bottom:40px;
+}
+.pb50{
+	padding-bottom:50px;
+}
+.pb70{
+	padding-bottom:70px;
+}
+.pb90{
+	padding-bottom:90px;
+}
+
+.align-l{
+	text-align: left;
+}
+.align-c{
+	text-align: center;
+}
+.align-r{
+	text-align: right;
+}
+.undis{
+	display:none;
+}
+
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
+
+
