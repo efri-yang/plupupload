@@ -1,15 +1,16 @@
 .ckeditor-imgupload-dialog {
-   float:left;
+    float: left;
     width: 700px;
     background: #fff;
     border: 1px solid #e5e5e5;
     height: 450px;
     overflow: hidden;
-    display:none;
+    display: none;
     .imgupload-tab-hd {
         background: #F8F8F8;
         height: 42px;
         line-height: 42px;
+        position: relative;
         border-bottom: 1px solid #eee;
         li {
             float: left;
@@ -29,6 +30,12 @@
                 border-right: 1px solid #eee;
                 background-color: #fff;
             }
+            &.move-seat {
+                position: absolute;
+                right: 0;
+                left: 245px;
+                height: 100%;
+            }
         }
     }
 }
@@ -36,7 +43,6 @@
 
 .ckeditor-uploadfile-container {
     position: relative;
-    
 }
 
 .ckeditor-uploadfile-list {
@@ -45,6 +51,7 @@
     overflow-y: auto;
     position: relative;
     height: 300px;
+    clear:both; 
     border-bottom: 1px solid #e6e6e6;
     &:after {
         content: ".";
@@ -55,27 +62,27 @@
     }
     li {
         float: left;
-        text-align:center; 
+        text-align: center;
         width: 110px;
         margin: 16px 8px 0px;
         height: 110px;
-        line-height:110px; 
+        line-height: 110px;
         position: relative;
         border: 1px solid #e5e5e5;
-        >canvas{
+        >canvas {
             vertical-align: middle;
         }
-        &.plupload_thumb_loading{
-            .img-before-preview{
-                .img-loading{
-                    display:block;
+        &.plupload_thumb_loading {
+            .img-before-preview {
+                .img-loading {
+                    display: block;
                 }
             }
         }
-        &.plupload_thumb_error{
-            .img-before-preview{
-                .txt-error-tip{
-                    display:block;
+        &.plupload_thumb_error {
+            .img-before-preview {
+                .txt-error-tip {
+                    display: block;
                 }
             }
         }
@@ -84,36 +91,36 @@
         width: 100%;
         height: 100%;
         background: url("../images/webuploader/bg.png") repeat;
-        .txt-error-tip{
+        .txt-error-tip {
             text-align: center;
             margin-top: 0px;
             color: #999;
-            font-size:12px;
-            line-height:normal;
-            padding:0 10px;
-            text-align:center;
-            display:none;
+            font-size: 12px;
+            line-height: normal;
+            padding: 0 10px;
+            text-align: center;
+            display: none;
         }
-        .img-loading{
-            width:24px;
-            height:24px;
-            position:absolute;
-            left:50%;
-            top:50%;
-            margin-left:-12px;
-            margin-top:-12px;
-            display:none;
-            background:url("../images/webuploader/loading.gif") no-repeat center;
+        .img-loading {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -12px;
+            margin-top: -12px;
+            display: none;
+            background: url("../images/webuploader/loading.gif") no-repeat center;
         }
     }
     .title {
-       
+
         text-overflow: ellipsis;
         text-overflow: hidden;
         padding: 5px 10px 10px;
-        height:32px;
-        line-height:16px;
-        font-size:12px;
+        height: 32px;
+        line-height: 16px;
+        font-size: 12px;
         overflow: hidden;
         text-align: center;
         color: #999;
@@ -125,13 +132,13 @@
         line-height: 110px;
         font-size: 0;
         text-align: center;
-        display:none; 
+        display: none;
         .img-upload {
-            
+
             max-width: 100% !important;
             max-height: 100% !important;
             display: inline-block;
-            vertical-align:middle;
+            vertical-align: middle;
         }
     }
     .img-del-btn {
@@ -142,7 +149,7 @@
         height: 16px;
         border-radius: 100%;
         background: #555;
-        display:none; 
+        display: none;
     }
 
     .img-progress {
@@ -151,10 +158,10 @@
         bottom: 0;
         right: 0;
         height: 16px;
-        display:none; 
+        display: none;
         span {
             display: block;
-            width:0; 
+            width: 0;
             height: 100%;
             background: url("../images/webuploader/progress.png") repeat-x #1483d8;
         }
@@ -169,7 +176,7 @@
         width: 40px;
         z-index: 200;
         background: url("../images/webuploader/success.png") no-repeat right bottom;
-        display:none; 
+        display: none;
     }
     .img-error {
         background: #f43838;
@@ -196,7 +203,7 @@
     vertical-align: middle;
     position: relative;
     .img-upload-btn {
-       
+
         margin-top: 6px;
         background: #00b7ee;
         color: #fff;
@@ -210,64 +217,60 @@
         float: right;
         height: 35px;
         line-height: 35px;
-        
-       
-      
-        &.disabled{
-             opacity: 0.5;
-            
-                cursor: not-allowed;
+
+
+
+        &.disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
         }
-        
     }
 
     .img-add-btn {
-    background: #ffffff;
-    border: 1px solid #cfcfcf;
-    color: #565656;
-    padding: 0 15px;
-    border-radius: 3px;
-    cursor: pointer;
-    float: right;
-    height: 33px;
-    line-height: 33px;
-    text-decoration: none;
-    margin-top:6px;
-        
-           
-
+        background: #ffffff;
+        border: 1px solid #cfcfcf;
+        color: #565656;
+        padding: 0 15px;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+        height: 33px;
+        line-height: 33px;
+        text-decoration: none;
+        margin-top: 6px;
     }
     .img-upload-info {
         float: left;
         font-size: 14px;
         color: #666666;
     }
-    .img-upload-allprogress{
-      border: 1px solid #1483d8;
-      width: 198px;
-      display:none; 
-      background: #fff;
-      height: 18px;
-      float:left;
-      position:relative;
-      text-align: center;
-      line-height: 20px;
-      color: #6dbfff;
-      position: relative;
-      margin-right: 10px;
-      margin-top:12px; 
-      .txt{
+    .img-upload-allprogress {
+        border: 1px solid #1483d8;
+        width: 198px;
+        display: none;
+        background: #fff;
+        height: 18px;
+        float: left;
         position: relative;
-        z-index: 10;
-      }
-      .percentage{
+        text-align: center;
+        line-height: 20px;
+        color: #6dbfff;
+        position: relative;
+        margin-right: 10px;
+        margin-top: 12px;
+        .txt {
+            position: relative;
+            z-index: 10;
+        }
+        .percentage {
             width: 0;
-      height: 100%;
-      left: 0;
-      top: 0;
-      background: #1483d8;
-      position: absolute;
-      }
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: #1483d8;
+            position: absolute;
+        }
     }
 }
 
@@ -314,10 +317,10 @@
         &:hover {
             background: #00a2d4;
         }
-        &.disabled{
-             opacity: 0.5;
-            
-                cursor: not-allowed;
+        &.disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
         }
     }
     .ft-save-checkbox {
@@ -341,21 +344,23 @@
     color: #666;
     padding-top: 120px;
 }
-.ckeditor-localupload-container{
-  display:none;
-  &.active{
-    display:block; 
-  } 
-}
-.ckeditor-gallery-container {
+
+.ckeditor-localupload-container {
     display: none;
-    &.active{
-    display:block; 
-  } 
+    &.active {
+        display: block;
+    }
 }
 
-.ckeditor-gallery-hasdata{
-  display:none; 
+.ckeditor-gallery-container {
+    display: none;
+    &.active {
+        display: block;
+    }
+}
+
+.ckeditor-gallery-hasdata {
+    display: none;
 }
 
 .ckeditor-gallery-list {
@@ -463,8 +468,8 @@
 }
 
 
-.filePicker-btn-1{
-        float: right;
+.filePicker-btn-1 {
+    float: right;
     background: #00b7ee;
     color: #fff;
     text-decoration: none;
@@ -477,4 +482,31 @@
     float: right;
     height: 35px;
     line-height: 35px;
+}
+
+
+// 
+// 
+
+.ckeditor-imgedit-dialog{
+    position:absolute;
+    left:150px;
+    top:100px;
+    .item-cell{
+        position:relative;
+        padding-bottom:15px;  
+        .lab{
+            float:left;
+            line-height:40px;  
+            width:60px;
+            padding-right:10px; 
+            text-align:right;  
+        }
+        .ipt-text{
+            border:1px solid #c7c7c7;
+            padding:10px 5px;
+            height:18px;
+            line-height:18px;   
+        }
+    }
 }
