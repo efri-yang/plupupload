@@ -57,7 +57,7 @@ function preloadThumb(file, cb) {
             // height: self.options.thumb_height,
             width: 110,
             height: 110,
-            crop: true,
+            crop: false,
             fit: true,
             preserveHeaders: false,
             swf_url: resolveUrl(uploader.settings.flash_swf_url),
@@ -159,6 +159,7 @@ uploader.bind('BeforeUpload', function(up, file) {
     console.dir(file);
     var $li = $("#" + file.id);
     var $propress = $li.find(".img-progress").show();
+    $li.find(".img-del-btn").hide();
 });
 uploader.bind('UploadProgress', function(up, file) {
     console.group("UploadProgress事件");
@@ -166,6 +167,7 @@ uploader.bind('UploadProgress', function(up, file) {
     var $li = $("#" + file.id);
     var $propress = $li.find(".img-progress").show();
     $propress.children('span').css("width", file.percent + "%");
+    
 });
 
 
@@ -177,7 +179,8 @@ uploader.bind('FileUploaded', function(up, file, info) {
     var $li = $("#" + file.id);
     var $propress = $li.find(".img-progress").hide();
     $li.find(".img-success").show();
-    $li.attr("data-src", info.response)
+    $li.attr("data-src", info.response);
+    $li.find(".img-del-btn").show();
 
 
 });
@@ -209,7 +212,7 @@ uploader.bind('FilesRemoved', function(up, files) {
 
 
     setTimeout(function() {
-        alert(uploader.total.queued)
+       
         if (!uploader.total.queued) {
             $uploadBtn.addClass("disabled");
         }

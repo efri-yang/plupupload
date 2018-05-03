@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="ckeditor-imgupload-dialog" data-relateto="J_xy-editor-textarea" style="margin-top:20px;margin-left:10px;display:block;">
+    <div class="ckeditor-imgupload-dialog" data-relateto="J_xy-editor-textarea">
         <ul class="imgupload-tab-hd">
             <li class="active"><a href="#tabbd-localupload-container">本地上传</a></li>
             <li><a href="#tabbd-gallery-container">相册图片</a></li>
@@ -31,7 +31,7 @@
                     <div class="img-add-btn" id="img-add-btn-1">添加文件</div>
                 </div>
                 <ul class="ckeditor-uploadfile-list">
-                   <!-- <li>
+                    <!-- <li>
                         <div class="img-before-preview">
                             <p class="title">图片名称图片名称图片名称.png</p>
                             <p class="img-loading" style="display:block;"></p>
@@ -53,8 +53,6 @@
                         <div class="img-progress" style="display: block;"><span style="width:50%;"></span></div>
                     </li> -->
                 </ul>
-
-                
                 <div class="ckeditor-uploadfile-ft">
                     <label class="ft-save-checkbox">
                         <input type="checkbox" name="" />保存到相册</label>
@@ -92,15 +90,29 @@
             </div>
         </div>
     </div>
-
-<!-- ************************************************** -->
-   
+    <!-- ************************************************** -->
+    <button id="x1">弹出框</button>
     <script type="text/javascript" src="index01.js"></script>
-
     <script type="text/javascript">
-         
+    $(function() {
+        $("#x1").on("click", function() {
+            layer.open({
+              type: 1,
+              shade: false,
+              move: ".imgupload-tab-hd",
+              title: false, //不显示标题
+              area: '702px',
+              content: $(".ckeditor-imgupload-dialog"), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+              success: function(layero, index){
+               
+              },
+              cancel: function(index, layero){ 
+                
+              }
+            });
+        })
+    })
     </script>
-
 </body>
 
 </html>

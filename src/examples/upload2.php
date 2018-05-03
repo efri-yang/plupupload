@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-origin:*");
 // $targetDir = 'upload_tmp';
 // $uploadDir = 'upload';
 

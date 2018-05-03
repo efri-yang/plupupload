@@ -55,11 +55,16 @@
     }
     li {
         float: left;
+        text-align:center; 
         width: 110px;
         margin: 16px 8px 0px;
         height: 110px;
+        line-height:110px; 
         position: relative;
         border: 1px solid #e5e5e5;
+        >canvas{
+            vertical-align: middle;
+        }
         &.plupload_thumb_loading{
             .img-before-preview{
                 .img-loading{
@@ -84,6 +89,7 @@
             margin-top: 0px;
             color: #999;
             font-size:12px;
+            line-height:normal;
             padding:0 10px;
             text-align:center;
             display:none;
@@ -148,6 +154,7 @@
         display:none; 
         span {
             display: block;
+            width:0; 
             height: 100%;
             background: url("../images/webuploader/progress.png") repeat-x #1483d8;
         }
