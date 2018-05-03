@@ -489,12 +489,10 @@
 // 
 
 .ckeditor-imgedit-dialog{
-    position:absolute;
-    left:150px;
-    top:100px;
+   display:none; 
     .item-cell{
         position:relative;
-        padding-bottom:15px;  
+        padding-bottom:10px;  
         .lab{
             float:left;
             line-height:40px;  
@@ -504,7 +502,7 @@
         }
         .ipt-text{
             border:1px solid #c7c7c7;
-            padding:10px 5px;
+            padding:7px 5px;
             height:18px;
             line-height:18px;   
         }
