@@ -107,7 +107,10 @@
                 <input type="text" name="imgintro" class="ipt-text">
         </div>
 
-        <div class=""></div>
+        <div class="ckeditor-imgedit-ft">
+            <a href="#" class="ft-btn-cancel">取消</a>
+            <a href="#" class="ft-btn-insert ">修改</a>
+        </div>
     </div>
 
 
@@ -126,7 +129,7 @@
             layer.open({
               type: 1,
               shade: false,
-            
+              
               title: false, //不显示标题
               area: '702px',
               content: $(".ckeditor-imgupload-dialog"), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
@@ -143,9 +146,8 @@
             layer.open({
               type: 1,
               shade: false,
-              move: ".move-seat",
-              title: false, //不显示标题
-              area: '702px',
+              title:"图片属性设置", //不显示标题
+              area: '350px',
               content: $(".ckeditor-imgedit-dialog"), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
               success: function(layero, index){
                
