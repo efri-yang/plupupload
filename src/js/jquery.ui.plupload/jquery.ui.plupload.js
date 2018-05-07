@@ -605,6 +605,7 @@ $.widget("ui.plupload", {
 			if (plupload.STARTED === up.state) {
 				self._trigger('started', null, { up: this.uploader });
 			} else if (plupload.STOPPED === up.state) {
+				
 				self._trigger('stopped', null, { up: this.uploader });
 			}
 		});
@@ -971,7 +972,7 @@ $.widget("ui.plupload", {
 
 	_updateTotalProgress: function() {
 		var up = this.uploader;
-
+console.dir(up.files);
 		// Scroll to end of file list
 		this.filelist[0].scrollTop = this.filelist[0].scrollHeight;
 

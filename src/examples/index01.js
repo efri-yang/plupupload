@@ -4,9 +4,12 @@ var uploader = new plupload.Uploader({
     url: 'upload2.php',
     flash_swf_url: '../js/Moxie.swf',
     silverlight_xap_url: '../js/Moxie.xap',
+    max_file_count:3,
+    
+    chunk_size: '100kb',
     filters: {
         prevent_duplicates: true,
-        max_file_size: '1000mb',
+        max_file_size: '10mb',
         mime_types: [
             { title: "Image files", extensions: "jpg,gif,png,psd" },
             { title: "Zip files", extensions: "zip" }
@@ -14,36 +17,43 @@ var uploader = new plupload.Uploader({
     }
 });
 
+console.dir(uploader);
+
 
 var $uploadBtn = $(".img-upload-btn");
+var $pauseBtn=$(".img-pause-btn");
 var $addBtn = $("#img-add-btn-1");
 var $insertBtn = $(".ft-btn-insert");
 var $fileListUL = $(".ckeditor-uploadfile-list");
+var $uploadInfo=$(".img-upload-info");
+var $uploadProgress=$(".img-upload-allprogress");
+
+var stating="STOPPED";
+var errorMsg="";
+
+var successFile=[];
+var errorFile=[];
+var fileSize=0;
 
 
+$(".ckeditor-imgupload-dialog").on("click",".retry",function(){
+   var len=uploader.files.length;
+    for (var i = len-1; i >= 0; i--) {
+        if(uploader.files[i].status==4){
+            uploader.files[i].status=1;
+        }
+    }
+    uploader.start();
+})
 
-uploader.bind("Init", function(uploader) {
-    console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
-});
-
-uploader.bind("PostInit", function() {
-    console.group("PostInit事件:当Init事件发生后触发监听函数参数：(uploader)");
-    $(".img-upload-btn").on("click", function() {
-        uploader.start();
-    });
-});
-
-uploader.bind("Browse", function(up) {
-    console.group("Browse事件")
-});
-
-
-
-uploader.bind('FileFiltered', function(up, file) {
-    console.group("FileFiltered事件")
-});
+$(".ckeditor-imgupload-dialog").on("click",".ignore",function(){
+    var len=uploader.files.length;
+    for (var i = len-1; i >= 0; i--) {
+        uploader.removeFile(uploader.files[i]);
+    }
 
 
+})
 
 
 function preloadThumb(file, cb) {
@@ -77,14 +87,104 @@ function preloadThumb(file, cb) {
     img.load(file.getSource());
 }
 
+function _handleState(){
+    var filesPending = uploader.files.length - (uploader.total.uploaded + uploader.total.failed);
+    var maxCount = uploader.getOption('filters').max_file_count || 0;
+    if (plupload.STARTED === uploader.state) {
+        //此时表示正在上传
+        $pauseBtn.show();
+    }else if (plupload.STOPPED === uploader.state) {
+        //停止上传
+        $pauseBtn.hide();
+        
+    }
+}
+
+function updateTotalText() {
+    var text = '',
+        stats;
+    if (stating === 'FilesAdded') {
+        text = '选中' + uploader.files.length + '张图片，共' + plupload.formatSize(fileSize) + '。';
+    }else if(stating === 'UploadComplete'){
+        text = '共' + uploader.files.length + '张（' + plupload.formatSize(fileSize) + '），已上传' + uploader.total.uploaded + '张';
+        if (uploader.total.failed) {
+                text += '，失败' + uploader.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>';
+            }
+    } 
+    $uploadInfo.html(text);
+}
 
 
+
+function updateTotalProgress(){
+    $uploadProgress.find(".txt").text(uploader.total.percent+"%");
+    $uploadProgress.find(".percentage").width(uploader.total.percent+"%");
+}
+
+
+
+function _handleFileStatus(){
+
+}
+
+
+
+uploader.bind("Init", function(uploader) {
+    console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
+});
+
+uploader.bind("PostInit", function() {
+    console.group("PostInit事件:当Init事件发生后触发监听函数参数：(uploader)");
+    $uploadBtn.on("click", function() {
+        uploader.start();
+    });
+
+    $pauseBtn.click(function(e) {
+        uploader.stop();
+        e.preventDefault();
+    });
+});
+
+uploader.bind("Browse", function(up) {
+    console.group("Browse事件")
+});
+
+plupload.extend(uploader.getOption('filters'), {
+    max_file_count: self.options.max_file_count
+});
+
+plupload.addFileFilter('max_file_count', function(maxCount, file, cb) {
+    if (maxCount <= this.files.length - (this.total.uploaded + this.total.failed)) {
+        self.browse_button.button('disable');
+        this.disableBrowse();
+
+        this.trigger('Error', {
+            code : self.FILE_COUNT_ERROR,
+            message : _("File count error."),
+            file : file
+        });
+        cb(false);
+    } else {
+        cb(true);
+    }
+});
+
+uploader.bind('FileFiltered', function(up, file) {
+    console.group("FileFiltered事件");
+
+     if (3 <= uploader.files.length - (uploader.total.uploaded + uploader.total.failed)) {
+            $addBtn.addClass('disabled');
+            uploader.disableBrowse();
+
+            
+          
+        } 
+});
 
 uploader.bind('FilesAdded', function(up, files) {
     console.group("FilesAdded事件");
     console.dir(files);
-    $(".img-upload-btn").removeClass("disabled");
-
+    $uploadBtn.removeClass("disabled");
     var str = "";
     var $beforePreview;
     var $afterPreview;
@@ -108,7 +208,7 @@ uploader.bind('FilesAdded', function(up, files) {
         $beforePreview = $str.find('.img-before-preview');
         $afterPreview = $str.find(".img-after-preview");
         $del = $str.find(".img-del-btn");
-
+        fileSize+=file.size;
         $del.show();
         $del.on("click", function() {
             uploader.removeFile(file);
@@ -119,18 +219,24 @@ uploader.bind('FilesAdded', function(up, files) {
         })
 
         preloadThumb(file, function(type) {
-           if(type=="error"){
-              $str.find(".img-loading").hide();
-              $str.find(".txt-error-tip").text("该浏览器不支持图片预览").show();
+            if (type == "error") {
+                $str.find(".img-loading").hide();
+                $str.find(".txt-error-tip").text("该浏览器不支持图片预览").show();
 
-           }else{
-            $beforePreview.hide();
-           }
-            
+            } else {
+                $beforePreview.hide();
+            }
+
 
 
         })
     });
+
+    stating="FilesAdded";
+
+    updateTotalText();
+
+
 });
 
 
@@ -139,16 +245,13 @@ uploader.bind('FilesAdded', function(up, files) {
 
 uploader.bind('QueueChanged', function(up) {
     console.group("QueueChanged事件");
+    _handleState();
 
 });
 
 uploader.bind('Refresh', function(up) {
     console.group("Refresh事件");
-    if (!up.total.queued) {
-        $insertBtn.addClass("disabled");
-    } else {
-        $insertBtn.removeClass("disabled");
-    }
+   
 });
 
 
@@ -160,6 +263,10 @@ uploader.bind('BeforeUpload', function(up, file) {
     var $li = $("#" + file.id);
     var $propress = $li.find(".img-progress").show();
     $li.find(".img-del-btn").hide();
+    $uploadProgress.show();
+    $uploadInfo.hide();
+    stating="UploadProgress";
+    updateTotalProgress();
 });
 uploader.bind('UploadProgress', function(up, file) {
     console.group("UploadProgress事件");
@@ -167,7 +274,7 @@ uploader.bind('UploadProgress', function(up, file) {
     var $li = $("#" + file.id);
     var $propress = $li.find(".img-progress").show();
     $propress.children('span').css("width", file.percent + "%");
-    
+    updateTotalProgress();
 });
 
 
@@ -182,17 +289,34 @@ uploader.bind('FileUploaded', function(up, file, info) {
     $li.attr("data-src", info.response);
     $li.find(".img-del-btn").show();
 
+    successFile.push(file);
+
 
 });
 
 uploader.bind('StateChanged', function(up) {
     //当前的上传状态，可能的值为plupload.STARTED或plupload.STOPPED，该值由Plupload实例的stop()或statr()方法控制。默认为plupload.STOPPED
     console.group("StateChanged事件");
-    console.dir(up.state);
+
+     if (!uploader.total.uploaded) {
+        $insertBtn.addClass("disabled");
+    } else {
+        $insertBtn.removeClass("disabled");
+    }
+    _handleState();
 });
+
+
+//一下子上传10张图片，也只会触发一次 
+//完成以后判断有多少张图片是成功的，多少张是失败的，对于失败的图片 重新上传 还是忽略
 
 uploader.bind('UploadComplete', function(up, files) {
     console.group("UploadComplete事件");
+    $uploadProgress.hide();
+    $uploadInfo.show();
+    stating="UploadComplete";
+    updateTotalText();
+    
 
 });
 
@@ -205,14 +329,15 @@ uploader.bind('FilesRemoved', function(up, files) {
     console.group("FilesRemoved事件");
 
     $.each(files, function(index, file) {
-
         $("#" + file.id).remove();
+        fileSize-=file.size;
 
     });
 
+    updateTotalText();
+
 
     setTimeout(function() {
-       
         if (!uploader.total.queued) {
             $uploadBtn.addClass("disabled");
         }
@@ -232,6 +357,14 @@ uploader.bind('Destroy', function() {
 
 uploader.bind('OptionChanged', function(up, name, value, oldValue) {
     console.group("OptionChanged事件")
+});
+
+
+uploader.bind('Error', function(up, err) {
+    console.group("Error事件")
+    $("#"+err.file.id).find(".img-error").show(); 
+    errorFile.push(err.file);
+    
 });
 
 

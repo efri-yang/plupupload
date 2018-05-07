@@ -45,7 +45,7 @@ $(function() {
 		url : '../upload.php',
 
 		// User can upload no more then 20 files in one go (sets multiple_queues to false)
-		max_file_count: 20,
+		max_file_count: 3,
 		
 		chunk_size: '1mb',
 
@@ -59,7 +59,7 @@ $(function() {
 		
 		filters : {
 			// Maximum file size
-			max_file_size : '1000mb',
+			max_file_size : '100mb',
 			// Specify what files to browse for
 			mime_types: [
 				{title : "Image files", extensions : "jpg,gif,png"},
