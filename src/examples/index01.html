@@ -10,10 +10,7 @@
     <script type="text/javascript" src="../js/plupload.dev.js"></script>
     <script type="text/javascript" src="../js/tab.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/base.css">
-    <link rel="stylesheet" type="text/css" href="../css/upload.css">
-    <link rel="stylesheet" type="text/css" href="../../dev/css/upload.css">
-    <link rel="stylesheet" type="text/css" href="../css/iframebox.css">
-    <link rel="stylesheet" type="text/css" href="../../dev/css/iframebox.css">
+    <link rel="stylesheet" type="text/css" href="../css/plugin.css">
 </head>
 
 <body>
@@ -138,12 +135,33 @@
             <a href="#" class="ckeditor-btn-primary">确认</a>
         </div>
     </div>
+    
 
+    <!--  -->
+    <div class="ckeditor-tablebox-dialog">
+        <div class="item-cell">
+            <label class="lab">行</label>
+            <input type="text" size="15" class="ckeditor-coms-formtext">
+        </div>
+        <div class="item-cell">
+            <label class="lab">列</label>
+            <input type="text" size="15"  class="ckeditor-coms-formtext">
+        </div>
+        <div class="item-cell">
+            <label class="lab">边框</label>
+            <input type="text" size="15"  class="ckeditor-coms-formtext">
+        </div>
 
+        <div class="ckeditor-tablebox-ft">
+            <a href="#" class="ckeditor-btn-default">关闭</a>
+            <a href="#" class="ckeditor-btn-primary">确认</a>
+        </div>
+    </div>
 
     <button id="x1">弹出上传图片对话框</button>
     <button id="x2">弹出编辑图片对话框</button>
     <button id="x3">弹出iframebox对话框</button>
+    <button id="x4">弹出tablebox对话框</button>
 
     <script type="text/javascript" src="index01.js"></script>
     <script type="text/javascript">
@@ -194,6 +212,22 @@
               title:"iframe属性设置", //不显示标题
               area:"500px",
               content: $(".ckeditor-iframebox-dialog"), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+              success: function(layero, index){
+               
+              },
+              cancel: function(index, layero){ 
+                
+              }
+            });
+        });
+
+        $("#x4").on("click",function(){
+            layer.open({
+              type: 1,
+              shade: false,
+              title:"iframe属性设置", //不显示标题
+              area:"300px",
+              content: $(".ckeditor-tablebox-dialog"), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
               success: function(layero, index){
                
               },
