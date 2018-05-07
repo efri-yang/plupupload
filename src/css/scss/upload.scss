@@ -43,6 +43,28 @@
 
 .ckeditor-uploadfile-container {
     position: relative;
+
+    .ckeditor-uploadfile-errortip{
+        position:absolute;
+        left:0;
+        bottom:62px;
+        right:0;
+        padding:10px 15px;
+        border:1px solid #cd0a0a;
+        background:#fef1ec;
+        font-size:12px;
+        display:none;
+        .close{
+            width:14px;
+            height:14px;
+            position:absolute;
+            overflow: hidden;
+            right:5px;
+            top:5px;
+            background:url("../images/webuploader/del_small.png") no-repeat center #cd0a0a;
+            border-radius:50%;
+        }
+    }
 }
 
 .ckeditor-uploadfile-list {

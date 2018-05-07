@@ -118,4 +118,7 @@ if (!$chunks || $chunk == $chunks - 1) {
 }
 
 // Return Success JSON-RPC response
-die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+// die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+
+$url = dirname('http://' . $_SERVER['SERVER_NAME'] . $_SERVER["REQUEST_URI"]);
+echo $url . "/plupload/" . $fileName;
