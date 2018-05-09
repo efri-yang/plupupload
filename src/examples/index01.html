@@ -166,10 +166,44 @@
         </div>
     </div>
 
+
+    <!-- ************************************** -->
+    <div class="ckeditor-link-dialog">
+        <div class="item-cell">
+            <label class="lab">显示文本</label>
+            <input type="text" size="38" class="ckeditor-coms-formtext">
+        </div>
+
+        <div class="item-cell item-xyurl">
+            <label class="lab">URL</label>
+            <select class="sel J_sel-xy">
+                <option value="1">http://</option>
+                <option value="2">https://</option>
+            </select>
+            <input type="text"  class="ckeditor-coms-formtext" size="24">
+        </div>
+        <div class="item-cell">
+            <label class="lab">目标窗口</label>
+            <select class="sel J_sel-url">
+                <option value="1">新窗口</option>
+                <option value="2">当前窗口</option>
+            </select>
+            
+        </div>
+        <div class="ckeditor-link-ft">
+            <a href="#" class="ckeditor-btn-default">关闭</a>
+            <a href="#" class="ckeditor-btn-primary">确认</a>
+        </div>
+    </div>
+
+
+    <!-- ************************************** -->
+
     <button id="x1">弹出上传图片对话框</button>
     <button id="x2">弹出编辑图片对话框</button>
     <button id="x3">弹出iframebox对话框</button>
     <button id="x4">弹出tablebox对话框</button>
+    <button id="x5">弹出link对话框</button>
 
     <script type="text/javascript" src="index01.js"></script>
     <script type="text/javascript">
@@ -178,6 +212,22 @@
             e.preventDefault();
             $(this).editorTab('show');
         });
+        $("#x5").on("click",function(){
+            layer.open({
+              type: 1,
+              shade: false,
+              
+              title:"连接设置", //不显示标题
+              area: '430px',
+              content: $(".ckeditor-link-dialog"), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+              success: function(layero, index){
+               
+              },
+              cancel: function(index, layero){ 
+                
+              }
+            });
+        })
 
         $("#x1").on("click", function() {
             layer.open({

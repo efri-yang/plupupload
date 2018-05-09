@@ -49,3 +49,15 @@
         cursor: not-allowed;
     }
 }
+
+
+
+.ckclearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.ckclearfix {
+  zoom: 1;
+}

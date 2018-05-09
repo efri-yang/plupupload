@@ -1,0 +1,42 @@
+.ckeditor-link-dialog{
+	display:none; 
+	
+	
+	
+	.lab{
+		width:80px;
+		padding-right:10px;
+		line-height:34px; 
+		float:left; 
+		text-align: right;  
+	}
+	.item-cell{
+		padding-top:15px; 
+	}
+
+	.sel{
+			
+			padding:6px 8px; 
+			border:1px solid #c7c7c7;
+			
+		}
+
+	.item-xyurl{
+		.sel{
+			float:left;
+			padding:6px 8px; 
+			border:1px solid #c7c7c7;
+			margin-right:10px; 
+		}
+	}
+}
+
+.ckeditor-link-ft{
+	border-top: 1px solid #eee;
+    padding: 12px 15px;
+    margin-top: 15px;
+    text-align:right; 
+    a{
+    	margin-left:12px;
+    }
+}

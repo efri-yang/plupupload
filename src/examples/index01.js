@@ -179,7 +179,7 @@ plupload.addFileFilter('max_imgfile_count', function(maxCount, file, cb) {
 
 console.dir(plupload);
 
-alert(uploader.settings.filters.max_imgfile_count)
+
 uploader.bind('FileFiltered', function(up, file) {
     console.group("FileFiltered事件");
      if (uploader.settings.filters.max_imgfile_count <= uploader.files.length - (uploader.total.uploaded + uploader.total.failed)) {
