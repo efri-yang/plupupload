@@ -559,8 +559,7 @@
     }
     .item-ratio{
         position:absolute;
-        width:60px;
-        height:60px;
+        height:30px;
         overflow: hidden;
         right: 80px;
         top: 40px;
@@ -568,10 +567,11 @@
             width:28px;
             height:28px;
             float:left;
-            margin-right:10px;
+            margin-right:5px;
             background:url("../images/lock_1.png") no-repeat center center;
             display:block;
             border:1px solid #fff;
+            cursor:pointer; 
             &.unlock{
                 background:url("../images/unlock_1.png") no-repeat center center;
             }
@@ -581,12 +581,17 @@
             }
         }
         .btnreset{
-            width:20px;
-            height:20px;
+            width:28px;
+            height:28px;
             float:left;
+            border:1px solid #fff;
             display:block;
             overflow: hidden;
             background:url("../images/refresh_1.png") no-repeat center center;
+            cursor:pointer;
+            &:hover{
+                border:1px solid #e5e5e5;
+            }
         }
     }
 }
