@@ -557,6 +557,38 @@
             line-height:18px;   
         }
     }
+    .item-ratio{
+        position:absolute;
+        width:60px;
+        height:60px;
+        overflow: hidden;
+        right: 80px;
+        top: 40px;
+        .btnlock{
+            width:28px;
+            height:28px;
+            float:left;
+            margin-right:10px;
+            background:url("../images/lock_1.png") no-repeat center center;
+            display:block;
+            border:1px solid #fff;
+            &.unlock{
+                background:url("../images/unlock_1.png") no-repeat center center;
+            }
+            &:hover{
+                padding:0;
+                border:1px solid #e5e5e5;
+            }
+        }
+        .btnreset{
+            width:20px;
+            height:20px;
+            float:left;
+            display:block;
+            overflow: hidden;
+            background:url("../images/refresh_1.png") no-repeat center center;
+        }
+    }
 }
 
 
