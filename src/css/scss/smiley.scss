@@ -1,0 +1,57 @@
+.ckeditor-smiley-dialog{
+	display:none; 
+	.smiley-hd-list{
+        background: #F8F8F8;
+        height: 42px;
+        line-height: 42px;
+        position: relative;
+        border-bottom: 1px solid #eee;
+        li {
+            float: left;
+            a {
+                padding: 0 12px;
+                font-size: 14px;
+                color: #333;
+                
+               
+                text-align: center;
+                display: block;
+                text-decoration: none;
+            }
+            &.active {
+                height: 43px;
+                border-left: 1px solid #eee;
+                border-right: 1px solid #eee;
+                background-color: #fff;
+            }
+            &.move-seat {
+                position: absolute;
+                right: 0;
+                left: 245px;
+                height: 100%;
+            }
+        }
+    }
+    .smiley-pic-list{
+    	&:after{
+    		content:"";
+		    display:table;
+		    clear:both;
+    	}
+    	li{
+    		float:left; 
+    		margin:0 5px 5px;
+    		padding:3px;
+    		font-size:0;
+    		border:1px solid #fff;
+    		cursor:pointer;  
+    		&:hover{
+    			border:1px solid #e5e5e5;
+    		}  
+    	}
+    }
+
+    .smiley-bd{
+    	padding:15px; 
+    }
+}
