@@ -4,7 +4,7 @@ var uploader = new plupload.Uploader({
     url: 'upload2.php',
     flash_swf_url: '../js/Moxie.swf',
     silverlight_xap_url: '../js/Moxie.xap',
-
+    multi_selection: true,
     chunk_size: '100kb',
     filters: {
         max_imgfile_count: 3,
@@ -133,9 +133,6 @@ function updateTotalProgress() {
 
 
 
-function _handleFileStatus() {
-
-}
 
 
 

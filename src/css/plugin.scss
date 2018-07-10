@@ -1,7 +1,224 @@
-@import "./scss/ckcommon.scss";
-@import "./scss/upload.scss";
-@import "./scss/iframebox.scss";
-@import "./scss/tablebox.scss";
-@import "./scss/link.scss";
-@import "./scss/fujian.scss";
-@import "./scss/smiley.scss";
+// @import "./scss/ckcommon.scss";
+// @import "./scss/upload.scss";
+// @import "./scss/iframebox.scss";
+// @import "./scss/tablebox.scss";
+// @import "./scss/link.scss";
+// @import "./scss/fujian.scss";
+// @import "./scss/smiley.scss";
+// 
+// 
+// 
+
+.coms-plupload-container{
+}
+
+.coms-btn-choice{
+	.btn-pickfiles{
+		position: relative;
+		clear:both; 
+	    float:left;
+	    cursor: pointer;
+	    background: #00b7ee;
+	    padding: 10px 15px;
+	    min-width:118px; 
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 3px;
+	    overflow: hidden;
+	    text-decoration:none;
+	    margin-right:30px;
+        &.disabled{
+            opacity:0.2; 
+            cursor:default;
+            &:hover{
+                background:#00b7ee;
+            }
+        }
+	    &:hover{
+	    	background:darken(#00b7ee,5%);
+	    } 
+	}
+		
+}
+
+.coms-plupload-nofile{
+	width: 150px;
+    height: 150px;
+    overflow: hidden;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+    background: url("../images/webuploader/not_file_image.png") no-repeat center center;
+}
+
+.coms-upload-info{
+	float:left;
+	padding:10px 0;
+	display:none;
+}
+
+
+.coms-upload-list{
+	display:none;
+	li {
+            float: left;
+            width: 152px;
+            height: 152px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            .img-wrap {
+                border: 1px solid #e6e6e6;
+                font-size: 0;
+                width: 150px;
+                height: 150px;
+                overflow: hidden;
+                text-align: center;
+               
+                color: #000;
+                &.preview {
+                    font-size: 14px;
+                    color: #999;
+                    background: url("../images/webuploader/bg.png") repeat top center;
+                }
+
+                
+            }
+
+            .preview-pic{
+            	display:none;
+            	line-height:150px;
+            	overflow:hidden;
+            	.uploadimg{
+                	max-width: 100%;
+                	max-height: 100%;
+                	display:inline-block;
+                	vertical-align: middle;
+                }
+            }
+            .preview-tip,.preview-name{
+            	line-height:150px;
+            	span{
+            		line-height:21px;
+            		display:inline-block;
+            		vertical-align:middle;
+            	}
+            }
+            .preview-name{
+            	display:none;
+            }
+            .handle-bar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 0 5px;
+                height: 30px;
+                line-height: 30px;
+                background-color: rgba(0, 0, 0, 0.8);
+                display: none;
+            }
+            .upbtn-upload{
+                float: right;
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+            .upbtn-del{
+                float: left;
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+
+            .upbtn-del-server,.upbtn-del-local{
+                position: absolute;
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                overflow: hidden;
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background-color: rgba(0, 0, 0, 0.7);
+                border-radius: 100%;
+                text-align: center;
+                display: none;
+                background-image:url("../images/webuploader/del.png");
+                background-repeat: no-repeat;
+                background-position:center center; 
+                cursor:pointer;
+                &:hover{
+                	background-color:darken(#000,5%);
+                }
+               
+            }
+            .error {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 25px;
+                line-height: 25px;
+                text-align: center;
+                background: #f60;
+                color: #fff;
+                font-size: 12px;
+                display: none;
+            }
+            .successing {
+                width: 40px;
+                height: 40px;
+                background: url("../images/webuploader/success.png") no-repeat top center;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                display: none;
+            }
+
+            .progressing {
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                height: 15px;
+                overflow: hidden;
+                z-index: 50;
+                margin-bottom: 0;
+                display: none;
+                span {
+                    overflow: hidden;
+                    width: 0;
+                    height: 100%;
+                    display: block;
+                    background: url("../images/webuploader/progress.png") repeat-x #1483d8;
+
+                    transition: width 200ms linear;
+
+                    -webkit-animation: progressmove 2s linear infinite;
+                    -moz-animation: progressmove 2s linear infinite;
+                    -o-animation: progressmove 2s linear infinite;
+                    -ms-animation: progressmove 2s linear infinite;
+                    animation: progressmove 2s linear infinite;
+
+                    -webkit-transform: translateZ(0);
+                }
+            }
+        }
+}
+
+
+
+
+
+
+
+
