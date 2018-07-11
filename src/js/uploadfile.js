@@ -9,7 +9,7 @@ var uploader = new plupload.Uploader({
     url: './php/upload2.php',
     flash_swf_url: './js/plupload/Moxie.swf',
     silverlight_xap_url: './js/plupload/Moxie.xap',
-    chunk_size: '100kb',
+    chunk_size:0,
     multi_selection:true,
     multipart_params:{},
     filters: {
@@ -161,6 +161,7 @@ uploader.bind('FilesAdded', function(up, files) {
     
 });
 
+
 uploader.bind('QueueChanged', function(up) {
     console.group("QueueChanged事件");
     //有队列或者是有上传文件的时候
@@ -175,31 +176,52 @@ uploader.bind('Refresh', function(up) {
         $noFile.hide();
         
     }
-});
-
-uploader.bind('BeforeUpload', function(up, file) {
-    console.group("BeforeUpload事件");
-});
-
-uploader.bind('UploadFile', function(up, file) {
-    console.group("UploadFile事件");
-});
-
-uploader.bind('UploadProgress', function(up, file) {
-    console.group("UploadProgress事件");
-});
-
-uploader.bind('FileUploaded', function(up, file, info) {
-    console.group("FileUploaded事件");
-});
 
 uploader.bind('StateChanged', function(up) {
     console.group("StateChanged事件");
 });
 
+uploader.bind('BeforeUpload', function(up, file) {
+    console.group("BeforeUpload事件");
+});
+uploader.bind('UploadFile', function(up, file) {
+    console.group("UploadFile事件");
+});
+
+uploader.bind('QueueChanged', function(up) {
+    console.group("QueueChanged事件");
+});
+uploader.bind('Refresh', function(up) {
+    console.group("Refresh事件");
+});
+
+
+
+
+uploader.bind('UploadProgress', function(up, file) {
+    console.group("UploadProgress事件");
+});
+
+uploader.bind('ChunkUploaded', function(up, file, info) {
+    console.group("ChunkUploaded事件")
+});
+
+
+uploader.bind('FileUploaded', function(up, file, info) {
+    console.group("FileUploaded事件");
+});
+
+
+uploader.bind('Error', function(up, err) {
+    console.group("Error事件")
+})
+
+
+
 uploader.bind('UploadComplete', function(up, files) {
     console.group("UploadComplete事件");
 });
+
 
 uploader.bind('FilesRemoved', function(up, files) {
     console.group("FilesRemoved事件");
@@ -210,10 +232,6 @@ uploader.bind('FilesRemoved', function(up, files) {
 });
 
 
-uploader.bind('ChunkUploaded', function(up, file, info) {
-    console.group("ChunkUploaded事件")
-});
-
 uploader.bind('Destroy', function() {
     console.group("Destroy事件")
 });
@@ -221,6 +239,7 @@ uploader.bind('Destroy', function() {
 uploader.bind('OptionChanged', function(up, name, value, oldValue) {
     console.group("OptionChanged事件")
 });
+
 
 
 uploader.bind('Error', function(up, err) {
@@ -255,6 +274,7 @@ uploader.bind('Error', function(up, err) {
                 layer.msg(details);
                 
 })
+
 
 
 uploader.init();
