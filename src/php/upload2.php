@@ -40,8 +40,9 @@ exit; // finish preflight CORS requests here
 // Settings
 // $targetDir = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/src')) . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "uploads";
 // echo $targetDir;
-$targetDir = $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "plupupload" . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "uploads";
-echo $targetDir;
+$dateFileName = date("Ymd");
+$targetDir = $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "plupupload" . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $dateFileName;
+
 //$targetDir = 'uploads';
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
@@ -124,5 +125,4 @@ if (!$chunks || $chunk == $chunks - 1) {
 // Return Success JSON-RPC response
 // die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
 
-$url = dirname('http://' . $_SERVER['SERVER_NAME'] . $_SERVER["REQUEST_URI"]);
-echo $url . "/plupload/" . $fileName;
+echo DIRECTORY_SEPARATOR . "plupload" . DIRECTORY_SEPARATOR . $dateFileName . DIRECTORY_SEPARATOR . $fileName;

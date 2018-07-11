@@ -16,7 +16,7 @@ var uploader = new plupload.Uploader({
         ]
     }
 });
-uploader.settings.FILE_COUNT_ERROR=-9001;
+uploader.settings.FILE_COUNT_ERROR = -9001;
 console.dir(uploader);
 
 
@@ -28,7 +28,7 @@ var $fileListUL = $(".ckeditor-uploadfile-list");
 var $uploadInfo = $(".img-upload-info");
 var $uploadProgress = $(".img-upload-allprogress");
 var $tipError = $(".ckeditor-uploadfile-errortip");
-var $tipErrorClose=$tipError.find(".close");
+var $tipErrorClose = $tipError.find(".close");
 
 var stating = "STOPPED";
 var errorMsg = "";
@@ -37,7 +37,7 @@ var successFile = [];
 var errorFile = [];
 var fileSize = 0;
 
-$tipErrorClose.on("click",function(){
+$tipErrorClose.on("click", function() {
     $tipError.hide();
 })
 
@@ -53,6 +53,8 @@ $(".ckeditor-imgupload-dialog").on("click", ".retry", function() {
 
 $(".ckeditor-imgupload-dialog").on("click", ".ignore", function() {
     var len = uploader.files.length;
+
+
     for (var i = len - 1; i >= 0; i--) {
         uploader.removeFile(uploader.files[i]);
     }
@@ -60,6 +62,28 @@ $(".ckeditor-imgupload-dialog").on("click", ".ignore", function() {
 
 })
 
+function previewImage(file, callback) {
+    if (!file || !/image\//.test(file.type)) return; //确保文件是图片
+    if (file.type == 'image/gif') { //gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
+        var gif = new moxie.file.FileReader();
+        gif.onload = function() {
+            callback(gif.result);
+            gif.destroy();
+            gif = null;
+        };
+        gif.readAsDataURL(file.getSource());
+    } else {
+        var image = new moxie.image.Image();
+        image.onload = function() {
+            image.downsize(150, 150); //先压缩一下要预览的图片,宽300，高300
+            var imgsrc = image.type == 'image/jpeg' ? image.getAsDataURL('image/jpeg', 80) : image.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+            callback && callback(imgsrc); //callback传入的参数为预览图片的url
+            image.destroy();
+            image = null;
+        };
+        image.load(file.getSource());
+    }
+}
 
 function preloadThumb(file, cb) {
     var img = new moxie.image.Image();
@@ -114,10 +138,10 @@ function updateTotalText() {
         if (uploader.total.failed) {
             text += '，失败' + uploader.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>';
         }
-    }else if (stating === 'Del') {
+    } else if (stating === 'Del') {
         text = '选中' + uploader.files.length + '张图片';
-        if(uploader.total.uploaded){
-           text+=',已上传' + uploader.total.uploaded + '张'; 
+        if (uploader.total.uploaded) {
+            text += ',已上传' + uploader.total.uploaded + '张';
         }
     }
     $uploadInfo.html(text);
@@ -164,9 +188,9 @@ plupload.extend(uploader.getOption('filters'), {
 plupload.addFileFilter('max_imgfile_count', function(maxCount, file, cb) {
     if (maxCount <= uploader.files.length - (uploader.total.uploaded + uploader.total.failed)) {
         //抛出上传个数限制
-        uploader.trigger('error',{
-            code :-9001,
-            file : file
+        uploader.trigger('error', {
+            code: -9001,
+            file: file
         })
         cb(false);
     } else {
@@ -179,10 +203,10 @@ console.dir(plupload);
 
 uploader.bind('FileFiltered', function(up, file) {
     console.group("FileFiltered事件");
-     if (uploader.settings.filters.max_imgfile_count <= uploader.files.length - (uploader.total.uploaded + uploader.total.failed)) {
+    if (uploader.settings.filters.max_imgfile_count <= uploader.files.length - (uploader.total.uploaded + uploader.total.failed)) {
         alert("dxxx");
         $addBtn.addClass('disabled');
-     }
+    }
 });
 
 uploader.bind('FilesAdded', function(up, files) {
@@ -218,7 +242,7 @@ uploader.bind('FilesAdded', function(up, files) {
             uploader.removeFile(file);
             stating = 'Del';
             updateTotalText();
-            if(!uploader.total.loaded){
+            if (!uploader.total.loaded) {
                 $insertBtn.addClass("disabled");
             }
         })
@@ -372,19 +396,19 @@ uploader.bind('Error', function(up, err) {
 
     switch (err.code) {
         case plupload.FILE_EXTENSION_ERROR:
-            details =err.file.name+"文件不符合格式要求！";
+            details = err.file.name + "文件不符合格式要求！";
             break;
 
         case plupload.FILE_SIZE_ERROR:
-            details="单个文件大小不能超过"+plupload.formatSize(plupload.parseSize(up.getOption('filters').max_file_size))+",文件"+err.file.name+"大小为："+plupload.formatSize(err.file.size);
+            details = "单个文件大小不能超过" + plupload.formatSize(plupload.parseSize(up.getOption('filters').max_file_size)) + ",文件" + err.file.name + "大小为：" + plupload.formatSize(err.file.size);
             break;
 
         case plupload.FILE_DUPLICATE_ERROR:
-            details =err.file.name+"上传已经在队列中了！";
+            details = err.file.name + "上传已经在队列中了！";
             break;
 
         case uploader.settings.FILE_COUNT_ERROR:
-            details ="每次上传文件总数不能超过"+up.getOption('filters').max_imgfile_count+"个,多出的文件将不被上传！";
+            details = "每次上传文件总数不能超过" + up.getOption('filters').max_imgfile_count + "个,多出的文件将不被上传！";
             break;
 
         case plupload.IMAGE_FORMAT_ERROR:
@@ -395,21 +419,21 @@ uploader.bind('Error', function(up, err) {
             details = _("Runtime ran out of available memory.");
             break;
         case plupload.HTTP_ERROR:
-            details ="上传的URL出现错误或着文件不存在！";
+            details = "上传的URL出现错误或着文件不存在！";
             break;
     }
 
     $tipError.show().find(".txt").html(details);
-    
-    
 
 
 
 
 
-   
 
-    
+
+
+
+
 });
 
 
