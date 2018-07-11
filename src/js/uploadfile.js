@@ -140,6 +140,7 @@ uploader.bind('FilesAdded', function(up, files) {
         var $previewName=$li.find(".preview-name");
         var $handerBar=$li.find(".handle-bar");
         var $delQueuedBtn=$handerBar.find(".upbtn-del");
+        var $uploadQueuedBtn=$handerBar.find(".upbtn-upload");
 
 
         $handerBar.show();
@@ -152,10 +153,16 @@ uploader.bind('FilesAdded', function(up, files) {
                $previewPic.show();
             }
         });
-
+        //删除按钮(队列)
         $delQueuedBtn.on("click",function(){
-            uploader.removeFile(file);
+            up.removeFile(file);
+        });
+        //上传按钮
+        $uploadQueuedBtn.on("click",function(){
+            up.start();
         })
+
+
     });
 
     
@@ -163,63 +170,75 @@ uploader.bind('FilesAdded', function(up, files) {
 
 
 uploader.bind('QueueChanged', function(up) {
-    console.group("QueueChanged事件");
-    //有队列或者是有上传文件的时候
-    
+    console.group("QueueChanged事件"); 
+    console.dir(up);
 });
+uploader.bind('StateChanged', function(up) {
+    //暂时不知道这个的作用
+    //
+    //
+    //执行两次，一个是开始上传的时候
+    //然后是上传后FileUploaded 后执行 或者是在Error事件后执行StateChanged，但是两次的执行竟然up.total是一样的
+    console.group("StateChanged事件");
+    console.dir(up);
+});
+
+
+
 uploader.bind('Refresh', function(up) {
     console.group("Refresh事件");
-    //QueueChanged都会触发refresh函数
-    if(up.total.queued==0 || up.total.uploaded){
-       $noFile.show();
+    //QueueChanged都会触发refresh函数，如果有上传的获取是有队列的时候,那么默认的图片就应该隐藏
+    if(up.total.queued || up.total.uploaded){
+       $noFile.hide();
     }else{
-        $noFile.hide();
+        $noFile.show();
         
     }
-
-uploader.bind('StateChanged', function(up) {
-    console.group("StateChanged事件");
 });
+
+
 
 uploader.bind('BeforeUpload', function(up, file) {
     console.group("BeforeUpload事件");
+    $("#"+file.id).find(".progressing").show();
+    $("#"+file.id).find(".handle-bar").hide();
+
 });
+
 uploader.bind('UploadFile', function(up, file) {
     console.group("UploadFile事件");
 });
 
-uploader.bind('QueueChanged', function(up) {
-    console.group("QueueChanged事件");
-});
-uploader.bind('Refresh', function(up) {
-    console.group("Refresh事件");
-});
+
 
 
 
 
 uploader.bind('UploadProgress', function(up, file) {
     console.group("UploadProgress事件");
+    $("#"+file.id).find(".progressing").children().css("width", file.percent + "%");
 });
 
 uploader.bind('ChunkUploaded', function(up, file, info) {
     console.group("ChunkUploaded事件")
 });
 
-
+//文件上传成功才会触发
 uploader.bind('FileUploaded', function(up, file, info) {
     console.group("FileUploaded事件");
+    $("#"+file.id).find(".successing").show();
+
 });
 
 
-uploader.bind('Error', function(up, err) {
-    console.group("Error事件")
-})
 
 
-
+//固定会触发的
 uploader.bind('UploadComplete', function(up, files) {
     console.group("UploadComplete事件");
+    $.each(files,function(index,file){
+        $("#"+file.id).find(".progressing").hide();
+    });
 });
 
 
@@ -273,7 +292,7 @@ uploader.bind('Error', function(up, err) {
                 }
                 layer.msg(details);
                 
-})
+});
 
 
 
