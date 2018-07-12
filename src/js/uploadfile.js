@@ -114,7 +114,6 @@ function toggleBrowseButton(up) {
 }
 
 function toggleHanderBar(up, file, eventing) {
-
     switch (eventing) {
         case "FilesAdded":
             file.$handerBar.show();
@@ -177,8 +176,6 @@ function toggleStopUpload(up, eventing) {
              up.$btnStopload.addClass('disabled'); 
              break;
     }
-
-
 }
 
 
