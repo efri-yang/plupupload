@@ -1,6 +1,6 @@
 <?php
 $fileUrl = $_POST["imgurl"];
-$targetDir = $_SERVER["DOCUMENT_ROOT"] . $fileUrl;
+$targetDir = $fileUrl;
 if (unlink($targetDir)) {
     echo 1;
 } else {

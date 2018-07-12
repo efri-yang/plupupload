@@ -23,7 +23,7 @@ plupload.addFileFilter("max_file_count", function(maxFileCount, file, cb) {
 var uploader = new plupload.Uploader({
     runtimes: 'html5,flash,silverlight,html4',
     browse_button: 'J_pickfiles', // you can pass an id...
-    url: './php/upload2.php',
+    url: './php/upload.php',
     delUrl: './php/delfile.php',
     flash_swf_url: './js/plupload/Moxie.swf',
     silverlight_xap_url: './js/plupload/Moxie.xap',
@@ -32,7 +32,7 @@ var uploader = new plupload.Uploader({
     multi_selection: true,
     multipart_params: {},
     filters: {
-        max_file_count: 1,
+        max_file_count:3,
         prevent_duplicates: true,
         max_file_size: '30mb',
         mime_types: [
@@ -125,9 +125,16 @@ function toggleHanderBar(up, file, eventing) {
         case "BeforeUpload":
             file.$handerBar.hide();
             break;
-        case "FileUploaded":
+        case "FileUploadedSuccess":
             file.$handerBar.hide();
             break;
+        case "FileUploadedFail":
+            file.$handerBar.show();
+            if (up.settings.filters.max_file_count <= 1) {
+                file.$uploadQueuedBtn.show();
+            }
+            break;
+
         case "UploadComplete":
             file.$handerBar.show();
             break;
@@ -308,6 +315,7 @@ uploader.bind('FilesAdded', function(up, files) {
 
         //删除服务端文件
         file.$delUploadServerBtn.on("click", function() {
+           
             $.ajax({
                 url: uploader.settings.delUrl,
                 type: "post",
@@ -399,12 +407,20 @@ uploader.bind('ChunkUploaded', function(up, file, info) {
 uploader.bind('FileUploaded', function(up, file, info) {
     console.group("FileUploaded事件");
     console.dir(info);
-
-    $("#" + file.id).find(".upbtn-del-server").show();
-    file.serverUrl = info.response;
-
-    toggleHanderBar(up, file, "FileUploaded");
-
+    var response=$.parseJSON(info.response);
+    console.dir(response);
+    //服务器上传成功
+    if(!!response.OK && response.OK==1){
+        file.$delUploadServerBtn.show();
+        file.serverUrl = response.info.path; 
+        toggleHanderBar(up, file, "FileUploadedSuccess");
+    }else{
+        //服务器上传失败
+        file.status=plupload.FAILED;
+        file.$error.show();
+        file.$progress.hide().children().css("width",0);
+        toggleHanderBar(up, file, "FileUploadedFail");
+    }
 });
 
 
@@ -416,16 +432,16 @@ uploader.bind('UploadComplete', function(up, files) {
     toggleStartUpload(up,"UploadComplete");
     toggleStopUpload(up, "UploadComplete");
     $.each(files, function(index, file) {
-        file.$progress.hide();
+        file.$progress.hide().children().css('width', 0);
         if (file.status == plupload.DONE) {
             file.$success.show();
             file.$delUploadServerBtn.show();
             file.$error.hide();
         } else if (file.status == plupload.FAILED) {
             //失败的时候
+            file.$uploadQueuedBtn.addClass('retry-btn');
             file.$error.show();
             toggleHanderBar(up, file, "UploadComplete");
-
         }
 
 
@@ -455,14 +471,13 @@ uploader.bind('OptionChanged', function(up, name, value, oldValue) {
 
 uploader.bind('Error', function(up, err) {
     console.group("Error事件");
+    // if (err.file.$progress) {
+    //     err.file.$progress.children().css('width', 0);
+    // }
 
-    if (err.file.$progress) {
-        err.file.$progress.children().css('width', 0);
-    }
-
-    if (err.file.$uploadQueuedBtn) {
-        err.file.$uploadQueuedBtn.addClass('retry-btn')
-    }
+    // if (err.file.$uploadQueuedBtn) {
+    //     err.file.$uploadQueuedBtn.addClass('retry-btn')
+    // }
 
 
     switch (err.code) {
