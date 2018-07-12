@@ -1,7 +1,8 @@
 plupload.FILE_COUNT_ERROR = -9001;
 plupload.addFileFilter("max_file_count", function(maxFileCount, file, cb) {
     console.group('max_file_count事件');
-    if (maxFileCount <= this.files.length - (this.total.uploaded + this.total.failed)) {
+    // if (maxFileCount <= this.files.length - (this.total.uploaded + this.total.failed)) {
+    if (maxFileCount <= this.files.length) {
         this.disableBrowse(true);
         this.trigger('Error', {
             code: plupload.FILE_COUNT_ERROR,
@@ -31,7 +32,7 @@ var uploader = new plupload.Uploader({
     multi_selection: true,
     multipart_params: {},
     filters: {
-        max_file_count: 3,
+        max_file_count: 1,
         prevent_duplicates: true,
         max_file_size: '30mb',
         mime_types: [
@@ -55,6 +56,7 @@ var uploader = new plupload.Uploader({
 console.dir(uploader);
 
 
+//删除一个文件的时候 
 
 
 
@@ -74,6 +76,104 @@ var $uploadUL = $container.find(".coms-upload-list"); //ul列表
 
 uploader.$btnStartload = $container.find(".btn-startload-file");
 uploader.$btnStopload = $container.find(".btn-stopload-file");
+
+
+//多个文件上传按钮
+uploader.$btnStartload.on("click", function() {
+    console.dir("btnStartload点击事件");
+    var $this = $(this);
+    if ($this.hasClass('disabled')) return;
+    // 编辑files 对于那些
+    for (var i = 0; i < uploader.files.length; i++) {
+        if (uploader.files[i].status == plupload.FAILED) {
+            uploader.files[i].status = 1;
+        }
+    }
+    uploader.start();
+    toggleStopUpload(uploader,"BeforeUpload");
+
+});
+
+uploader.$btnStopload.on("click",function(){
+    console.dir("btnStopload点击事件");
+    uploader.stop();
+    toggleStartUpload(uploader,"Pausing");
+    toggleStopUpload(uploader,"Pausing");
+})
+
+
+
+function toggleBrowseButton(up) {
+    if (up.settings.filters.max_file_count <= up.files.length) {
+        up.disableBrowse(true);
+        $choiceBtn.addClass("disabled");
+    } else {
+        up.disableBrowse(false);
+        $choiceBtn.removeClass("disabled");
+    }
+}
+
+function toggleHanderBar(up, file, eventing) {
+
+    switch (eventing) {
+        case "FilesAdded":
+            file.$handerBar.show();
+            if (up.settings.filters.max_file_count <= 1) {
+                file.$uploadQueuedBtn.show();
+            }
+            break;
+        case "BeforeUpload":
+            file.$handerBar.hide();
+            break;
+        case "FileUploaded":
+            file.$handerBar.hide();
+            break;
+        case "UploadComplete":
+            file.$handerBar.show();
+            break;
+    }
+}
+
+
+function toggleStartUpload(up, eventing) {
+    if (up.settings.filters.max_file_count <= 1) return;
+    switch (eventing) {
+        case "Refresh":
+        case "UploadComplete":
+            if ((up.files.length - up.total.uploaded > 0) || up.total.failed) {
+                up.$btnStartload.show().removeClass('disabled');
+
+            } else {
+                up.$btnStartload.addClass('disabled');
+            }
+            break;
+        case "BeforeUpload":
+             up.$btnStartload.addClass('disabled');
+             break;
+        case "Pausing":
+             up.$btnStartload.removeClass('disabled'); 
+             break;
+    }
+
+}
+
+function toggleStopUpload(up, eventing) {
+    if (up.settings.filters.max_file_count <= 1) return;
+    switch (eventing) {
+        case "BeforeUpload":
+            up.$btnStopload.removeClass('disabled').show();
+            break;
+        case "UploadComplete":
+            up.$btnStopload.removeClass('disabled').hide();
+            break;
+        case "Pausing":
+             up.$btnStopload.addClass('disabled'); 
+             break;
+    }
+
+
+}
+
 
 
 
@@ -133,49 +233,9 @@ function preloadThumb(file, $previewPic, cb) {
 }
 
 
-function toggleBrowseButton(up) {
-    if (up.settings.filters.max_file_count <= up.files.length - (up.total.uploaded + up.total.failed)) {
-        up.disableBrowse(true);
-        $choiceBtn.addClass("disabled");
-    } else {
-        up.disableBrowse(false);
-        $choiceBtn.removeClass("disabled");
-    }
-}
-
-function toggleHanderBar(up, file, eventing) {
-
-    switch (eventing) {
-        case "FilesAdded":
-            file.$handerBar.show();
-            if (up.settings.filters.max_file_count <= 1) {
-                file.$uploadQueuedBtn.show();
-            }
-            break;
-        case "BeforeUpload":
-            file.$handerBar.hide();
-            break;
-        case "FileUploaded":
-            file.$handerBar.hide();
-            break;
-        case "UploadComplete":
-            file.$handerBar.show();
-            break;
-    }
-}
 
 
-function toggleStartUpload(up, eventing) {
-    if (up.settings.filters.max_file_count <= 1) return;
 
-
-    if (up.total.queued || up.total.failed) {
-        up.$btnStartload.show().removeClass('disabled');
-    } else {
-        up.$btnStartload.addClass('disabled');
-    }
-
-}
 
 //这里的files是指每次添加的，而不是总的
 uploader.bind('FilesAdded', function(up, files) {
@@ -227,7 +287,6 @@ uploader.bind('FilesAdded', function(up, files) {
         });
 
         toggleHanderBar(up, file, "FilesAdded");
-
         //判断如果
         //删除按钮(队列)
         file.$delQueuedBtn.on("click", function() {
@@ -235,7 +294,7 @@ uploader.bind('FilesAdded', function(up, files) {
         });
 
 
-        //上传按钮
+        //单个文件上传按钮
         file.$uploadQueuedBtn.on("click", function() {
             console.dir("uploadQueuedBtn点击事件")
             var $this = $(this);
@@ -249,7 +308,6 @@ uploader.bind('FilesAdded', function(up, files) {
 
         //删除服务端文件
         file.$delUploadServerBtn.on("click", function() {
-
             $.ajax({
                 url: uploader.settings.delUrl,
                 type: "post",
@@ -268,22 +326,15 @@ uploader.bind('FilesAdded', function(up, files) {
         })
 
     });
-
-
-
-
-
 });
 
 
 uploader.bind('QueueChanged', function(up) {
     console.group("QueueChanged事件");
     //filter判断一次 这里要在判断一次，因为files上传和删除的时候都会触发这个事件
-    toggleBrowseButton(up);
-
 });
 
-//文件上传失败后，点击重新上传 就会触发 这个函数
+//控制打的按钮就要在这个地方，例如重新上传 就会触犯这个函数
 uploader.bind('StateChanged', function(up) {
     //暂时不知道这个的作用
 
@@ -292,23 +343,24 @@ uploader.bind('StateChanged', function(up) {
     console.group("StateChanged事件");
     console.dir(up.total);
 
+
+
 });
 
 
+//如果上传失败，那么我删除了文件，那么自然会触犯StateChanged 事件，但是在这个事件里面 失败的文件仍然是1
+//但是到refresh的时候，这个failed 就变成了0，所以toggleStartUpload 为什么放这里而不放StateChanged
 
 uploader.bind('Refresh', function(up) {
     console.group("Refresh事件");
     //QueueChanged都会触发refresh函数，如果有上传的获取是有队列的时候,那么默认的图片就应该隐藏
-    if (up.total.queued || up.total.uploaded) {
+    if (up.total.uploaded || up.total.failed || (up.files.length - (up.total.uploaded + up.total.failed)) > 0) {
         $noFile.hide();
     } else {
         $noFile.show();
     }
-
-    toggleStartUpload(up)
-
-
-
+    toggleStartUpload(up,"Refresh");
+    toggleBrowseButton(up);
 });
 
 
@@ -316,7 +368,12 @@ uploader.bind('Refresh', function(up) {
 uploader.bind('BeforeUpload', function(up, file) {
     console.group("BeforeUpload事件");
     file.$progress.show();
+    file.$error.hide();
     toggleHanderBar(up, file, "BeforeUpload");
+    toggleStopUpload(up, "BeforeUpload");
+    toggleStartUpload(up,"BeforeUpload");
+
+
 
 });
 
@@ -342,6 +399,7 @@ uploader.bind('ChunkUploaded', function(up, file, info) {
 uploader.bind('FileUploaded', function(up, file, info) {
     console.group("FileUploaded事件");
     console.dir(info);
+
     $("#" + file.id).find(".upbtn-del-server").show();
     file.serverUrl = info.response;
 
@@ -355,6 +413,8 @@ uploader.bind('FileUploaded', function(up, file, info) {
 //固定会触发的
 uploader.bind('UploadComplete', function(up, files) {
     console.group("UploadComplete事件");
+    toggleStartUpload(up,"UploadComplete");
+    toggleStopUpload(up, "UploadComplete");
     $.each(files, function(index, file) {
         file.$progress.hide();
         if (file.status == plupload.DONE) {
@@ -370,6 +430,7 @@ uploader.bind('UploadComplete', function(up, files) {
 
 
     });
+
 });
 
 
@@ -394,7 +455,16 @@ uploader.bind('OptionChanged', function(up, name, value, oldValue) {
 
 uploader.bind('Error', function(up, err) {
     console.group("Error事件");
-    console.dir(err.code);
+
+    if (err.file.$progress) {
+        err.file.$progress.children().css('width', 0);
+    }
+
+    if (err.file.$uploadQueuedBtn) {
+        err.file.$uploadQueuedBtn.addClass('retry-btn')
+    }
+
+
     switch (err.code) {
         case plupload.FILE_EXTENSION_ERROR:
             details = err.file.name + "文件不符合格式要求！";
@@ -409,7 +479,7 @@ uploader.bind('Error', function(up, err) {
             break;
 
         case plupload.HTTP_ERROR:
-            err.file.$uploadQueuedBtn.addClass('retry-btn')
+
             details = "上传的URL出现错误或着文件不存在！";
             break;
 
