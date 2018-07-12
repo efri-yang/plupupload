@@ -125,6 +125,38 @@
     }
 
 
+    function toggleUploadInfo(up, eventing) {
+        if (!up.hasUploadInfo) return;
+        var text = '';
+        console.dir(up.total.size);
+        if (eventing == "UploadComplete") {
+            text = '共' + up.files.length + '张（' + plupload.formatSize(up.total.size) + '），已上传' + up.total.uploaded + '张';
+            if (up.total.failed) {
+                text += '，失败' + up.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>';
+            }
+
+        } else {
+            if (up.total.uploaded) {
+                text = '共' + up.files.length + '张（' + plupload.formatSize(up.total.size) + '），已上传' + up.total.uploaded + '张';
+                if (up.total.failed) {
+                    text += '，失败' + up.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>图片';
+                }
+            } else {
+                text = '选中' + up.files.length + '张图片，共' + plupload.formatSize(up.total.size) + '。';
+            }
+
+
+        }
+
+
+        up.$uploadInfo.html(text);
+
+        if (!up.files.length) {
+            up.$uploadInfo.html("");
+        }
+    }
+
+
 
 
     $.fn.plupload = function(options) {
@@ -142,6 +174,35 @@
             uploader.$uploadUL = uploader.$container.find(".coms-upload-list"); //ul列表
             uploader.$btnStartload = uploader.$container.find(".btn-startload-file");
             uploader.$btnStopload = uploader.$container.find(".btn-stopload-file");
+            uploader.$uploadInfo = uploader.$container.find(".coms-upload-info");
+
+            uploader.$uploadInfo.length ? uploader.hasUploadInfo = true : uploader.hasUploadInfo = false;
+            if (uploader.hasUploadInfo) {
+                $(document).on("click", ".coms-upload-info .retry", function(event) {
+                    event.preventDefault();
+                    for (var i = 0; i < uploader.files.length; i++) {
+                        if (uploader.files[i].status == plupload.FAILED) {
+                            uploader.files[i].status = 1;
+                        }
+                    }
+                    uploader.start();
+                });
+
+                $(document).on("click", ".coms-upload-info .ignore", function(event) {
+                    event.preventDefault();
+                    console.dir("ignore 点击xxxxxxxxxxxxxx");
+                    console.dir(uploader.files);
+                   
+                    for (var i = 0; i < uploader.files.length; i++) {
+                            if (uploader.files[i].status == plupload.FAILED) {
+                                uploader.removeFile(uploader.files[i]);
+                                i--;
+                            }
+                    }
+                    console.dir(uploader.files);
+
+                })
+            }
 
             //多个文件上传按钮
             uploader.$btnStartload.on("click", function() {
@@ -274,8 +335,10 @@
                             }
                         })
                     })
-
                 });
+
+
+
             });
 
 
@@ -311,6 +374,8 @@
                 }
                 toggleStartUpload(up, "Refresh");
                 toggleBrowseButton(up);
+                toggleUploadInfo(up);
+
             });
 
 
@@ -353,8 +418,10 @@
                 console.dir(response);
                 //服务器上传成功
                 if (!!response.OK && response.OK == 1) {
-                    file.$delUploadServerBtn.show();
                     file.serverUrl = response.info.path;
+                    file.$delUploadServerBtn.show();
+                    file.$success.show();
+                    file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
                 } else {
                     //服务器上传失败
@@ -363,6 +430,7 @@
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedFail");
                 }
+
             });
 
 
@@ -373,6 +441,7 @@
                 console.group("UploadComplete事件");
                 toggleStartUpload(up, "UploadComplete");
                 toggleStopUpload(up, "UploadComplete");
+                toggleUploadInfo(up, "UploadComplete");
                 $.each(files, function(index, file) {
                     file.$progress.hide().children().css('width', 0);
                     if (file.status == plupload.DONE) {
