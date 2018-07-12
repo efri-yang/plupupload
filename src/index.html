@@ -17,14 +17,14 @@
 </head>
   
 <body style="padding: 20px 50px;">
-    <div class="coms-plupload-container" id="J_coms-plupload-1">
+    <div class="coms-plupload-container ">
         <div class="coms-plupload-nofile"></div>
         
         <ul class="coms-upload-list clearfix">
              
         </ul>
-        <div class="coms-btn-choice">
-            <a id="J_pickfiles" class="btn-pickfiles" href="javascript:;">选择文件</a>
+        <div class="coms-btn-choice  clearfix">
+            <a id="J_pickfiles1" class="btn-pickfiles" href="javascript:;">选择文件</a>
             <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
             <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
             <!-- <div class="coms-upload-info">已成功上传0张照片，1张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>图片</div> -->
@@ -32,9 +32,39 @@
 
 
     </div>
+        <div style="margin-top: 50px;"></div>
 
+     <div class="coms-plupload-container">
+        <div class="coms-plupload-nofile"></div>
+        
+        <ul class="coms-upload-list clearfix">
+             
+        </ul>
+        <div class="coms-btn-choice">
+            <a id="J_pickfiles2" class="btn-pickfiles" href="javascript:;">选择文件</a>
+            <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
+            <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
+            <!-- <div class="coms-upload-info">已成功上传0张照片，1张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>图片</div> -->
+        </div>
+
+
+    </div>
     <script type="text/javascript" src="js/uploadfile.js"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            $a=$("#J_pickfiles1").plupload({
+                filters: {
+                    max_file_count:1
+                }
+            });
+            console.dir($a)
+            $("#J_pickfiles2").plupload({
+                filters: {
+                    max_file_count:3
+                }
+            });
+        })
+    </script>
 
 
     
