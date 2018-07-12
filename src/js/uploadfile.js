@@ -249,7 +249,7 @@
                         var $this = $(this);
                         // console.dir(file);
                         if ($this.hasClass('retry-btn')) {
-                            file.status = 1;
+                            file.status = plupload.QUEUED;
                         }
                         console.dir(up.total)
                         up.start();
@@ -468,7 +468,7 @@
 
             uploader.init();
 
-            
+
 
         });
 
