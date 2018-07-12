@@ -1,5 +1,21 @@
+plupload.FILE_COUNT_ERROR = -9001;
+plupload.addFileFilter("max_file_count", function(maxFileCount, file, cb) {
+    console.group('max_file_count事件');
+    if (maxFileCount <= this.files.length - (this.total.uploaded + this.total.failed)) {
+        this.disableBrowse(true);
+        this.trigger('Error', {
+            code: plupload.FILE_COUNT_ERROR,
+            message:"上传文件个数超出限制",
+            file: file
+        });
+        cb(false);
+    } else {
+        cb(true);
+    }
+});
 
 
+// filesPending = up.files.length - (up.total.uploaded + up.total.failed)
 
 
 
@@ -7,12 +23,15 @@ var uploader = new plupload.Uploader({
     runtimes: 'html5,flash,silverlight,html4',
     browse_button: 'J_pickfiles', // you can pass an id...
     url: './php/upload2.php',
+    delUrl: './php/delfile.php',
     flash_swf_url: './js/plupload/Moxie.swf',
     silverlight_xap_url: './js/plupload/Moxie.xap',
-    chunk_size:0,
-    multi_selection:true,
-    multipart_params:{},
+    chunk_size: 0,
+    max_retries:0,
+    multi_selection: true,
+    multipart_params: {},
     filters: {
+        max_file_count:3,
         prevent_duplicates: true,
         max_file_size: '30mb',
         mime_types: [
@@ -20,7 +39,7 @@ var uploader = new plupload.Uploader({
             { title: "Zip files", extensions: "zip" }
         ]
     },
-    resize:{
+    resize: {
         // width: 100,
         // height: 100,
         // //是否裁剪图片
@@ -47,10 +66,10 @@ console.dir(uploader);
 
 
 
-var $container=$("#J_coms-plupload-1");
-var $noFile=$container.find(".coms-plupload-nofile");
-var $choiceBtn=$("#J_pickfiles");//选择文件按钮
-var $uploadUL=$container.find(".coms-upload-list");//ul列表
+var $container = $("#J_coms-plupload-1");
+var $noFile = $container.find(".coms-plupload-nofile");
+var $choiceBtn = $("#J_pickfiles"); //选择文件按钮
+var $uploadUL = $container.find(".coms-upload-list"); //ul列表
 
 
 
@@ -78,14 +97,14 @@ uploader.bind('FileFiltered', function(up, file) {
 
 
 
-function preloadThumb(file,$previewPic,cb) {
+function preloadThumb(file, $previewPic, cb) {
     var img = new moxie.image.Image();
     var resolveUrl = moxie.core.utils.Url.resolveUrl;
     img.onload = function() {
         this.embed($previewPic[0], {
             // width: self.options.thumb_width,
             // height: self.options.thumb_height,
-            width:uploader.settings.resize.width,
+            width: uploader.settings.resize.width,
             height: uploader.settings.resize.height,
             crop: uploader.settings.resize.crop,
             fit: true,
@@ -104,83 +123,153 @@ function preloadThumb(file,$previewPic,cb) {
         }, 1); // detach, otherwise ui might hang (in SilverLight for example)
     });
 
-    
+
     img.load(file.getSource());
 }
 
 
+function toggleBrowseButton(up){
+    if (up.settings.filters.max_file_count <= up.files.length - (up.total.uploaded + up.total.failed)) {
+        up.disableBrowse(true);
+        $choiceBtn.addClass("disabled");
+    }else{
+        up.disableBrowse(false);
+        $choiceBtn.removeClass("disabled");
+    }
+}
 
-uploader.bind('FilesAdded', function(up, files) {
-    console.group("FilesAdded事件");
+function toggleHanderBar(up,file,eventing){
     
+    switch(eventing){
+        case "FilesAdded":
+            file.$handerBar.show();
+            if(up.settings.filters.max_file_count <=1){
+               file.$uploadQueuedBtn.show();
+            }
+            break;
+        case "BeforeUpload":
+            file.$handerBar.hide();
+            break;
+        case "UploadComplete":
+            file.$handerBar.show();
+            file.$uploadQueuedBtn.hide();
+            break;
+    }
+    
+    
+}
+
+//这里的files是指每次添加的，而不是总的
+uploader.bind('FilesAdded', function(up, files) {
+
     plupload.each(files, function(file) {
         var str = '<li id="' + file.id + '">' +
-                        '<div class="img-wrap">'+
-                            '<div class="preview-tip"><span>预览中...</span></div>'+
-                            '<div class="preview-name"><span></span></div>'+
-                            '<div class="preview-pic"></div>'+
-                         '</div>'+
-                            '<div class="handle-bar">'+
-                                '<span class="upbtn-del">删除</span>'+
-                                '<span class="upbtn-upload">上传</span>'+
-                            '</div>'+
-                            '<p class="progressing"><span style="width:0%;"></span></p>'+
-                            '<span class="error">上传失败，请重试</span>'+
-                            '<span class="upbtn-del-local"></span>'+
-                            '<span class="upbtn-del-server"></span>'+
-                            '<span class="successing"></span>'+
-                    '</li>';
+            '<div class="img-wrap">' +
+            '<div class="preview-tip"><span>预览中...</span></div>' +
+            '<div class="preview-name"><span></span></div>' +
+            '<div class="preview-pic"></div>' +
+            '</div>' +
+            '<div class="handle-bar">' +
+            '<span class="upbtn-upload">上传</span>' +
+            '<span class="upbtn-del">删除</span>' +
+            
+            '</div>' +
+            '<p class="progressing"><span style="width:0%;"></span></p>' +
+            '<span class="error">上传失败，请重试</span>' +
+            '<span class="upbtn-del-local"></span>' +
+            '<span class="upbtn-del-server"></span>' +
+            '<span class="successing"></span>' +
+            '</li>';
 
-        var $li = $(str);
-        $li.appendTo($uploadUL);
+        file.$li = $(str);
+        file.$li.appendTo($uploadUL);
 
-        var $img=$li.find(".uploadimg");
-        var $previewPic=$li.find(".preview-pic");
-        var $previewTip=$li.find(".preview-tip");
-        var $previewName=$li.find(".preview-name");
-        var $handerBar=$li.find(".handle-bar");
-        var $delQueuedBtn=$handerBar.find(".upbtn-del");
-        var $uploadQueuedBtn=$handerBar.find(".upbtn-upload");
+        file.$img = file.$li.find(".uploadimg");
+        file.$previewPic = file.$li.find(".preview-pic");
+        file.$previewTip = file.$li.find(".preview-tip");
+        file.$previewName = file.$li.find(".preview-name");
+        file.$handerBar = file.$li.find(".handle-bar");
+        file.$delQueuedBtn = file.$handerBar.find(".upbtn-del");
+        file.$uploadQueuedBtn = file.$handerBar.find(".upbtn-upload");
+        file.$delUploadServerBtn = file.$li.find(".upbtn-del-server");
+        file.$progress=file.$li.find(".progressing");
+        file.$success=file.$li.find(".successing");
+        file.$error=file.$li.find(".error");
 
 
-        $handerBar.show();
 
-        preloadThumb(file,$previewPic,function(type) {
-            $previewTip.hide();
+
+        preloadThumb(file, file.$previewPic, function(type) {
+            file.$previewTip.hide();
             if (type == "error") {
-                $previewName.show().children().html('暂不支持该文件预览<br/>'+file.name);
+                file.$previewName.show().children().html('暂不支持该文件预览<br/>' + file.name);
             } else {
-               $previewPic.show();
+                file.$previewPic.show();
             }
         });
+
+        toggleHanderBar(up,file,"FilesAdded");
+       
+       
+
+       
+
+        //判断如果
         //删除按钮(队列)
-        $delQueuedBtn.on("click",function(){
+        file.$delQueuedBtn.on("click", function() {
             up.removeFile(file);
         });
-        //上传按钮
-        $uploadQueuedBtn.on("click",function(){
-            up.start();
-        })
 
+
+        //上传按钮
+        file.$uploadQueuedBtn.on("click", function() {
+            up.start();
+        });
+
+        //删除服务端文件
+        file.$delUploadServerBtn.on("click", function() {
+
+            $.ajax({
+                url: uploader.settings.delUrl,
+                type: "post",
+                data: { uid: uploader.settings.multipart_params.uid, imgurl: file.serverUrl },
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        //删除成功 删除队列的文件，如果我们规定只能上传一个文件，或者三个文件那么就要判断
+                        uploader.removeFile(file);
+
+                    } else {
+                        layer.msg("删除失败！")
+                    }
+                }
+            })
+        })
 
     });
 
-    
+
+
+
 });
 
 
 uploader.bind('QueueChanged', function(up) {
-    console.group("QueueChanged事件"); 
-    console.dir(up);
+    console.group("QueueChanged事件");
+    //filter判断一次 这里要在判断一次，因为files上传和删除的时候都会触发这个事件
+    toggleBrowseButton(up);
+
 });
+
+//文件上传失败后，点击重新上传 就会触发 这个函数
 uploader.bind('StateChanged', function(up) {
     //暂时不知道这个的作用
-    //
-    //
+    
     //执行两次，一个是开始上传的时候
     //然后是上传后FileUploaded 后执行 或者是在Error事件后执行StateChanged，但是两次的执行竟然up.total是一样的
     console.group("StateChanged事件");
-    console.dir(up);
+    console.dir(up.total);
+
 });
 
 
@@ -188,11 +277,11 @@ uploader.bind('StateChanged', function(up) {
 uploader.bind('Refresh', function(up) {
     console.group("Refresh事件");
     //QueueChanged都会触发refresh函数，如果有上传的获取是有队列的时候,那么默认的图片就应该隐藏
-    if(up.total.queued || up.total.uploaded){
-       $noFile.hide();
-    }else{
+    if (up.total.queued || up.total.uploaded) {
+        $noFile.hide();
+    } else {
         $noFile.show();
-        
+
     }
 });
 
@@ -200,8 +289,8 @@ uploader.bind('Refresh', function(up) {
 
 uploader.bind('BeforeUpload', function(up, file) {
     console.group("BeforeUpload事件");
-    $("#"+file.id).find(".progressing").show();
-    $("#"+file.id).find(".handle-bar").hide();
+    file.$progress.show();
+    toggleHanderBar(up,file,"BeforeUpload");
 
 });
 
@@ -216,7 +305,7 @@ uploader.bind('UploadFile', function(up, file) {
 
 uploader.bind('UploadProgress', function(up, file) {
     console.group("UploadProgress事件");
-    $("#"+file.id).find(".progressing").children().css("width", file.percent + "%");
+    file.$progress.children().css("width", file.percent + "%");
 });
 
 uploader.bind('ChunkUploaded', function(up, file, info) {
@@ -226,8 +315,9 @@ uploader.bind('ChunkUploaded', function(up, file, info) {
 //文件上传成功才会触发
 uploader.bind('FileUploaded', function(up, file, info) {
     console.group("FileUploaded事件");
-    $("#"+file.id).find(".successing").show();
-
+    console.dir(info);
+    $("#" + file.id).find(".upbtn-del-server").show();
+    file.serverUrl = info.response;
 });
 
 
@@ -236,16 +326,26 @@ uploader.bind('FileUploaded', function(up, file, info) {
 //固定会触发的
 uploader.bind('UploadComplete', function(up, files) {
     console.group("UploadComplete事件");
-    $.each(files,function(index,file){
-        $("#"+file.id).find(".progressing").hide();
+    $.each(files, function(index, file) {
+        file.$progress.hide();
+        if (file.status == plupload.DONE) {
+            file.$success.show();
+            file.$delUploadServerBtn.show();
+        } else if (file.status == plupload.FAILED) {
+            //失败的时候
+            file.$error.show();
+            
+        }
+        toggleHanderBar(up,file,"UploadComplete");
+
     });
 });
 
 
 uploader.bind('FilesRemoved', function(up, files) {
     console.group("FilesRemoved事件");
-    $.each(files,function(index,file){
-        $("#"+file.id).remove();
+    $.each(files, function(index, file) {
+        $("#" + file.id).remove();
     })
 
 });
@@ -264,41 +364,41 @@ uploader.bind('OptionChanged', function(up, name, value, oldValue) {
 uploader.bind('Error', function(up, err) {
     console.group("Error事件");
     console.dir(err.code);
-     switch (err.code) {
-                    case plupload.FILE_EXTENSION_ERROR:
-                        details = err.file.name + "文件不符合格式要求！";
-                        break;
+    switch (err.code) {
+        case plupload.FILE_EXTENSION_ERROR:
+            details = err.file.name + "文件不符合格式要求！";
+            break;
 
-                    case plupload.FILE_SIZE_ERROR:
-                        details = "单个文件大小不能超过" + plupload.formatSize(plupload.parseSize(up.getOption('filters').max_file_size)) + ",<br/>文件(" + err.file.name + ")大小为：" + plupload.formatSize(err.file.size);
-                        break;
+        case plupload.FILE_SIZE_ERROR:
+            details = "单个文件大小不能超过" + plupload.formatSize(plupload.parseSize(up.getOption('filters').max_file_size)) + ",<br/>文件(" + err.file.name + ")大小为：" + plupload.formatSize(err.file.size);
+            break;
 
-                    case plupload.FILE_DUPLICATE_ERROR:
-                        details = err.file.name + "已经在队列中了！";
-                        break;
+        case plupload.FILE_DUPLICATE_ERROR:
+            details = err.file.name + "已经在队列中了！";
+            break;
 
-                    case plupload.HTTP_ERROR:
-                        details = "上传的URL出现错误或着文件不存在！";
-                        break;
+        case plupload.HTTP_ERROR:
+            details = "上传的URL出现错误或着文件不存在！";
+            break;
 
-                    case plupload.IMAGE_FORMAT_ERROR:
-                        details = _("Image format either wrong or not supported.");
-                        break;
+        case plupload.FILE_COUNT_ERROR:
+            details ="最多只能上传"+(up.getOption('filters').max_file_count || 0)+"个文件";
+            break;
 
-                    case plupload.IMAGE_MEMORY_ERROR:
-                        details = _("Runtime ran out of available memory.");
-                        break;
-                    
-                }
-                layer.msg(details);
-                
+        case plupload.IMAGE_FORMAT_ERROR:
+            details = _("Image format either wrong or not supported.");
+            break;
+
+        case plupload.IMAGE_MEMORY_ERROR:
+            details = _("Runtime ran out of available memory.");
+            break;
+
+
+    }
+    layer.msg(details);
+
 });
 
 
 
 uploader.init();
-
-
-
-
-

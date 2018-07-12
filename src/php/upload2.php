@@ -125,4 +125,4 @@ if (!$chunks || $chunk == $chunks - 1) {
 // Return Success JSON-RPC response
 // die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
 
-echo DIRECTORY_SEPARATOR . "plupload" . DIRECTORY_SEPARATOR . $dateFileName . DIRECTORY_SEPARATOR . $fileName;
+echo DIRECTORY_SEPARATOR . "plupupload" . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $dateFileName . DIRECTORY_SEPARATOR . $fileName;

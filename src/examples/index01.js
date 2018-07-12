@@ -1,3 +1,5 @@
+
+
 var uploader = new plupload.Uploader({
     runtimes: 'html5,flash,silverlight,html4',
     browse_button: 'img-add-btn-1', // you can pass an id...

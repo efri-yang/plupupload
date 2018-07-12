@@ -2,6 +2,7 @@
 node_modules/
 .git
 build/
+src/uploads/
 gulp/
 A小鱼日常/
 .tmp/

@@ -130,15 +130,18 @@
             }
             .upbtn-upload{
                 float: right;
+                margin-left:15px; 
                 color: #fff;
                 text-decoration: none;
                 cursor: pointer;
+                display:none;
                 &:hover {
                     text-decoration: underline;
                 }
             }
             .upbtn-del{
-                float: left;
+                float: right;
+                margin-left:15px; 
                 color: #fff;
                 text-decoration: none;
                 cursor: pointer;
@@ -168,7 +171,10 @@
                 &:hover{
                 	background-color:darken(#000,5%);
                 }
-               
+            }
+
+            .upbtn-del-server{
+                 background-color: rgba(0, 0, 0,0.2);
             }
             .error {
                 position: absolute;
