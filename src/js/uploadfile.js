@@ -171,9 +171,10 @@
 
 
     $.fn.plupload = function(options) {
-
-        var opt = $.extend(true, $.fn.plupload.defaultConfig, options);
+        var opt = $.extend(true,{},$.fn.plupload.defaultConfig, options);
+        
         return this.each(function(index, el) {
+
             opt.browse_button = el;
             var $this = $(this);
             var uploader = new plupload.Uploader(opt);
@@ -242,6 +243,7 @@
 
             uploader.bind("Init", function(uploader) {
                 console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
+                !!opt.initLoad && !!opt.initLoad(uploader);
             });
 
             uploader.bind("PostInit", function() {
@@ -278,6 +280,7 @@
 
                         '<span class="upbtn-del-server"></span>' +
                         '<span class="successing"></span>' +
+                        (opt.inputHidden ? '<input type="hidden" id="'+file.id+'" name="'+opt.inputHidden.name+'">' : '')+
                         '</li>';
 
                     file.$li = $(str);
@@ -290,10 +293,13 @@
                     file.$handerBar = file.$li.find(".handle-bar");
                     file.$delQueuedBtn = file.$handerBar.find(".upbtn-del");
                     file.$uploadQueuedBtn = file.$handerBar.find(".upbtn-upload");
-                    file.$delUploadServerBtn = file.$li.find(".upbtn-del-server");
+                    
                     file.$progress = file.$li.find(".progressing");
                     file.$success = file.$li.find(".successing");
                     file.$error = file.$li.find(".error");
+
+                    file.$delUploadServerBtn = file.$li.find(".upbtn-del-server");
+                    file.$inputHidden =file.$li.find('input[name="'+opt.inputHidden.name+'"]');
 
 
 
@@ -436,6 +442,9 @@
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
+                    !!file.$inputHidden.length && file.$inputHidden.val(response.info.path);
+                    !!opt.fileUploaded && opt.fileUploaded(up,file)
+
                 } else {
                     //服务器上传失败
                     file.status = plupload.FAILED;
@@ -468,6 +477,7 @@
                         toggleHanderBar(up, file, "UploadComplete");
                     }
                 });
+                !!opt.uploadComplete && opt.uploadComplete.call(up,files);
 
             });
 
@@ -486,22 +496,14 @@
             });
 
             uploader.bind('OptionChanged', function(up, name, value, oldValue) {
-                console.group("OptionChanged事件")
+                console.group("OptionChanged事件");
+                console.dir(up);
             });
 
 
 
             uploader.bind('Error', function(up, err) {
                 console.group("Error事件");
-                // if (err.file.$progress) {
-                //     err.file.$progress.children().css('width', 0);
-                // }
-
-                // if (err.file.$uploadQueuedBtn) {
-                //     err.file.$uploadQueuedBtn.addClass('retry-btn')
-                // }
-
-
                 switch (err.code) {
                     case plupload.FILE_EXTENSION_ERROR:
                         details = err.file.name + "文件不符合格式要求！";
@@ -547,10 +549,12 @@
 
 
             uploader.init();
+            this.uploader=uploader;
 
 
 
         });
+
 
     }
 
@@ -566,6 +570,9 @@
         multi_selection: true,
         multipart_params: {},
         delServerBtn: true,
+        inputHidden:{
+            name:"photo_url[]"
+        },
         filters: {
             max_file_count: 3,
             prevent_duplicates: true,

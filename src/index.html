@@ -19,7 +19,6 @@
 <body style="padding: 20px 50px;">
     <div class="coms-plupload-container ">
         <div class="coms-upload-info"></div>
-        <!-- <div class="coms-upload-info">已成功上传0张照片，1张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>图片</div> -->
         <div class="coms-plupload-nofile"></div>
         
         <ul class="coms-upload-list clearfix">
@@ -31,9 +30,14 @@
             <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
             
         </div>
+        
 
+        <button class="btn-1">改变选项值(传给后天参数值)</button>
+        
+        
 
     </div>
+    
         <div style="margin-top: 50px;"></div>
 
      <div class="coms-plupload-container">
@@ -46,7 +50,6 @@
             <a id="J_pickfiles2" class="btn-pickfiles" href="javascript:;">选择文件</a>
             <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
             <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
-            <!-- <div class="coms-upload-info">已成功上传0张照片，1张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>图片</div> -->
         </div>
 
 
@@ -54,18 +57,50 @@
     <script type="text/javascript" src="js/uploadfile.js"></script>
     <script type="text/javascript">
         $(function(){
-            $a=$("#J_pickfiles1").plupload({
+            uploader1=$("#J_pickfiles1").plupload({
                 delServerBtn:false,
+                inputHidden:{
+                    name:"xxx[]"
+                },
                 filters: {
-                    max_file_count:1
+                    max_file_count:2
+                },
+                multipart_params: {
+                    uid:10
+                },
+                initLoad:function(up){
+                    up.$container.find(".btn-1").on("click",function(){
+                        var params=up.getOption("multipart_params");
+                        params["ablum"]=10;
+                        up.setOption("multipart_params",params);
+                        console.dir(up);
+
+                    });
+
+                     
+                    
+                   
+                },
+                //每个文件上传成功毁掉函数
+                fileUploaded:function(up,file){
+                    file.$inputHidden.val("asdfasdfasdfasdfasdf");
+                },
+                //plupload 执行全部的上传事件后触发该函数，只触发一次
+                uploadComplete:function(up,files){
+
                 }
             });
-            console.dir($a)
+            
             $("#J_pickfiles2").plupload({
                 filters: {
                     max_file_count:3
                 }
             });
+
+            $("#btn-1").on("click",function(){
+
+            })
+
         })
     </script>
 
