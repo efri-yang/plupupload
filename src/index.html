@@ -55,8 +55,9 @@
     <script type="text/javascript">
         $(function(){
             $a=$("#J_pickfiles1").plupload({
+                delServerBtn:false,
                 filters: {
-                    max_file_count:3
+                    max_file_count:1
                 }
             });
             console.dir($a)

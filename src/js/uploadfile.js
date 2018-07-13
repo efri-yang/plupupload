@@ -94,6 +94,17 @@
     }
 
 
+
+    function toggleDelUploadServerBtn(up, file, eventing) {
+        if (!up.settings.delServerBtn) return;
+        switch (eventing) {
+            case "FileUploadedSuccess":
+                file.$delUploadServerBtn.show();
+                break;
+        }
+    }
+
+
     function preloadThumb(file, $previewPic, cb, uploader) {
         var img = new moxie.image.Image();
         var resolveUrl = moxie.core.utils.Url.resolveUrl;
@@ -192,12 +203,12 @@
                     event.preventDefault();
                     console.dir("ignore 点击xxxxxxxxxxxxxx");
                     console.dir(uploader.files);
-                   
+
                     for (var i = 0; i < uploader.files.length; i++) {
-                            if (uploader.files[i].status == plupload.FAILED) {
-                                uploader.removeFile(uploader.files[i]);
-                                i--;
-                            }
+                        if (uploader.files[i].status == plupload.FAILED) {
+                            uploader.removeFile(uploader.files[i]);
+                            i--;
+                        }
                     }
                     console.dir(uploader.files);
 
@@ -315,26 +326,28 @@
                         console.dir(up.total)
                         up.start();
                     });
+                    if (up.settings.delServerBtn) {
+                        //删除服务端文件
+                        file.$delUploadServerBtn.on("click", function() {
 
-                    //删除服务端文件
-                    file.$delUploadServerBtn.on("click", function() {
+                            $.ajax({
+                                url: uploader.settings.delUrl,
+                                type: "post",
+                                data: { uid: uploader.settings.multipart_params.uid, imgurl: file.serverUrl },
+                                dataType: "json",
+                                success: function(data) {
+                                    if (data) {
+                                        //删除成功 删除队列的文件，如果我们规定只能上传一个文件，或者三个文件那么就要判断
+                                        uploader.removeFile(file);
 
-                        $.ajax({
-                            url: uploader.settings.delUrl,
-                            type: "post",
-                            data: { uid: uploader.settings.multipart_params.uid, imgurl: file.serverUrl },
-                            dataType: "json",
-                            success: function(data) {
-                                if (data) {
-                                    //删除成功 删除队列的文件，如果我们规定只能上传一个文件，或者三个文件那么就要判断
-                                    uploader.removeFile(file);
-
-                                } else {
-                                    layer.msg("删除失败！")
+                                    } else {
+                                        layer.msg("删除失败！")
+                                    }
                                 }
-                            }
+                            })
                         })
-                    })
+                    }
+
                 });
 
 
@@ -419,7 +432,7 @@
                 //服务器上传成功
                 if (!!response.OK && response.OK == 1) {
                     file.serverUrl = response.info.path;
-                    file.$delUploadServerBtn.show();
+                    toggleDelUploadServerBtn(up, file, "FileUploadedSuccess");
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
@@ -446,7 +459,7 @@
                     file.$progress.hide().children().css('width', 0);
                     if (file.status == plupload.DONE) {
                         file.$success.show();
-                        file.$delUploadServerBtn.show();
+                        toggleDelUploadServerBtn(up, file, "FileUploadedSuccess");
                         file.$error.hide();
                     } else if (file.status == plupload.FAILED) {
                         //失败的时候
@@ -454,8 +467,6 @@
                         file.$error.show();
                         toggleHanderBar(up, file, "UploadComplete");
                     }
-
-
                 });
 
             });
@@ -464,7 +475,7 @@
             uploader.bind('FilesRemoved', function(up, files) {
                 console.group("FilesRemoved事件");
                 $.each(files, function(index, file) {
-                    $("#" + file.id).remove();
+                    file.$li.remove();
                 })
 
             });
@@ -554,6 +565,7 @@
         max_retries: 0,
         multi_selection: true,
         multipart_params: {},
+        delServerBtn: true,
         filters: {
             max_file_count: 3,
             prevent_duplicates: true,
