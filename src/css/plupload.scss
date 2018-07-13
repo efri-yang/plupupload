@@ -1,0 +1,650 @@
+.ckeditor-imgupload-dialog {
+    float: left;
+    width: 700px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    height: 450px;
+    overflow: hidden;
+    display: none;
+    .imgupload-tab-hd {
+        background: #F8F8F8;
+        height: 42px;
+        line-height: 42px;
+        position: relative;
+        border-bottom: 1px solid #eee;
+        li {
+            float: left;
+            a {
+                padding: 0 20px;
+                font-size: 14px;
+                color: #333;
+                min-width: 80px;
+                max-width: 260px;
+                line-height: 41px;
+                text-align: center;
+                display: block;
+                text-decoration: none;
+            }
+            &.active {
+                height: 43px;
+                border-left: 1px solid #eee;
+                border-right: 1px solid #eee;
+                background-color: #fff;
+            }
+            &.move-seat {
+                position: absolute;
+                right: 0;
+                left: 245px;
+                height: 100%;
+            }
+        }
+    }
+}
+
+
+.ckeditor-uploadfile-container {
+    position: relative;
+
+    .ckeditor-uploadfile-errortip{
+        position:absolute;
+        left:0;
+        bottom:62px;
+        right:0;
+        padding:10px 15px;
+        border:1px solid #cd0a0a;
+        background:#fef1ec;
+        font-size:12px;
+        display:none;
+        .close{
+            width:14px;
+            height:14px;
+            position:absolute;
+            overflow: hidden;
+            right:5px;
+            top:5px;
+            background:url("../images/webuploader/del_small.png") no-repeat center #cd0a0a;
+            border-radius:50%;
+        }
+    }
+}
+
+.ckeditor-uploadfile-list {
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    height: 300px;
+    clear:both; 
+    border-bottom: 1px solid #e6e6e6;
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+    li {
+        float: left;
+        text-align: center;
+        width: 110px;
+        margin: 16px 8px 0px;
+        height: 110px;
+        line-height: 110px;
+        position: relative;
+        border: 1px solid #e5e5e5;
+        font-size:0; 
+        >canvas {
+            vertical-align: middle;
+        }
+        &.plupload_thumb_loading {
+            .img-before-preview {
+                .img-loading {
+                    display: block;
+                }
+            }
+        }
+        &.plupload_thumb_error {
+            .img-before-preview {
+                .txt-error-tip {
+                    display: block;
+                }
+            }
+        }
+    }
+    .img-before-preview {
+        width: 100%;
+        height: 100%;
+        background: url("../images/webuploader/bg.png") repeat;
+        .txt-error-tip {
+            text-align: center;
+            margin-top: 0px;
+            color: #999;
+            font-size: 12px;
+            line-height: normal;
+            padding: 0 10px;
+            text-align: center;
+            display: none;
+        }
+        .img-loading {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -12px;
+            margin-top: -12px;
+            display: none;
+            background: url("../images/webuploader/loading.gif") no-repeat center;
+        }
+    }
+    .title {
+
+        text-overflow: ellipsis;
+        text-overflow: hidden;
+        padding: 5px 10px 10px;
+        height: 32px;
+        line-height: 16px;
+        font-size: 12px;
+        overflow: hidden;
+        text-align: center;
+        color: #999;
+    }
+
+    .img-after-preview {
+        width: 100%;
+        height: 100%;
+        line-height: 110px;
+        font-size: 0;
+        text-align: center;
+        display: none;
+        .img-upload {
+
+            max-width: 100% !important;
+            max-height: 100% !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    .img-del-btn {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+       
+        display: none;
+        background:url("../images/webuploader/del.png") no-repeat center center #555; 
+    }
+
+    .img-progress {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 16px;
+        display: none;
+        span {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: url("../images/webuploader/progress.png") repeat-x #1483d8;
+        }
+    }
+
+    .img-success {
+
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 40px;
+        width: 40px;
+        z-index: 200;
+        background: url("../images/webuploader/success.png") no-repeat right bottom;
+        display: none;
+    }
+    .img-error {
+        background: #f43838;
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 28px;
+        line-height: 28px;
+        width: 100%;
+        z-index: 100;
+        text-align: center;
+        display: none;
+        font-size:12px;
+    }
+}
+
+.ckeditor-uploadfile-hd {
+    height: 45px;
+    border-bottom: 1px solid #dadada;
+    margin: 0 10px;
+    padding: 0;
+    line-height: 45px;
+    background: #fff;
+    vertical-align: middle;
+    position: relative;
+    clear:both;
+    .img-upload-btn {
+
+        margin-top: 6px;
+        background: #00b7ee;
+        color: #fff;
+        text-decoration: none;
+        padding: 0 15px;
+        display: inline-block;
+        border-radius: 3px;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        float: right;
+        height: 35px;
+        line-height: 35px;
+
+        &.disabled {
+            opacity: 0.5;
+            background:#d1d1d1;
+            cursor: not-allowed;
+        }
+    }
+
+    .img-pause-btn{
+        background: #ffffff;
+        border: 1px solid #cfcfcf;
+        color: #565656;
+        padding: 0 15px;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+        height: 33px;
+        line-height: 33px;
+        text-decoration: none;
+        margin-top: 6px;
+        margin-right:10px;
+        display:none;
+    }
+
+    .img-add-btn {
+        background: #ffffff;
+        border: 1px solid #cfcfcf;
+        color: #565656;
+        padding: 0 15px;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+        height: 33px;
+        line-height: 33px;
+        text-decoration: none;
+        margin-top: 6px;
+        &:hover {
+            background: #f0f0f0;
+        }
+        &.disabled {
+            opacity: 0.5;
+            background:#d1d1d1;
+            cursor: not-allowed;
+        }
+    }
+    .img-upload-info {
+        float: left;
+        font-size: 14px;
+        color: #666666;
+        line-height:46px; 
+    }
+    .img-upload-allprogress {
+        border: 1px solid #1483d8;
+        width: 198px;
+        display: none;
+        background: #fff;
+        height: 18px;
+        float: left;
+        position: relative;
+        text-align: center;
+        line-height: 20px;
+        color: #6dbfff;
+        position: relative;
+        margin-right: 10px;
+        margin-top: 12px;
+        .txt {
+            position: relative;
+            z-index: 10;
+        }
+        .percentage {
+            width: 0;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: #1483d8;
+            position: absolute;
+        }
+    }
+}
+
+
+.ckeditor-uploadfile-ft {
+    padding: 12px 15px;
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+    .ft-btn-cancel {
+        background: #ffffff;
+        border: 1px solid #cfcfcf;
+        color: #565656;
+        padding: 0 30px;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+        height: 35px;
+        line-height: 35px;
+        text-decoration: none;
+        &:hover {
+            background: #f0f0f0;
+        }
+    }
+    .ft-btn-insert {
+        float: right;
+        background: #00b7ee;
+        color: #fff;
+        text-decoration: none;
+        padding: 0 30px;
+        display: inline-block;
+        border-radius: 3px;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        float: right;
+        height: 35px;
+        line-height: 35px;
+
+        &:hover {
+            background: #00a2d4;
+        }
+         &.disabled {
+            opacity: 0.5;
+            background:#d1d1d1;
+            cursor: not-allowed;
+        }
+    }
+    .ft-save-checkbox {
+        float: left;
+        padding: 5px 0;
+        margin-right: 10px;
+        input {
+            vertical-align: middle;
+        }
+    }
+    .ft-gallery-sel {
+        float: left;
+        border: 1px solid #cfcfcf;
+        padding: 5px 10px;
+    }
+}
+
+.ckeditor-gallery-nodata {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    padding-top: 120px;
+}
+
+.ckeditor-localupload-container {
+    display: none;
+    &.active {
+        display: block;
+    }
+}
+
+.ckeditor-gallery-container {
+    display: none;
+    &.active {
+        display: block;
+    }
+}
+
+.ckeditor-gallery-hasdata {
+    display: none;
+}
+
+.ckeditor-gallery-list {
+    height: 315px;
+    padding: 15px 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    clear:both;
+    li {
+        width: 112px;
+        height: 112px;
+        float: left;
+        margin: 10px 10px 0;
+        overflow: hidden;
+
+        position: relative;
+        .pic {
+            display: block;
+            height: 110px;
+            overflow: hidden;
+            line-height: 110px;
+            font-size: 0;
+            border: 1px solid #ccc;
+            text-align: center;
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                overflow: hidden;
+                vertical-align: middle;
+                display: inline-block;
+            }
+        }
+        .status-check {
+            display: none;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 40px;
+            width: 40px;
+            z-index: 200;
+            background: url("../images/webuploader/success.png") no-repeat right bottom;
+        }
+        &.active {
+            .pic {
+                border-color: #00b7ee;
+            }
+            .status-check {
+                display: block;
+            }
+        }
+    }
+}
+
+.ckeditor-gallery-ft {
+    border-top: 1px solid #eee;
+    padding: 12px 15px;
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+    .ft-galleryall-sel {
+        float: left;
+        border: 1px solid #cfcfcf;
+        padding: 5px 10px;
+        margin-top: 5px;
+    }
+
+    .ft-galleryall-cancel {
+        background: #ffffff;
+        border: 1px solid #cfcfcf;
+        color: #565656;
+        padding: 0 30px;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+        height: 35px;
+        line-height: 35px;
+        text-decoration: none;
+        &:hover {
+            background: #f0f0f0;
+        }
+    }
+    .ft-galleryall-insert {
+        float: right;
+        background: #00b7ee;
+        color: #fff;
+        text-decoration: none;
+        padding: 0 30px;
+        display: inline-block;
+        border-radius: 3px;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        float: right;
+        height: 35px;
+        line-height: 35px;
+
+        &:hover {
+            background: #00a2d4;
+        }
+    }
+}
+
+
+.filePicker-btn-1 {
+    float: right;
+    background: #00b7ee;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 30px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    height: 35px;
+    line-height: 35px;
+}
+
+
+// 
+// 
+
+.ckeditor-imgedit-dialog{
+   display:none; 
+   padding-top:15px;
+    .item-cell{
+        position:relative;
+        padding-bottom:10px;  
+        .lab{
+            float:left;
+            line-height:40px;  
+            width:60px;
+            padding-right:10px; 
+            text-align:right;  
+        }
+        .ipt-text{
+            border:1px solid #c7c7c7;
+            padding:7px 5px;
+            height:18px;
+            line-height:18px;   
+        }
+    }
+    .item-ratio{
+        position:absolute;
+        height:30px;
+        overflow: hidden;
+        right: 80px;
+        top: 40px;
+        .btnlock{
+            width:28px;
+            height:28px;
+            float:left;
+            margin-right:5px;
+            background:url("../images/lock_1.png") no-repeat center center;
+            display:block;
+            border:1px solid #fff;
+            cursor:pointer; 
+            &.unlock{
+                background:url("../images/unlock_1.png") no-repeat center center;
+            }
+            &:hover{
+                padding:0;
+                border:1px solid #e5e5e5;
+            }
+        }
+        .btnreset{
+            width:28px;
+            height:28px;
+            float:left;
+            border:1px solid #fff;
+            display:block;
+            overflow: hidden;
+            background:url("../images/refresh_1.png") no-repeat center center;
+            cursor:pointer;
+            &:hover{
+                border:1px solid #e5e5e5;
+            }
+        }
+    }
+}
+
+
+.ckeditor-imgedit-ft{
+    border-top: 1px solid #eee;
+    padding: 12px 15px;
+    text-align:center;
+
+    
+    .ft-btn-cancel {
+        background: #ffffff;
+        border: 1px solid #cfcfcf;
+        color: #565656;
+        padding: 0 30px;
+        border-radius: 3px;
+        cursor: pointer;
+        display:inline-block;
+        height: 35px;
+        line-height: 35px;
+        margin: 0 5px;
+        text-decoration: none;
+        &:hover {
+            background: #f0f0f0;
+        }
+    }
+    .ft-btn-insert {
+        display:inline-block;
+        background: #00b7ee;
+        color: #fff;
+        text-decoration: none;
+        padding: 0 30px;
+        display: inline-block;
+        border-radius: 3px;
+        margin: 0 5px;
+        cursor: pointer;
+        font-size: 14px;
+        
+        height: 35px;
+        line-height: 35px;
+
+        &:hover {
+            background: #00a2d4;
+        }
+        &.disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
+        }
+    }
+}
+
+// *************插入表格**************
