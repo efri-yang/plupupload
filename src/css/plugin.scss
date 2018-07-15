@@ -8,9 +8,7 @@
 // 
 // 
 // 
-.coms-plupload-container {
-    
-}
+.coms-plupload-container {}
 
 .coms-btn-choice {
     .btn-pickfiles {
@@ -40,7 +38,7 @@
 
     .btn-startload-file {
         position: relative;
-        display:none;
+        display: none;
         float: left;
         cursor: pointer;
         background: #00b7ee;
@@ -66,7 +64,7 @@
         }
     }
     .btn-stopload-file {
-        display:none;
+        display: none;
         position: relative;
         float: left;
         cursor: pointer;
@@ -105,9 +103,42 @@
 }
 
 .coms-upload-info {
-    padding: 10px 0;
-    height:30px;
-    line-height:30px;
+    padding: 15px 0;
+    height: 20px;
+    line-height: 20px;
+    overflow:hidden;
+    .info-txt{
+        float:left;
+        
+    }
+    .info-progress {
+        border: 1px solid #1483d8;
+        width: 198px;
+        display: none;
+        background: #fff;
+        height: 18px;
+        float:left;
+
+        position: relative;
+        text-align: center;
+        line-height: 20px;
+        color: #6dbfff;
+        position: relative;
+        margin-right: 10px;
+        
+        .txt {
+            position: relative;
+            z-index: 10;
+        }
+        .percentage {
+            width: 0;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: #1483d8;
+            position: absolute;
+        }
+    }
 }
 
 

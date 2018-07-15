@@ -137,15 +137,26 @@
 
 
     function toggleUploadInfo(up, eventing) {
-        if (!up.hasUploadInfo) return;
+
+        if (!up.settings.hasUploadInfo || !up.$uploadInfo.length) return;
+
         var text = '';
         console.dir(up.total.size);
         if (eventing == "UploadComplete") {
+
             text = '共' + up.files.length + '张（' + plupload.formatSize(up.total.size) + '），已上传' + up.total.uploaded + '张';
             if (up.total.failed) {
                 text += '，失败' + up.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>';
-            }
+            }            
+            up.$uploadInfo.$progress.hide();
+        } else if (eventing == "BeforeUpload") {
+            up.$uploadInfo.$progress.show();
 
+
+        } else if (eventing == "UploadProgress") {
+           
+            up.$uploadInfo.$progress.$txt.html(up.total.percent + "%");
+            up.$uploadInfo.$progress.$percent.width(up.total.percent + "%");
         } else {
             if (up.total.uploaded) {
                 text = '共' + up.files.length + '张（' + plupload.formatSize(up.total.size) + '），已上传' + up.total.uploaded + '张';
@@ -155,24 +166,29 @@
             } else {
                 text = '选中' + up.files.length + '张图片，共' + plupload.formatSize(up.total.size) + '。';
             }
-
-
         }
-
-
-        up.$uploadInfo.html(text);
-
-        if (!up.files.length) {
-            up.$uploadInfo.html("");
-        }
+       
+            if (!up.files.length) {
+                up.$uploadInfo.$infoText.html("");
+            } else {
+                up.$uploadInfo.$infoText.show().html(text);
+            }
+        
     }
 
 
 
 
+    //获取queued 和failed的值
+   
+
+   
+
+
+
     $.fn.plupload = function(options) {
-        var opt = $.extend(true,{},$.fn.plupload.defaultConfig, options);
-        
+        var opt = $.extend(true, {}, $.fn.plupload.defaultConfig, options);
+
         return this.each(function(index, el) {
 
             opt.browse_button = el;
@@ -186,35 +202,43 @@
             uploader.$uploadUL = uploader.$container.find(".coms-upload-list"); //ul列表
             uploader.$btnStartload = uploader.$container.find(".btn-startload-file");
             uploader.$btnStopload = uploader.$container.find(".btn-stopload-file");
-            uploader.$uploadInfo = uploader.$container.find(".coms-upload-info");
+            
 
-            uploader.$uploadInfo.length ? uploader.hasUploadInfo = true : uploader.hasUploadInfo = false;
-            if (uploader.hasUploadInfo) {
-                $(document).on("click", ".coms-upload-info .retry", function(event) {
-                    event.preventDefault();
-                    for (var i = 0; i < uploader.files.length; i++) {
-                        if (uploader.files[i].status == plupload.FAILED) {
-                            uploader.files[i].status = 1;
+            if (!!opt.hasUploadInfo) {
+                uploader.$uploadInfo = uploader.$container.find(".coms-upload-info");
+                if (uploader.$uploadInfo.length) {
+                    uploader.$uploadInfo.$infoText = uploader.$uploadInfo.find(".info-txt");
+                    uploader.$uploadInfo.$progress = uploader.$uploadInfo.find(".info-progress");
+                    uploader.$uploadInfo.$progress.$txt = uploader.$uploadInfo.$progress.children(".txt");
+                    uploader.$uploadInfo.$progress.$percent = uploader.$uploadInfo.$progress.children(".percentage");
+                    $(document).on("click", ".coms-upload-info .retry", function(event) {
+                        event.preventDefault();
+                        for (var i = 0; i < uploader.files.length; i++) {
+                            if (uploader.files[i].status == plupload.FAILED) {
+                                uploader.files[i].status = 1;
+                            }
                         }
-                    }
-                    uploader.start();
-                });
+                        uploader.start();
+                    });
 
-                $(document).on("click", ".coms-upload-info .ignore", function(event) {
-                    event.preventDefault();
-                    console.dir("ignore 点击xxxxxxxxxxxxxx");
-                    console.dir(uploader.files);
+                    $(document).on("click", ".coms-upload-info .ignore", function(event) {
+                        event.preventDefault();
+                        console.dir("ignore 点击xxxxxxxxxxxxxx");
+                        console.dir(uploader.files);
 
-                    for (var i = 0; i < uploader.files.length; i++) {
-                        if (uploader.files[i].status == plupload.FAILED) {
-                            uploader.removeFile(uploader.files[i]);
-                            i--;
+                        for (var i = 0; i < uploader.files.length; i++) {
+                            if (uploader.files[i].status == plupload.FAILED) {
+                                uploader.removeFile(uploader.files[i]);
+                                i--;
+                            }
                         }
-                    }
-                    console.dir(uploader.files);
+                        console.dir(uploader.files);
 
-                })
+                    })
+                }
             }
+
+
 
             //多个文件上传按钮
             uploader.$btnStartload.on("click", function() {
@@ -280,7 +304,7 @@
 
                         '<span class="upbtn-del-server"></span>' +
                         '<span class="successing"></span>' +
-                        (opt.inputHidden ? '<input type="hidden" id="'+file.id+'" name="'+opt.inputHidden.name+'">' : '')+
+                        (opt.inputHidden ? '<input type="hidden" id="' + file.id + '" name="' + opt.inputHidden.name + '">' : '') +
                         '</li>';
 
                     file.$li = $(str);
@@ -293,13 +317,13 @@
                     file.$handerBar = file.$li.find(".handle-bar");
                     file.$delQueuedBtn = file.$handerBar.find(".upbtn-del");
                     file.$uploadQueuedBtn = file.$handerBar.find(".upbtn-upload");
-                    
+
                     file.$progress = file.$li.find(".progressing");
                     file.$success = file.$li.find(".successing");
                     file.$error = file.$li.find(".error");
 
                     file.$delUploadServerBtn = file.$li.find(".upbtn-del-server");
-                    file.$inputHidden =file.$li.find('input[name="'+opt.inputHidden.name+'"]');
+                    file.$inputHidden = file.$li.find('input[name="' + opt.inputHidden.name + '"]');
 
 
 
@@ -377,6 +401,8 @@
 
 
 
+
+
             });
 
 
@@ -394,6 +420,7 @@
                 toggleStartUpload(up, "Refresh");
                 toggleBrowseButton(up);
                 toggleUploadInfo(up);
+               
 
             });
 
@@ -406,6 +433,7 @@
                 toggleHanderBar(up, file, "BeforeUpload");
                 toggleStopUpload(up, "BeforeUpload");
                 toggleStartUpload(up, "BeforeUpload");
+                toggleUploadInfo(up, "BeforeUpload")
 
 
 
@@ -422,7 +450,10 @@
 
             uploader.bind('UploadProgress', function(up, file) {
                 console.group("UploadProgress事件");
+                console.dir(file)
+                
                 file.$progress.children().css("width", file.percent + "%");
+                toggleUploadInfo(up, "UploadProgress");
             });
 
             uploader.bind('ChunkUploaded', function(up, file, info) {
@@ -435,6 +466,7 @@
                 console.dir(info);
                 var response = $.parseJSON(info.response);
                 console.dir(response);
+                console.dir(up.total);
                 //服务器上传成功
                 if (!!response.OK && response.OK == 1) {
                     file.serverUrl = response.info.path;
@@ -443,10 +475,11 @@
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
                     !!file.$inputHidden.length && file.$inputHidden.val(response.info.path);
-                    !!opt.fileUploaded && opt.fileUploaded(up,file)
+                    !!opt.fileUploaded && opt.fileUploaded(up, file)
 
                 } else {
                     //服务器上传失败
+                    
                     file.status = plupload.FAILED;
                     file.$error.show();
                     file.$progress.hide().children().css("width", 0);
@@ -477,7 +510,10 @@
                         toggleHanderBar(up, file, "UploadComplete");
                     }
                 });
-                !!opt.uploadComplete && opt.uploadComplete.call(up,files);
+                !!opt.uploadComplete && opt.uploadComplete.call(up, files);
+
+                
+
 
             });
 
@@ -549,7 +585,7 @@
 
 
             uploader.init();
-            this.uploader=uploader;
+            this.uploader = uploader;
 
 
 
@@ -570,8 +606,9 @@
         multi_selection: true,
         multipart_params: {},
         delServerBtn: true,
-        inputHidden:{
-            name:"photo_url[]"
+        hasUploadInfo: true,
+        inputHidden: {
+            name: "photo_url[]"
         },
         filters: {
             max_file_count: 3,
