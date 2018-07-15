@@ -214,7 +214,7 @@
                         event.preventDefault();
                         for (var i = 0; i < uploader.files.length; i++) {
                             if (uploader.files[i].status == plupload.FAILED) {
-                                uploader.files[i].status = 1;
+                                uploader.files[i].status = plupload.QUEUED;
                             }
                         }
                         uploader.start();
@@ -247,7 +247,7 @@
                 // 编辑files 对于那些
                 for (var i = 0; i < uploader.files.length; i++) {
                     if (uploader.files[i].status == plupload.FAILED) {
-                        uploader.files[i].status = 1;
+                        uploader.files[i].status =plupload.QUEUED;
                     }
                 }
                 uploader.start();
