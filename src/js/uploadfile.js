@@ -150,11 +150,10 @@
             }            
             up.$uploadInfo.$progress.hide();
         } else if (eventing == "BeforeUpload") {
+            up.$uploadInfo.$progress.$txt.html(up.total.percent + "%");
+            up.$uploadInfo.$progress.$percent.width(up.total.percent + "%");
             up.$uploadInfo.$progress.show();
-
-
         } else if (eventing == "UploadProgress") {
-           
             up.$uploadInfo.$progress.$txt.html(up.total.percent + "%");
             up.$uploadInfo.$progress.$percent.width(up.total.percent + "%");
         } else {
@@ -398,9 +397,6 @@
                 //然后是上传后FileUploaded 后执行 或者是在Error事件后执行StateChanged，但是两次的执行竟然up.total是一样的
                 console.group("StateChanged事件");
                 console.dir(up.total);
-
-
-
 
 
             });
