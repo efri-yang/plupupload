@@ -139,7 +139,7 @@
     function toggleUploadInfo(up, eventing) {
 
         if (!up.settings.hasUploadInfo || !up.$uploadInfo.length) return;
-
+   
         var text = '';
         console.dir(up.total.size);
         if (eventing == "UploadComplete") {
@@ -166,25 +166,17 @@
                 text = '选中' + up.files.length + '张图片，共' + plupload.formatSize(up.total.size) + '。';
             }
         }
+      
        
         if (!up.files.length) {
             up.$uploadInfo.$infoText.html("");
         } else {
+           
             up.$uploadInfo.$infoText.show().html(text);
         }
         
     }
-
-
-
-
     //获取queued 和failed的值
-   
-
-   
-
-
-
     $.fn.plupload = function(options) {
         var opt = $.extend(true, {}, $.fn.plupload.defaultConfig, options);
 
