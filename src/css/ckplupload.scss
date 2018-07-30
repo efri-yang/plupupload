@@ -283,6 +283,11 @@
         margin: 15px 12px 0;
         overflow: hidden;
         position: relative;
+        &.selected{
+            .img-wrap {
+                border-color:#f60;
+            }
+        }
         .img-wrap {
             border: 1px solid #e6e6e6;
             font-size: 0;

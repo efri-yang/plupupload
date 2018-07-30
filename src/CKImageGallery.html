@@ -42,7 +42,7 @@
                     <a href="javascript:void(0);" class="img-pause-btn">暂停上传</a>
                 </div>
 
-                <div class="ckeditor-uploadfile-no">暂无文件，请添加图片并上传 !</div>
+                <div class="ckeditor-uploadfile-no">暂无文件，请添加图片并上传!</div>
                 <ul class="ckeditor-uploadfile-list">
                     
                 </ul>
@@ -51,6 +51,8 @@
                         <input type="checkbox" name="" />保存到相册</label>
                     <select class="ft-gallery-sel" disabled>
                         <option value="1">默认相册</option>
+                        <option value="2">相册01</option>
+                        <option value="3">相册02</option>
                     </select>
                     <a href="#" class="ft-btn-insert disabled">插入</a>
                     <a href="#" class="ft-btn-cancel">关闭</a>
@@ -78,7 +80,8 @@
                 <div class="ckeditor-gallery-ft">
                     <select class="ft-galleryall-sel">
                         <option value="1">默认相册</option>
-                        <option value="2">相册2</option>
+                        <option value="2">相册01</option>
+                        <option value="3">相册02</option>
                     </select>
                     <a href="#" class="ft-galleryall-insert">插入</a>
                     <a href="#" class="ft-galleryall-cancel">取消</a>
@@ -94,9 +97,7 @@
         $(function(){
             uploader1=$("#img-add-btn-1").plupload({
                 delServerBtn:false,
-                inputHidden:{
-                    name:"xxx[]"
-                },
+                inputHidden:false,
                 filters: {
                     max_file_count:2
                 },
@@ -104,17 +105,26 @@
                     uid:10
                 },
                 initLoad:function(up){
-                    up.$container.find(".btn-1").on("click",function(){
+                    function setOption(k,v){
                         var params=up.getOption("multipart_params");
-                        params["ablum"]=10;
+                        params[k]=v;
                         up.setOption("multipart_params",params);
-                        console.dir(up);
-
+                    }
+                    up.$container.find(".ft-save-checkbox input").on("change",function(){
+                        var $this = $(this);
+                        var $sel=up.$container.find(".ft-gallery-sel");
+                        if ($this.prop('checked')) {
+                            $sel.removeAttr('disabled');
+                            setOption("ablum",$sel.val());
+                        } else {
+                            $sel.attr('disabled', 'disabled');
+                            setOption("ablum",null);
+                        }
                     });
 
-                     
-                    
-                   
+                    up.$container.find(".ft-gallery-sel").on("change",function(){
+                        setOption("ablum",$(this).val());
+                    });   
                 },
                 //每个文件上传成功毁掉函数
                 fileUploaded:function(up,file){

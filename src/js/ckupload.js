@@ -95,14 +95,7 @@
 
 
 
-    function toggleDelUploadServerBtn(up, file, eventing) {
-        if (!up.settings.delServerBtn) return;
-        switch (eventing) {
-            case "FileUploadedSuccess":
-                file.$delUploadServerBtn.show();
-                break;
-        }
-    }
+    
 
 
     function preloadThumb(file, $previewPic, cb, uploader) {
@@ -133,6 +126,14 @@
 
 
         img.load(file.getSource());
+    }
+
+    function toggleInsertBtn(up){
+        if(up.$uploadUL.children().hasClass('selected')){
+            up.$insertBtn.removeClass('disabled')
+        }else{
+             up.$insertBtn.addClass('disabled')
+        }
     }
 
 
@@ -195,6 +196,9 @@
             uploader.$btnStopload = uploader.$container.find(".img-pause-btn");
 
 
+            uploader.$insertBtn=uploader.$container.find(".ft-btn-insert");
+
+
             if (!!opt.hasUploadInfo) {
                 uploader.$uploadInfo = uploader.$container.find(".img-upload-info");
                 if (uploader.$uploadInfo.length) {
@@ -229,6 +233,22 @@
                 }
             }
 
+            uploader.$uploadUL.on("click","li",function(){
+                var $this=$(this);
+                if($this.hasClass('selected')){
+                    $this.removeClass('selected');
+                }else{
+                    $this.addClass('selected');
+                }
+                toggleInsertBtn(uploader);
+            })
+
+            uploader.$insertBtn.on("click",function(){
+                var $this=$(this);
+                if($this.hasClass('disabled')) return;
+                //插入编辑器
+            });
+
 
 
             //多个文件上传按钮
@@ -252,7 +272,11 @@
                 uploader.stop();
                 toggleStartUpload(uploader, "Pausing");
                 toggleStopUpload(uploader, "Pausing");
-            })
+            });
+
+
+
+
 
 
 
@@ -440,13 +464,13 @@
                 //服务器上传成功
                 if (!!response.OK && response.OK == 1) {
                     file.serverUrl = response.info.path;
-                    toggleDelUploadServerBtn(up, file, "FileUploadedSuccess");
+                    file.$li.addClass('selected').attr("data-src",response.info.path);
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
                     !!file.$inputHidden.length && file.$inputHidden.val(response.info.path);
                     !!opt.fileUploaded && opt.fileUploaded(up, file)
-
+                    toggleInsertBtn(up);
                 } else {
                     //服务器上传失败
 
@@ -471,7 +495,7 @@
                     file.$progress.hide().children().css('width', 0);
                     if (file.status == plupload.DONE) {
                         file.$success.show();
-                        toggleDelUploadServerBtn(up, file, "FileUploadedSuccess");
+                        
                         file.$error.hide();
                     } else if (file.status == plupload.FAILED) {
                         //失败的时候
@@ -547,17 +571,8 @@
                 layer.msg(details);
 
             });
-
-
-
-
-
-
-
             uploader.init();
             this.uploader = uploader;
-
-
 
         });
 
