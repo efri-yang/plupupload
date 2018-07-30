@@ -47,7 +47,7 @@
     $this.trigger(showEvent)
 
     if (showEvent.isDefaultPrevented() || hideEvent.isDefaultPrevented()) return
-    var $target = $('[data-relateto="'+selector+'"]')
+     var $target = $(selector)
 
     this.activate($this.closest('li'), $ul)
     this.activate($target, $target.parent(), function () {

@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/plupload/moxie.js"></script>
     <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
     <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
+    <script type="text/javascript" src="js/tab.js"></script>
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/ckplupload.css">
 
@@ -18,7 +19,7 @@
 
 
 </head>
-
+   
 <body style="padding:80px;">
     <button>相册图片</button>
     <div class="ckeditor-imgupload-dialog" style="display:block;">
@@ -27,7 +28,7 @@
             <li><a href="#tabbd-gallery-container">相册图片</a></li>
             <li class="move-seat"></li>
         </ul>
-        <div class="ckeditor-localupload-container active" data-relateto="#tabbd-localupload-container">
+        <div class="ckeditor-localupload-container active" id="tabbd-localupload-container">
             <div class="ckeditor-uploadfile-container">
                 <div class="ckeditor-uploadfile-hd">
                     <div class="img-upload-info">
@@ -62,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <div class="ckeditor-gallery-container" data-relateto="#tabbd-gallery-container">
+        <div class="ckeditor-gallery-container" id="tabbd-gallery-container">
             <div class="ckeditor-gallery-nodata" style="display:none;">
                 您的相册目前还没有照片,<a href="#">立马去上传</a>
             </div>
@@ -95,6 +96,11 @@
 
     <script type="text/javascript">
         $(function(){
+
+            $(".ckeditor-imgupload-dialog").find('.imgupload-tab-hd a').click(function(e) {
+                e.preventDefault();
+                $(this).editorTab('show');
+            });
             uploader1=$("#img-add-btn-1").plupload({
                 delServerBtn:false,
                 inputHidden:false,

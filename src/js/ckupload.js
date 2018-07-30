@@ -250,6 +250,9 @@
             });
 
 
+           
+
+
 
             //多个文件上传按钮
             uploader.$btnStartload.on("click", function() {
