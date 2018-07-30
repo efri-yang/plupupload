@@ -95,7 +95,7 @@
 
 
 
-    
+
 
 
     function preloadThumb(file, $previewPic, cb, uploader) {
@@ -128,11 +128,11 @@
         img.load(file.getSource());
     }
 
-    function toggleInsertBtn(up){
-        if(up.$uploadUL.children().hasClass('selected')){
-            up.$insertBtn.removeClass('disabled')
-        }else{
-             up.$insertBtn.addClass('disabled')
+    function toggleInsertBtn(up) {
+        if (up.$uploadUL.children().hasClass('selected')) {
+            up.$insertBtnLocal.removeClass('disabled')
+        } else {
+            up.$insertBtnLocal.addClass('disabled')
         }
     }
 
@@ -195,9 +195,10 @@
             uploader.$btnStartload = uploader.$container.find(".img-upload-btn");
             uploader.$btnStopload = uploader.$container.find(".img-pause-btn");
 
-
-            uploader.$insertBtn=uploader.$container.find(".ft-btn-insert");
-
+            //本地上传的插入按钮和相册插入按钮
+            uploader.$insertBtnLocal = uploader.$container.find(".ft-btn-insert");
+            uploader.$insertBtnServer = uploader.$container.find(".ft-galleryall-insert");
+            uploader.$galleryList = uploader.$container.find(".ckeditor-gallery-list")
 
             if (!!opt.hasUploadInfo) {
                 uploader.$uploadInfo = uploader.$container.find(".img-upload-info");
@@ -233,24 +234,69 @@
                 }
             }
 
-            uploader.$uploadUL.on("click","li",function(){
-                var $this=$(this);
-                if($this.hasClass('selected')){
+            uploader.$uploadUL.on("click", "li", function() {
+                var $this = $(this);
+                if ($this.hasClass('selected')) {
                     $this.removeClass('selected');
-                }else{
+                } else {
                     $this.addClass('selected');
                 }
                 toggleInsertBtn(uploader);
             })
 
-            uploader.$insertBtn.on("click",function(){
-                var $this=$(this);
-                if($this.hasClass('disabled')) return;
+            uploader.$insertBtnLocal.on("click", function() {
+                var $this = $(this);
+                if ($this.hasClass('disabled')) return;
                 //插入编辑器
+                alert("插入编辑器");
+            });
+
+            uploader.$insertBtnServer.on("click", function() {
+                var $this = $(this);
+                if ($this.hasClass('disabled')) return;
+                //插入编辑器
+                alert("插入编辑器");
+            });
+
+            //相册中选择  插入按钮
+            uploader.$galleryList.on("click", "li", function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                if ($this.hasClass('selected')) {
+                    $this.removeClass('selected')
+                } else {
+                    $this.addClass('selected');
+                }
+                if (uploader.$galleryList.children().hasClass('selected')) {
+                    uploader.$insertBtnServer.removeClass('disabled')
+                } else {
+                    uploader.$insertBtnServer.addClass('disabled')
+                }
             });
 
 
-           
+            //标签显示的时候
+
+            $('a[href="#tabbd-gallery-container"]').on('shown.bs.tab', function(e) {
+                $.ajax({
+                    url: './php/lazyload.php',
+                    type: 'get',
+                    dataType: 'json',
+                    data: {param1: 'value1'},
+                    success:function(res){
+                         var strArr = [];
+                        $.each(res.list, function(index, src) {
+                            strArr.push('<li data-src="' + src + '"><div class="pic"><img src="' + src + '" /></div><span class="status-check"></span></li>');
+                        });
+                        uploader.$galleryList.html(strArr.join(""));
+                        
+                    }
+                })
+            });
+
+
+
+
 
 
 
@@ -329,7 +375,7 @@
                     file.$previewName = file.$li.find(".preview-name");
                     file.$handerBar = file.$li.find(".handle-bar");
                     file.$delQueuedBtn = file.$handerBar.find(".upbtn-del");
-                  
+
                     file.$progress = file.$li.find(".progressing");
                     file.$success = file.$li.find(".successing");
                     file.$error = file.$li.find(".error");
@@ -357,7 +403,7 @@
                     });
 
 
-                   
+
                     if (up.settings.delServerBtn) {
                         //删除服务端文件
                         file.$delUploadServerBtn.on("click", function() {
@@ -467,7 +513,7 @@
                 //服务器上传成功
                 if (!!response.OK && response.OK == 1) {
                     file.serverUrl = response.info.path;
-                    file.$li.addClass('selected').attr("data-src",response.info.path);
+                    file.$li.addClass('selected').attr("data-src", response.info.path);
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
@@ -498,11 +544,11 @@
                     file.$progress.hide().children().css('width', 0);
                     if (file.status == plupload.DONE) {
                         file.$success.show();
-                        
+
                         file.$error.hide();
                     } else if (file.status == plupload.FAILED) {
                         //失败的时候
-                      
+
                         file.$error.show();
                         toggleHanderBar(up, file, "UploadComplete");
                     }

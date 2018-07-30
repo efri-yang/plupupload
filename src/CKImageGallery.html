@@ -51,9 +51,7 @@
                     <label class="ft-save-checkbox">
                         <input type="checkbox" name="" />保存到相册</label>
                     <select class="ft-gallery-sel" disabled>
-                        <option value="1">默认相册</option>
-                        <option value="2">相册01</option>
-                        <option value="3">相册02</option>
+                       
                     </select>
                     <a href="#" class="ft-btn-insert disabled">插入</a>
                     <a href="#" class="ft-btn-cancel">关闭</a>
@@ -69,7 +67,7 @@
             </div>
             <div class="ckeditor-gallery-hasdata" style="display:block;">
                 <ul class="ckeditor-gallery-list">
-                    <li class="active">
+                    <li>
                         <div class="pic"><img src="../uploadDemo/01.jpg" /></div>
                         <span class="status-check"></span>
                     </li>
@@ -80,11 +78,10 @@
                 </ul>
                 <div class="ckeditor-gallery-ft">
                     <select class="ft-galleryall-sel">
-                        <option value="1">默认相册</option>
-                        <option value="2">相册01</option>
-                        <option value="3">相册02</option>
+                        
+                       
                     </select>
-                    <a href="#" class="ft-galleryall-insert">插入</a>
+                    <a href="#" class="ft-galleryall-insert disabled">插入</a>
                     <a href="#" class="ft-galleryall-cancel">取消</a>
                 </div>
             </div>
@@ -101,8 +98,40 @@
                 e.preventDefault();
                 $(this).editorTab('show');
             });
+
+
+            
+
+
+
+
+           
+
+
+
+           
+
+            $.ajax({
+                url: './php/gallerytype.php',
+                type: 'get',
+                dataType: 'json',
+                data: {param1: 'value1'},
+                success:function(res){
+                    var str="";
+                    $.each(res.list,function(index, item) {
+                       str+='<option value="'+item.id+'">'+item.text+'</option>'
+                    });
+                   $(str).appendTo($(".ft-galleryall-sel"))
+                   $(str).appendTo($(".ft-gallery-sel"))
+                }
+            });
+            
+
+            
+
+
             uploader1=$("#img-add-btn-1").plupload({
-                delServerBtn:false,
+              
                 inputHidden:false,
                 filters: {
                     max_file_count:2

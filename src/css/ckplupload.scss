@@ -529,6 +529,7 @@
             display: none;
             background: #fff;
             height: 18px;
+            margin-top: 13px;
             float: left;
 
             position: relative;
@@ -684,7 +685,7 @@
             z-index: 200;
             background: url("../images/webuploader/success.png") no-repeat right bottom;
         }
-        &.active {
+        &.selected {
             .pic {
                 border-color: #00b7ee;
             }
@@ -744,6 +745,12 @@
 
         &:hover {
             background: #00a2d4;
+        }
+        &.disabled {
+            opacity: 0.5;
+            background: #d1d1d1;
+            cursor: not-allowed;
+            color:#fff;
         }
     }
 }
