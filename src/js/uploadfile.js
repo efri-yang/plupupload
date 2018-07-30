@@ -167,11 +167,11 @@
             }
         }
        
-            if (!up.files.length) {
-                up.$uploadInfo.$infoText.html("");
-            } else {
-                up.$uploadInfo.$infoText.show().html(text);
-            }
+        if (!up.files.length) {
+            up.$uploadInfo.$infoText.html("");
+        } else {
+            up.$uploadInfo.$infoText.show().html(text);
+        }
         
     }
 
