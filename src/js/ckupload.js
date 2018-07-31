@@ -198,7 +198,10 @@
             //本地上传的插入按钮和相册插入按钮
             uploader.$insertBtnLocal = uploader.$container.find(".ft-btn-insert");
             uploader.$insertBtnServer = uploader.$container.find(".ft-galleryall-insert");
-            uploader.$galleryList = uploader.$container.find(".ckeditor-gallery-list")
+            uploader.$galleryList = uploader.$container.find(".ckeditor-gallery-list");
+            uploader.$galleryListSel = uploader.$container.find(".ft-galleryall-sel");
+
+
 
             if (!!opt.hasUploadInfo) {
                 uploader.$uploadInfo = uploader.$container.find(".img-upload-info");
@@ -248,18 +251,34 @@
                 var $this = $(this);
                 if ($this.hasClass('disabled')) return;
                 //插入编辑器
-                alert("插入编辑器");
+                var arr=[];
+                uploader.$uploadUL.children().each(function(index, el) {
+                    var $el=$(el);
+                    if($el.hasClass('selected')){
+                       arr.push($el.data("src"));
+                    }
+                });
+                 console.dir(arr); 
             });
 
             uploader.$insertBtnServer.on("click", function() {
                 var $this = $(this);
                 if ($this.hasClass('disabled')) return;
+                var arr=[];
                 //插入编辑器
-                alert("插入编辑器");
+                uploader.$galleryList.children().each(function(index, el) {
+                    var $el=$(el);
+                    if($el.hasClass('selected')){
+                       arr.push($el.data("src"));
+                    }
+                });
+                console.dir(arr); 
+                
             });
 
             //相册中选择  插入按钮
             uploader.$galleryList.on("click", "li", function(e) {
+
                 e.preventDefault();
                 var $this = $(this);
                 if ($this.hasClass('selected')) {
@@ -276,23 +295,46 @@
 
 
             //标签显示的时候
-
-            $('a[href="#tabbd-gallery-container"]').on('shown.bs.tab', function(e) {
+            //
+            function getGalleryData(params) {
                 $.ajax({
-                    url: './php/lazyload.php',
-                    type: 'get',
+                    url: opt.galleryListUrl,
+                    type: 'post',
                     dataType: 'json',
-                    data: {param1: 'value1'},
-                    success:function(res){
-                         var strArr = [];
+                    data:params,
+                    success: function(res) {
+                        var strArr = [];
                         $.each(res.list, function(index, src) {
                             strArr.push('<li data-src="' + src + '"><div class="pic"><img src="' + src + '" /></div><span class="status-check"></span></li>');
                         });
                         uploader.$galleryList.html(strArr.join(""));
-                        
+
                     }
                 })
+            }
+
+            $('a[href="#tabbd-gallery-container"]').on('shown.bs.tab', function(e) {
+                    var $this=$(this);
+                    if(!$this.data("first")){
+                        $this.attr("data-first",true);
+                        var params={
+                            galleryid:uploader.$galleryListSel.val(),
+                            uid:uploader.settings.multipart_params.uid
+                        }
+                        getGalleryData(params);
+                    }  
             });
+            uploader.$galleryListSel.on("change", function() {
+                    var params={
+                        galleryid:uploader.$galleryListSel.val(),
+                        uid:uploader.settings.multipart_params.uid
+                    }
+                    getGalleryData(params);
+
+            });
+
+
+
 
 
 
@@ -356,8 +398,8 @@
                     var str = '<li id="' + file.id + '">' +
                         '<div class="img-wrap preview">' +
                         '<div class="preview-tip"><span>预览中...</span></div>' +
-                        '<div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>' +
-                        '<div class="preview-pic"><img src="images/demo/01.jpg" class="uploadimg" /></div>' +
+                        '<div class="preview-name"></div>' +
+                        '<div class="preview-pic"></div>' +
                         '<div class="handle-bar"><span class="upbtn-del">删除</span></div>' +
                         '<p class="progressing"><span style="width:0%;"></span></p>' +
                         '<span class="error">上传失败，请重试</span>' +
@@ -389,7 +431,7 @@
                     preloadThumb(file, file.$previewPic, function(type) {
                         file.$previewTip.hide();
                         if (type == "error") {
-                            file.$previewName.show().children().html('暂不支持该文件预览<br/>' + file.name);
+                            file.$previewName.show().children().html(file.name + "(暂不支持该文件预览)");
                         } else {
                             file.$previewPic.show();
                         }
@@ -401,31 +443,6 @@
                     file.$delQueuedBtn.on("click", function() {
                         up.removeFile(file);
                     });
-
-
-
-                    if (up.settings.delServerBtn) {
-                        //删除服务端文件
-                        file.$delUploadServerBtn.on("click", function() {
-
-                            $.ajax({
-                                url: uploader.settings.delUrl,
-                                type: "post",
-                                data: { uid: uploader.settings.multipart_params.uid, imgurl: file.serverUrl },
-                                dataType: "json",
-                                success: function(data) {
-                                    if (data) {
-                                        //删除成功 删除队列的文件，如果我们规定只能上传一个文件，或者三个文件那么就要判断
-                                        uploader.removeFile(file);
-
-                                    } else {
-                                        layer.msg("删除失败！")
-                                    }
-                                }
-                            })
-                        })
-                    }
-
                 });
 
 
@@ -632,7 +649,7 @@
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: 'J_pickfiles', // you can pass an id...
         url: './php/upload.php',
-        delUrl: './php/delfile.php',
+
         flash_swf_url: './js/plupload/Moxie.swf',
         silverlight_xap_url: './js/plupload/Moxie.xap',
         chunk_size: 0,
