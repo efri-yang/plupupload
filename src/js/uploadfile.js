@@ -463,7 +463,7 @@
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
                     !!file.$inputHidden.length && file.$inputHidden.val(response.info.path);
-                    !!opt.fileUploaded && opt.fileUploaded(up, file)
+                    !!opt.fileUploaded && opt.fileUploaded(up, file,response.info)
 
                 } else {
                     //服务器上传失败
@@ -562,7 +562,7 @@
                 }
 
 
-                layer.msg(details);
+                // layer.msg(details);
 
             });
 
@@ -622,4 +622,4 @@
 
 
 
-})(jQuery, plupload);
+})(Zepto, plupload);
