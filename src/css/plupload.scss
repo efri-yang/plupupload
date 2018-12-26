@@ -1,13 +1,4 @@
-// @import "./scss/ckcommon.scss";
-// @import "./scss/upload.scss";
-// @import "./scss/iframebox.scss";
-// @import "./scss/tablebox.scss";
-// @import "./scss/link.scss";
-// @import "./scss/fujian.scss";
-// @import "./scss/smiley.scss";
-// 
-// 
-// 
+
 .coms-plupload-container {}
 
 .coms-btn-choice {
@@ -107,6 +98,7 @@
     height: 20px;
     line-height: 20px;
     overflow:hidden;
+
     .info-txt{
         float:left;
         
@@ -163,6 +155,28 @@
             color: #000;
         }
 
+         .upbtn-del-local{
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            overflow: hidden;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 100%;
+            text-align: center;
+            display: none;
+            background-image: url("../images/webuploader/del.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            cursor: pointer;
+            &:hover {
+                background-color: darken(#000, 5%);
+            }
+        }
+
         .preview-pic {
             display: none;
             line-height: 150px;
@@ -210,17 +224,17 @@
             background-color: rgba(0, 0, 0, 0.8);
             display: none;
         }
-        .upbtn-upload {
-            float: right;
-            margin-left: 15px;
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-            display: none;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+        // .upbtn-upload {
+        //     float: right;
+        //     margin-left: 15px;
+        //     color: #fff;
+        //     text-decoration: none;
+        //     cursor: pointer;
+        //     display: none;
+        //     &:hover {
+        //         text-decoration: underline;
+        //     }
+        // }
         .upbtn-del {
             float: right;
             margin-left: 15px;
@@ -233,27 +247,7 @@
         }
 
 
-        .upbtn-del-server {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            line-height: 25px;
-            overflow: hidden;
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 100%;
-            text-align: center;
-            display: none;
-            background-image: url("../images/webuploader/del.png");
-            background-repeat: no-repeat;
-            background-position: center center;
-            cursor: pointer;
-            &:hover {
-                background-color: darken(#000, 5%);
-            }
-        }
+        
         .error {
             position: absolute;
             left: 0;
@@ -276,6 +270,7 @@
             bottom: 0;
             display: none;
         }
+
 
         .progressing {
             position: absolute;

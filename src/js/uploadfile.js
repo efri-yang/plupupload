@@ -521,7 +521,7 @@
 
             uploader.bind('OptionChanged', function(up, name, value, oldValue) {
                 console.group("OptionChanged事件");
-                console.dir(up);
+                
             });
 
 
@@ -622,4 +622,4 @@
 
 
 
-})(Zepto, plupload);
+})(Zepto || jQuery, plupload);

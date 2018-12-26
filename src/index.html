@@ -12,9 +12,12 @@
     <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
     <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
     <link rel="stylesheet" type="text/css" href="css/base.css">
-    <link rel="stylesheet" type="text/css" href="css/plugin.css">
-    <link rel="stylesheet" type="text/css" href="../dev/css/plugin.css">
-    
+    <link rel="stylesheet" type="text/css" href="css/plupload.css">
+    <style type="text/css">
+        .btn-1{
+            margin:15px 0 0;
+        }
+    </style>
 </head>
   
 <body style="padding: 20px 50px;">
@@ -39,7 +42,7 @@
         </div>
         
 
-        <button class="btn-1">改变选项值(传给后天参数值)</button>
+        <button class="btn-1">改变选项值(初始化参数值)</button>
         
         
 
@@ -61,13 +64,13 @@
 
 
     </div>
-    <script type="text/javascript" src="../dev/js/uploadfile.js"></script>
+    <script type="text/javascript" src="js/uploadfile.js"></script>
     <script type="text/javascript">
         $(function(){
             uploader1=$("#J_pickfiles1").plupload({
                 delServerBtn:false,
                 inputHidden:{
-                    name:"xxx[]"
+                    name:"name[]"
                 },
                 filters: {
                     max_file_count:2
@@ -78,9 +81,14 @@
                 initLoad:function(up){
                     up.$container.find(".btn-1").on("click",function(){
                         var params=up.getOption("multipart_params");
-                        params["ablum"]=10;
-                        up.setOption("multipart_params",params);
-                        console.dir(up);
+                        params["test"]="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+                        up.setOption({
+                            "multipart_params":params,
+                            "filters":{
+                                max_file_count:1
+                            }
+                        });
+                        console.dir(up.settings);
 
                     });
 

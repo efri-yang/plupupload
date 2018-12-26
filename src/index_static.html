@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传Demo</title>
+    <script type="text/javascript" src="js/zepto.js"></script>
+    <script type="text/javascript" src="js/plupload/moxie.js"></script>
+    <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
+    <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/plupload.css">
+</head>
+
+<body style="padding: 20px 50px;">
+    <h1 style="margin:0  0 20px 0;">文件名上传</h1>
+    <hr>
+    <div style="padding:0 25px;">
+        <!--  01 初始化未上传任何图片 start********************************-->
+        <h2 style="margin:20px  0 20px 0;">初始化未上传任何照片</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt"></div>
+                <div class="info-progress">
+                    <span class="txt"></span>
+                    <span class="percentage"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile"></div>
+            <ul class="coms-upload-list clearfix"></ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:;">选择文件</a>
+            </div>
+        </div>
+        <!--  01初始化未上传任何图片 end********************************-->
+
+
+        <!--  02上传图片预览中 start********************************-->
+        <h2 style="margin:20px  0 20px 0;">上传图片预览中</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt"></div>
+                <div class="info-progress">
+                    <span class="txt"></span>
+                    <span class="percentage"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile" style="display:none;"></div>
+            <ul class="coms-upload-list clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display:block;"><span>预览中...</span></div>
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing">
+                            <span style="width:0%;"></span>
+                        </p>
+                        <span class="error">上传失败，请重试</span>
+                        <span class="upbtn-del-local"></span>
+                        <span class="successing"></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:;">选择文件</a>
+            </div>
+        </div>
+        <!--  02上传图片预览中 end********************************-->
+
+
+
+        <!--  03上传图片预览成功 start********************************-->
+        <h2 style="margin:20px  0 20px 0;">上传图片预览成功或者失败</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt">选中1张图片，共4 kb。</div>
+                <div class="info-progress">
+                    <span class="txt"></span>
+                    <span class="percentage"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile" style="display:none;"></div>
+            <ul class="coms-upload-list clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display: none;"><span>预览中...</span></div>
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic" style="display:block;"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar" style="display:block;">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing">
+                            <span style="width:0%;"></span>
+                        </p>
+                        <span class="error">上传失败，请重试</span>
+                        <span class="upbtn-del-local"></span>
+                        <span class="successing"></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display:none;"><span>预览中...</span></div>
+                        <div class="preview-name" style="display:block;"><span>暂不支持该文件预览<br/>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar" style="display:block">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing">
+                            <span style="width:0%;"></span>
+                        </p>
+                        <span class="error">上传失败，请重试</span>
+                        <span class="upbtn-del-local"></span>
+                        <span class="successing"></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:void(0);">选择文件</a>
+                <a href="javascript:void(0);" class="btn-startload-file" style="display:block;">上传文件</a>
+            </div>
+        </div>
+        <!--  03 上传图片预览中 end********************************-->
+
+
+
+
+        <!--  04 开始上传图片进行中 start********************************-->
+        <h2 style="margin:20px  0 20px 0;">上传图片进行中</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt"></div>
+                <div class="info-progress" style="display: block;">
+                    <span class="txt">42%</span>
+                    <span class="percentage" style="width: 42%;"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile" style="display:none;"></div>
+            <ul class="coms-upload-list clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display: none;"><span>预览中...</span></div>
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic" style="display:block;"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar" style="display:none;">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing" style="display:block;">
+                            <span style="width:35%;"></span>
+                        </p>
+                        <span class="error">上传失败，请重试</span>
+                        <span class="upbtn-del-local"></span>
+                        <span class="successing"></span>
+                    </div>
+                </li>
+               
+            </ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:void(0);">选择文件</a>
+                <a href="javascript:void(0);" class="btn-startload-file disabled" style="display:block;">上传文件</a>
+                <a href="javascript:void(0);" class="btn-stopload-file" style="display: inline;">暂停上传</a>
+            </div>
+        </div>
+        <!--  04 开始上传图片进行中 end********************************-->
+
+
+
+        <!--  05 开始上传图片进行中 暂停 start********************************-->
+        <h2 style="margin:20px  0 20px 0;">上传图片进行中-暂停</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt"></div>
+                <div class="info-progress" style="display: block;">
+                    <span class="txt">42%</span>
+                    <span class="percentage" style="width: 42%;"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile" style="display:none;"></div>
+            <ul class="coms-upload-list clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display: none;"><span>预览中...</span></div>
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic" style="display:block;"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar" style="display:none;">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing" style="display:block;">
+                            <span style="width:35%;"></span>
+                        </p>
+                        <span class="error">上传失败，请重试</span>
+                        <span class="upbtn-del-local"></span>
+                        <span class="successing"></span>
+                    </div>
+                </li>
+               
+            </ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:void(0);">选择文件</a>
+                <a href="javascript:void(0);" class="btn-startload-file" style="display:block;">上传文件</a>
+                <a href="javascript:void(0);" class="btn-stopload-file disabled" style="display: inline;">暂停上传</a>
+            </div>
+        </div>
+        <!--  05 开始上传图片进行中 暂停 end********************************-->
+
+
+
+        <!--  06 开始上传图片成功 暂停 start********************************-->
+        <h2 style="margin:40px  0 20px 0;">上传图片-成功(如果完成那么上传按钮变成disabled)</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt">共1张（1 mb），已上传1张</div>
+                <div class="info-progress" style="display:none;">
+                    <span class="txt">42%</span>
+                    <span class="percentage" style="width: 42%;"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile" style="display:none;"></div>
+            <ul class="coms-upload-list clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display: none;"><span>预览中...</span></div>
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic" style="display:block;"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar" style="display:none;">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing" style="display:none;">
+                            <span style="width:35%;"></span>
+                        </p>
+                        <span class="error">上传失败，请重试</span>
+                        <span class="upbtn-del-local" style="display:block;"></span>
+                        <span class="successing" style="display:block;"></span>
+                    </div>
+                </li>
+               
+            </ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:void(0);">选择文件</a>
+                <a href="javascript:void(0);" class="btn-startload-file disabled" style="display:block;">上传文件</a>
+                <a href="javascript:void(0);" class="btn-stopload-file" style="display: none;">暂停上传</a>
+            </div>
+        </div>
+        <!--  06 开始上传图片成功  end********************************-->
+
+
+
+
+        <!--  06 开始上传图片成功 暂停 start********************************-->
+        <h2 style="margin:40px  0 20px 0;">上传图片-失败</h2>
+        <hr style="margin: 0 0 20px 0;">
+        <div class="coms-plupload-container">
+            <div class="coms-upload-info">
+                <div class="info-txt">共1张（1 mb），已上传0张，失败1张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a></div>
+                <div class="info-progress" style="display:none;">
+                    <span class="txt">42%</span>
+                    <span class="percentage" style="width: 42%;"></span>
+                </div>
+            </div>
+            <div class="coms-plupload-nofile" style="display:none;"></div>
+            <ul class="coms-upload-list clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-tip" style="display: none;"><span>预览中...</span></div>
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic" style="display:block;"><img src="images/demo/01.jpg" class="uploadimg" /></div>
+                        <div class="handle-bar" style="display:none;">
+                            
+                            <span class="upbtn-del">删除</span>
+                        </div>
+                        <p class="progressing" style="display:none;">
+                            <span style="width:35%;"></span>
+                        </p>
+                        <span class="error" style="display:block;">上传失败，请重试</span>
+                        <span class="upbtn-del-local" style="display:block;"></span>
+                        <span class="successing" ></span>
+                    </div>
+                </li>
+               
+            </ul>
+            <div class="coms-btn-choice clearfix">
+                <a id="pickfiles" class="btn-pickfiles" href="javascript:void(0);">选择文件</a>
+                <a href="javascript:void(0);" class="btn-startload-file disabled" style="display:block;">上传文件</a>
+                <a href="javascript:void(0);" class="btn-stopload-file" style="display: none;">暂停上传</a>
+            </div>
+        </div>
+        <!--  06 开始上传图片成功 暂停 end********************************-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+    </div>
+
+
+
+    
+    <div style="height: 300px;"></div>
+</body>
+
+</html>
