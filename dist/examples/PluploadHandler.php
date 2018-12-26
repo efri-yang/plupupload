@@ -1,5 +1,6 @@
 <?php
 
+
 define('PLUPLOAD_MOVE_ERR', 103);
 define('PLUPLOAD_INPUT_ERR', 101);
 define('PLUPLOAD_OUTPUT_ERR', 102);
@@ -22,7 +23,8 @@ define('DS', DIRECTORY_SEPARATOR);
  * @method string getErrorMessage()
  *
  */
-class PluploadHandler {
+class PluploadHandler
+{
     /**
      * @property array $conf
      */
@@ -40,7 +42,9 @@ class PluploadHandler {
      */
     protected $error = null;
 
-    function __construct($conf = array()) {
+
+    function __construct($conf = array())
+    {
         $this->conf = array_merge(
             array(
                 'file_data_name' => 'file',
@@ -66,20 +70,24 @@ class PluploadHandler {
                     PLUPLOAD_TMPDIR_ERR => "Failed to open temp directory.",
                     PLUPLOAD_TYPE_ERR => "File type not allowed.",
                     PLUPLOAD_UNKNOWN_ERR => "Failed due to unknown error.",
-                    PLUPLOAD_SECURITY_ERR => "File didn't pass security check.",
+                    PLUPLOAD_SECURITY_ERR => "File didn't pass security check."
                 ),
                 'debug' => false,
-                'log_path' => "error.log",
+                'log_path' => "error.log"
             ),
             $conf
         );
     }
 
-    function __destruct() {
+
+    function __destruct()
+    {
         $this->reset();
     }
 
-    function handleUpload() {
+
+    function handleUpload()
+    {
         $conf = $this->conf;
 
         @set_time_limit($conf['max_execution_time']);
@@ -98,6 +106,7 @@ class PluploadHandler {
                 sleep($conf['delay']);
             }
 
+
             if (!$conf['file_name']) {
                 if (!empty($_FILES)) {
                     $conf['file_name'] = $_FILES[$conf['file_data_name']]['name'];
@@ -111,6 +120,7 @@ class PluploadHandler {
             } else {
                 $file_name = $conf['file_name'];
             }
+
 
             // Check if file type is allowed
             if ($conf['allow_extensions']) {
@@ -144,12 +154,14 @@ class PluploadHandler {
         }
     }
 
+
     /**
      * Retrieve the error code
      *
      * @return int Error code
      */
-    function getErrorCode() {
+    function getErrorCode()
+    {
         if (!$this->error) {
             return null;
         }
@@ -161,18 +173,21 @@ class PluploadHandler {
         return $this->error;
     }
 
+
     /**
      * Retrieve the error message
      *
      * @return string Error message
      */
-    function getErrorMessage() {
+    function getErrorMessage()
+    {
         if ($code = $this->getErrorCode()) {
             return $this->conf['error_strings'][$code];
         } else {
             return '';
         }
     }
+
 
     /**
      * Combine chunks for specified file name.
@@ -182,7 +197,8 @@ class PluploadHandler {
      * @param string $file_name
      * @return string Path to the target file
      */
-    function combineChunksFor($file_name) {
+    function combineChunksFor($file_name)
+    {
         $file_path = $this->getTargetPathFor($file_name);
         if (!$tmp_path = $this->writeChunksToFile("$file_path.dir.part", "$file_path.part")) {
             return false;
@@ -190,7 +206,9 @@ class PluploadHandler {
         return $this->rename($tmp_path, $file_path);
     }
 
-    protected function handleChunk($chunk, $file_name) {
+
+    protected function handleChunk($chunk, $file_name)
+    {
         $file_path = $this->getTargetPathFor($file_name);
 
         $this->log($this->conf['append_chunks_to_target']
@@ -216,17 +234,21 @@ class PluploadHandler {
             'name' => $file_name,
             'path' => $chunk_path,
             'chunk' => $chunk,
-            'size' => call_user_func($this->conf['cb_filesize'], $chunk_path),
+            'size' => call_user_func($this->conf['cb_filesize'], $chunk_path)
         );
     }
 
-    protected function handleFile($file_name) {
+
+    protected function handleFile($file_name)
+    {
         $file_path = $this->getTargetPathFor($file_name);
         $tmp_path = $this->writeUploadTo($file_path . ".part");
         return $this->rename($tmp_path, $file_path);
     }
 
-    protected function rename($tmp_path, $file_path) {
+
+    protected function rename($tmp_path, $file_path)
+    {
         // Upload complete write a temp file to the final destination
         if (!$this->fileIsOK($tmp_path)) {
             if ($this->conf['cleanup']) {
@@ -241,12 +263,13 @@ class PluploadHandler {
             return array(
                 'name' => basename($file_path),
                 'path' => $file_path,
-                'size' => call_user_func($this->conf['cb_filesize'], $file_path),
+                'size' => call_user_func($this->conf['cb_filesize'], $file_path)
             );
         } else {
             return false;
         }
     }
+
 
     /**
      * Writes either a multipart/form-data message or a binary stream
@@ -258,7 +281,8 @@ class PluploadHandler {
      * @param string [$file_data_name='file'] The name of the multipart field
      * @return string Path to the target file
      */
-    protected function writeUploadTo($file_path, $file_data_name = false, $mode = 'wb') {
+    protected function writeUploadTo($file_path, $file_data_name = false, $mode = 'wb')
+    {
         if (!$file_data_name) {
             $file_data_name = $this->conf['file_data_name'];
         }
@@ -288,7 +312,8 @@ class PluploadHandler {
      * @param string [$mode='wb'] Mode to use (to append use 'ab')
      * @return string Path to the written target file
      */
-    protected function writeToFile($source_paths, $target_path, $mode = 'wb') {
+    protected function writeToFile($source_paths, $target_path, $mode = 'wb')
+    {
         if (!is_array($source_paths)) {
             $source_paths = array($source_paths);
         }
@@ -317,6 +342,7 @@ class PluploadHandler {
         return $target_path;
     }
 
+
     /**
      * Combine chunks from the specified folder into the single file.
      *
@@ -326,7 +352,8 @@ class PluploadHandler {
      * @param string $target_path The file to write the chunks to
      * @return string File path containing combined chunks
      */
-    protected function writeChunksToFile($chunk_dir, $target_path) {
+    protected function writeChunksToFile($chunk_dir, $target_path)
+    {
         $chunk_paths = array();
 
         for ($i = 0; $i < $this->conf['chunks']; $i++) {
@@ -355,11 +382,12 @@ class PluploadHandler {
      * @param string $file_name
      * @return boolean
      */
-    protected function isLastChunk($file_name) {
+    protected function isLastChunk($file_name)
+    {
         if ($this->conf['append_chunks_to_target']) {
-            if ($result = $this->conf['chunks'] && $this->conf['chunks'] == $this->conf['chunk'] + 1) {
-                $this->log("last chunk received: {$this->conf['chunks']} out of {$this->conf['chunks']}");
-            }
+			if ($result = $this->conf['chunks'] && $this->conf['chunks'] == $this->conf['chunk'] + 1) {
+				$this->log("last chunk received: {$this->conf['chunks']} out of {$this->conf['chunks']}");
+			}
         } else {
             $file_path = $this->getTargetPathFor($file_name);
             $chunks = sizeof(glob("$file_path.dir.part/*.part"));
@@ -377,9 +405,11 @@ class PluploadHandler {
      * @param string $file_path Path to the file to check
      * @return boolean
      */
-    protected function fileIsOK($path) {
+    protected function fileIsOK($path)
+    {
         return !is_callable($this->conf['cb_check_file']) || call_user_func($this->conf['cb_check_file'], $path);
     }
+
 
     /**
      * Returns the size of the file in bytes for the given filename. Filename will be resolved
@@ -388,9 +418,11 @@ class PluploadHandler {
      * @param string $file_name
      * @return number|false
      */
-    function getFileSizeFor($file_name) {
+    function getFileSizeFor($file_name)
+    {
         return call_user_func($this->conf['cb_filesize'], getTargetPathFor($file_name));
     }
+
 
     /**
      * Resolves given filename against target_dir value defined in the config.
@@ -398,15 +430,18 @@ class PluploadHandler {
      * @param string $file_name
      * @return string Resolved file path
      */
-    function getTargetPathFor($file_name) {
+    function getTargetPathFor($file_name)
+    {
         $target_dir = str_replace(array("/", "\/"), DS, rtrim($this->conf['target_dir'], "/\\"));
         return $target_dir . DS . $file_name;
     }
 
+
     /**
      * Sends out headers that prevent caching of the output that is going to follow.
      */
-    function sendNoCacheHeaders() {
+    function sendNoCacheHeaders()
+    {
         // Make sure this file is not cached (as it might happen on iOS devices, for example)
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -421,7 +456,8 @@ class PluploadHandler {
      * @param array $headers Additional headers to send out
      * @param string [$origin='*'] Allowed origin
      */
-    function sendCORSHeaders($headers = array(), $origin = '*') {
+    function sendCORSHeaders($headers = array(), $origin = '*')
+    {
         $allow_origin_present = false;
 
         if (!empty($headers)) {
@@ -443,12 +479,14 @@ class PluploadHandler {
         }
     }
 
+
     /**
      * Cleans up outdated *.part files and directories inside target_dir.
      * Files are considered outdated if they are older than max_file_age hours.
      * (@see config options)
      */
-    private function cleanup() {
+    private function cleanup()
+    {
         // Remove old temp files
         if (file_exists($this->conf['target_dir'])) {
             foreach (glob($this->conf['target_dir'] . '/*.part') as $tmpFile) {
@@ -464,6 +502,7 @@ class PluploadHandler {
         }
     }
 
+
     /**
      * Sanitizes a filename replacing whitespace with dashes
      *
@@ -478,7 +517,8 @@ class PluploadHandler {
      * @param string $filename The filename to be sanitized
      * @return string The sanitized filename
      */
-    protected function sanitizeFileName($filename) {
+    protected function sanitizeFileName($filename)
+    {
         $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
         $filename = str_replace($special_chars, '', $filename);
         $filename = preg_replace('/[\s-]+/', '-', $filename);
@@ -486,23 +526,24 @@ class PluploadHandler {
         return $filename;
     }
 
+
     /**
      * Concise way to recursively remove a directory
      * @see http://www.php.net/manual/en/function.rmdir.php#108113
      *
      * @param string $dir Directory to remove
      */
-    private function rrmdir($dir) {
+    private function rrmdir($dir)
+    {
         foreach (glob($dir . '/*') as $file) {
-            if (is_dir($file)) {
+            if (is_dir($file))
                 $this->rrmdir($file);
-            } else {
+            else
                 unlink($file);
-            }
-
         }
         rmdir($dir);
     }
+
 
     /**
      * PHPs filesize() fails to measure files larger than 2gb
@@ -511,7 +552,8 @@ class PluploadHandler {
      * @param string $file Path to the file to measure
      * @return int
      */
-    protected function filesize($file) {
+    protected function filesize($file)
+    {
         if (!file_exists($file)) {
             $this->log("cannot measure $file, 'cause it doesn't exist.");
             return false;
@@ -557,33 +599,39 @@ class PluploadHandler {
         return @filesize($file);
     }
 
+
     /**
      * Obtain the blocking lock on the specified file. All processes looking to work with
      * the same file will have to wait, until we release it (@see unlockTheFile).
      *
      * @param string $file_name File to lock
      */
-    private function lockTheFile($file_name) {
+    private function lockTheFile($file_name)
+    {
         $file_path = $this->getTargetPathFor($file_name);
-        $this->out = @fopen("$file_path.lock", 'w');
+        $this->out = fopen("$file_path.lock", 'w');
         flock($this->out, LOCK_EX); // obtain blocking lock
     }
+
 
     /**
      * Release the blocking lock on the specified file.
      *
      * @param string $file_name File to lock
      */
-    private function unlockTheFile($file_name) {
+    private function unlockTheFile($file_name)
+    {
         $file_path = $this->getTargetPathFor($file_name);
         fclose($this->out);
         @unlink("$file_path.lock");
     }
 
+
     /**
      * Reset private variables to their initial values.
      */
-    private function reset() {
+    private function reset()
+    {
         $conf = $this->conf;
         $this->error = null;
 
@@ -592,13 +640,15 @@ class PluploadHandler {
         }
     }
 
+
     /**
      * Log the message to the log_path, but only if debug is set to true.
      * Each message will get prepended with the current timestamp.
      *
      * @param string $msg
      */
-    protected function log($msg) {
+    protected function log($msg)
+    {
         if (!$this->conf['debug']) {
             return;
         }
@@ -606,3 +656,4 @@ class PluploadHandler {
         file_put_contents($this->conf['log_path'], $msg, FILE_APPEND);
     }
 }
+

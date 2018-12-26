@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传Demo</title>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <!--  -->
+    <script type="text/javascript" src="js/plupload/moxie.js"></script>
+    <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
+    <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    <link rel="stylesheet" type="text/css" href="../dev/css/plugin.css">
+    
+</head>
+  
+<body style="padding: 20px 50px;">
+    <div class="coms-plupload-container ">
+        <div class="coms-upload-info">
+            <div class="info-txt"></div>
+            <div class="info-progress">
+                <span class="txt"></span>
+                <span class="percentage"></span>
+            </div>
+        </div>
+        <div class="coms-plupload-nofile"></div>
+        
+        <ul class="coms-upload-list clearfix">
+             
+        </ul>
+        <div class="coms-btn-choice  clearfix">
+            <a id="J_pickfiles1" class="btn-pickfiles" href="javascript:;">选择文件</a>
+            <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
+            <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
+            
+        </div>
+        
+
+        <button class="btn-1">改变选项值(传给后天参数值)</button>
+        
+        
+
+    </div>
+    
+        <div style="margin-top: 50px;"></div>
+
+     <div class="coms-plupload-container">
+        <div class="coms-plupload-nofile"></div>
+        
+        <ul class="coms-upload-list clearfix">
+             
+        </ul>
+        <div class="coms-btn-choice">
+            <a id="J_pickfiles2" class="btn-pickfiles" href="javascript:;">选择文件</a>
+            <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
+            <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
+        </div>
+
+
+    </div>
+    <script type="text/javascript" src="../dev/js/uploadfile.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            uploader1=$("#J_pickfiles1").plupload({
+                delServerBtn:false,
+                inputHidden:{
+                    name:"xxx[]"
+                },
+                filters: {
+                    max_file_count:2
+                },
+                multipart_params: {
+                    uid:10
+                },
+                initLoad:function(up){
+                    up.$container.find(".btn-1").on("click",function(){
+                        var params=up.getOption("multipart_params");
+                        params["ablum"]=10;
+                        up.setOption("multipart_params",params);
+                        console.dir(up);
+
+                    });
+
+                     
+                    
+                   
+                },
+                //每个文件上传成功毁掉函数
+                fileUploaded:function(up,file){
+                    file.$inputHidden.val("asdfasdfasdfasdfasdf");
+                },
+                //plupload 执行全部的上传事件后触发该函数，只触发一次
+                uploadComplete:function(up,files){
+
+                }
+            });
+            
+            // $("#J_pickfiles2").plupload({
+            //     filters: {
+            //         max_file_count:3
+            //     }
+            // });
+
+            // $("#btn-1").on("click",function(){
+
+            // })
+
+        })
+    </script>
+
+
+    
+</body>
+
+</html>
