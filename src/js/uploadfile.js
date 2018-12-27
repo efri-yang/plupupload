@@ -594,7 +594,10 @@
         multi_selection: true,
         multipart_params: {},
         delServerBtn: true,
-        hasUploadInfo: true,
+        uploadInfo:{
+            required:true,
+            containerClass:""
+        },
         inputHidden: {
             name: "photo_url[]"
         },
