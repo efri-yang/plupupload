@@ -224,17 +224,7 @@
             background-color: rgba(0, 0, 0, 0.8);
             display: none;
         }
-        // .upbtn-upload {
-        //     float: right;
-        //     margin-left: 15px;
-        //     color: #fff;
-        //     text-decoration: none;
-        //     cursor: pointer;
-        //     display: none;
-        //     &:hover {
-        //         text-decoration: underline;
-        //     }
-        // }
+        
         .upbtn-del {
             float: right;
             margin-left: 15px;
@@ -302,3 +292,28 @@
         }
     }
 }
+
+
+
+.coms-upload-list {
+    .item-upload-btn{
+        width:152px;
+        height:152px;
+        
+
+        a{
+            display:block;
+            width:100%;
+            height:100%;
+            border:1px solid #e6e6e6;
+            box-sizing:border-box;
+            background:url("../images/webuploader/not_file_image.png") no-repeat center center;
+
+            &.disabled{
+                opacity:0.5;
+                cursor:default;
+            }
+        }
+    }
+}
+
