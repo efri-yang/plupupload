@@ -14,13 +14,13 @@ $ph->sendCORSHeaders();
 if ($result = $ph->handleUpload()) {
 
     die(json_encode(array(
-        'OK' => 1,
-        'info' => $result,
+        'status' => 1,
+        'data' => $result,
     )));
 } else {
     die(json_encode(array(
-        'OK' => 0,
-        'error' => array(
+        'status' => 0,
+        'data' => array(
             'code' => $ph->getErrorCode(),
             'message' => $ph->getErrorMessage(),
         ),

@@ -22,9 +22,11 @@
         if (up.settings.filters.max_file_count <= up.files.length) {
             up.disableBrowse(true);
             up.$choiceBtn.addClass("disabled");
+            up.settings.isCheck && up.$choiceBtn.parents("li").addClass('disabled');
         } else {
             up.disableBrowse(false);
             up.$choiceBtn.removeClass("disabled");
+            up.settings.isCheck && up.$choiceBtn.parents("li").removeClass('disabled');
         }
     }
 
@@ -93,16 +95,18 @@
         }
     }
 
-
-
-    function toggleDelUploadServerBtn(up, file, eventing) {
-        if (!up.settings.delServerBtn) return;
+     function toggleDelUploadSLBtn(up, file, eventing) {
+        if (!up.settings.delSLBtn) return;
         switch (eventing) {
             case "FileUploadedSuccess":
-                file.$delUploadServerBtn.show();
+                file.$delUploadSLBtn.show();
                 break;
         }
     }
+
+
+
+   
 
 
     function preloadThumb(file, $previewPic, cb, uploader) {
@@ -138,16 +142,17 @@
 
     function toggleUploadInfo(up, eventing) {
 
-        if (!up.settings.hasUploadInfo || !up.$uploadInfo.length) return;
-   
+        if (!up.settings.uploadInfo.required || !up.$uploadInfo.length) return;
+
         var text = '';
+        console.dir(up.files)
         console.dir(up.total.size);
         if (eventing == "UploadComplete") {
 
             text = '共' + up.files.length + '张（' + plupload.formatSize(up.total.size) + '），已上传' + up.total.uploaded + '张';
             if (up.total.failed) {
                 text += '，失败' + up.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>';
-            }            
+            }
             up.$uploadInfo.$progress.hide();
         } else if (eventing == "BeforeUpload") {
             up.$uploadInfo.$progress.$txt.html(up.total.percent + "%");
@@ -157,7 +162,7 @@
             up.$uploadInfo.$progress.$txt.html(up.total.percent + "%");
             up.$uploadInfo.$progress.$percent.width(up.total.percent + "%");
         } else {
-            if (up.total.uploaded) {
+            if (up.total.uploaded || up.total.failed) {
                 text = '共' + up.files.length + '张（' + plupload.formatSize(up.total.size) + '），已上传' + up.total.uploaded + '张';
                 if (up.total.failed) {
                     text += '，失败' + up.total.failed + '张,<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>图片';
@@ -166,15 +171,15 @@
                 text = '选中' + up.files.length + '张图片，共' + plupload.formatSize(up.total.size) + '。';
             }
         }
-      
-       
+
+
         if (!up.files.length) {
             up.$uploadInfo.$infoText.html("");
         } else {
-           
+
             up.$uploadInfo.$infoText.show().html(text);
         }
-        
+
     }
     //获取queued 和failed的值
     $.fn.plupload = function(options) {
@@ -187,46 +192,55 @@
             var uploader = new plupload.Uploader(opt);
 
 
+
+
             uploader.$container = $this.parents(".coms-plupload-container").eq(0);
             uploader.$noFileDefault = uploader.$container.find(".coms-plupload-nofile");
             uploader.$choiceBtn = $this;
             uploader.$uploadUL = uploader.$container.find(".coms-upload-list"); //ul列表
             uploader.$btnStartload = uploader.$container.find(".btn-startload-file");
             uploader.$btnStopload = uploader.$container.find(".btn-stopload-file");
-            
 
-            if (!!opt.hasUploadInfo) {
-                uploader.$uploadInfo = uploader.$container.find(".coms-upload-info");
-                if (uploader.$uploadInfo.length) {
-                    uploader.$uploadInfo.$infoText = uploader.$uploadInfo.find(".info-txt");
-                    uploader.$uploadInfo.$progress = uploader.$uploadInfo.find(".info-progress");
-                    uploader.$uploadInfo.$progress.$txt = uploader.$uploadInfo.$progress.children(".txt");
-                    uploader.$uploadInfo.$progress.$percent = uploader.$uploadInfo.$progress.children(".percentage");
-                    $(document).on("click", ".coms-upload-info .retry", function(event) {
-                        event.preventDefault();
-                        for (var i = 0; i < uploader.files.length; i++) {
-                            if (uploader.files[i].status == plupload.FAILED) {
-                                uploader.files[i].status = plupload.QUEUED;
-                            }
-                        }
-                        uploader.start();
-                    });
 
-                    $(document).on("click", ".coms-upload-info .ignore", function(event) {
-                        event.preventDefault();
-                        console.dir("ignore 点击xxxxxxxxxxxxxx");
-                        console.dir(uploader.files);
-
-                        for (var i = 0; i < uploader.files.length; i++) {
-                            if (uploader.files[i].status == plupload.FAILED) {
-                                uploader.removeFile(uploader.files[i]);
-                                i--;
-                            }
-                        }
-                        console.dir(uploader.files);
-
-                    })
+            if (!!opt.uploadInfo.required) {
+                var $uploadInfoDetail = $('<div class="coms-upload-info"><div class="info-txt"></div><div class="info-progress"><span class="txt"></span><span class="percentage"></span></div></div>');
+                if (opt.uploadInfo.container) {
+                    uploader.$uploadInfo = uploader.$container.find(opt.uploadInfo.container);
+                    $uploadInfoDetail.appendTo(uploader.$uploadInfo)
+                } else {
+                    $uploadInfoDetail.prependTo(uploader.$container);
+                    uploader.$uploadInfo = $uploadInfoDetail;
                 }
+
+
+                uploader.$uploadInfo.$infoText = uploader.$uploadInfo.find(".info-txt");
+                uploader.$uploadInfo.$progress = uploader.$uploadInfo.find(".info-progress");
+                uploader.$uploadInfo.$progress.$txt = uploader.$uploadInfo.$progress.children(".txt");
+                uploader.$uploadInfo.$progress.$percent = uploader.$uploadInfo.$progress.children(".percentage");
+                $(document).on("click", ".coms-upload-info .retry", function(event) {
+                    event.preventDefault();
+                    for (var i = 0; i < uploader.files.length; i++) {
+                        if (uploader.files[i].status == plupload.FAILED) {
+                            uploader.files[i].status = plupload.QUEUED;
+                        }
+                    }
+                    uploader.start();
+                });
+
+                $(document).on("click", ".coms-upload-info .ignore", function(event) {
+                    event.preventDefault();
+                    console.dir("ignore 点击xxxxxxxxxxxxxx");
+                    console.dir(uploader.files);
+                    for (var i = 0; i < uploader.files.length; i++) {
+                        if (uploader.files[i].status == plupload.FAILED) {
+                            uploader.removeFile(uploader.files[i]);
+                            i--;
+                        }
+                    }
+                    console.dir(uploader.files);
+
+                })
+
             }
 
 
@@ -239,7 +253,7 @@
                 // 编辑files 对于那些
                 for (var i = 0; i < uploader.files.length; i++) {
                     if (uploader.files[i].status == plupload.FAILED) {
-                        uploader.files[i].status =plupload.QUEUED;
+                        uploader.files[i].status = plupload.QUEUED;
                     }
                 }
                 uploader.start();
@@ -286,20 +300,24 @@
                         '<div class="preview-pic"></div>' +
                         '</div>' +
                         '<div class="handle-bar">' +
-                        '<span class="upbtn-upload">上传</span>' +
+                        
                         '<span class="upbtn-del">删除</span>' +
 
                         '</div>' +
                         '<p class="progressing"><span style="width:0%;"></span></p>' +
                         '<span class="error">上传失败，请重试</span>' +
 
-                        '<span class="upbtn-del-server"></span>' +
+                        '<span class="upbtn-del-sl"></span>' +
                         '<span class="successing"></span>' +
-                        (opt.inputHidden ? '<input type="hidden" id="' + file.id + '" name="' + opt.inputHidden.name + '">' : '') +
                         '</li>';
 
                     file.$li = $(str);
-                    file.$li.appendTo(up.$uploadUL);
+                    if(opt.type==1){
+                        file.$li.appendTo(up.$uploadUL);
+                    }else if(opt.type==2){
+                        file.$li.insertBefore(up.$choiceBtn.parents("li"));
+                    }
+                    
 
                     file.$img = file.$li.find(".uploadimg");
                     file.$previewPic = file.$li.find(".preview-pic");
@@ -313,8 +331,8 @@
                     file.$success = file.$li.find(".successing");
                     file.$error = file.$li.find(".error");
 
-                    file.$delUploadServerBtn = file.$li.find(".upbtn-del-server");
-                    file.$inputHidden = file.$li.find('input[name="' + opt.inputHidden.name + '"]');
+                    file.$delUploadSLBtn = file.$li.find(".upbtn-del-sl");
+                    
 
 
 
@@ -347,27 +365,13 @@
                         console.dir(up.total)
                         up.start();
                     });
-                    if (up.settings.delServerBtn) {
-                        //删除服务端文件
-                        file.$delUploadServerBtn.on("click", function() {
 
-                            $.ajax({
-                                url: uploader.settings.delUrl,
-                                type: "post",
-                                data: { uid: uploader.settings.multipart_params.uid, imgurl: file.serverUrl },
-                                dataType: "json",
-                                success: function(data) {
-                                    if (data) {
-                                        //删除成功 删除队列的文件，如果我们规定只能上传一个文件，或者三个文件那么就要判断
-                                        uploader.removeFile(file);
-
-                                    } else {
-                                        layer.msg("删除失败！")
-                                    }
-                                }
-                            })
-                        })
-                    }
+                    file.$delUploadSLBtn.on("click",function(){
+                        up.removeFile(file);
+                    });
+                    //第二种类型的时候直接上传
+                    opt.type==2 &&  up.start();
+                    
 
                 });
 
@@ -378,7 +382,8 @@
 
             uploader.bind('QueueChanged', function(up) {
                 console.group("QueueChanged事件");
-                //filter判断一次 这里要在判断一次，因为files上传和删除的时候都会触发这个事件
+                //FilesAdded事件和FilesRemoved事件也会触发这个事件
+                
             });
 
             //控制打的按钮就要在这个地方，例如重新上传 就会触犯这个函数
@@ -399,6 +404,7 @@
 
             uploader.bind('Refresh', function(up) {
                 console.group("Refresh事件");
+
                 //QueueChanged都会触发refresh函数，如果有上传的获取是有队列的时候,那么默认的图片就应该隐藏
                 if (up.total.uploaded || up.total.failed || (up.files.length - (up.total.uploaded + up.total.failed)) > 0) {
                     up.$noFileDefault.hide();
@@ -408,7 +414,7 @@
                 toggleStartUpload(up, "Refresh");
                 toggleBrowseButton(up);
                 toggleUploadInfo(up);
-               
+
 
             });
 
@@ -439,7 +445,7 @@
             uploader.bind('UploadProgress', function(up, file) {
                 console.group("UploadProgress事件");
                 console.dir(file)
-                
+
                 file.$progress.children().css("width", file.percent + "%");
                 toggleUploadInfo(up, "UploadProgress");
             });
@@ -451,23 +457,21 @@
             //文件上传成功才会触发
             uploader.bind('FileUploaded', function(up, file, info) {
                 console.group("FileUploaded事件");
-                console.dir(info);
+                
                 var response = $.parseJSON(info.response);
-                console.dir(response);
-                console.dir(up.total);
+                // console.dir(response);
+                // console.dir(up.total);
                 //服务器上传成功
-                if (!!response.OK && response.OK == 1) {
-                    file.serverUrl = response.info.path;
-                    toggleDelUploadServerBtn(up, file, "FileUploadedSuccess");
+                if (!!response.status && response.status == 1) {
+                    toggleDelUploadSLBtn(up, file, "FileUploadedSuccess");
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
                     toggleHanderBar(up, file, "FileUploadedSuccess");
-                    !!file.$inputHidden.length && file.$inputHidden.val(response.info.path);
-                    !!opt.fileUploaded && opt.fileUploaded(up, file,response.info)
+                    !!opt.fileUploaded && opt.fileUploaded.call(up, file, response)
 
                 } else {
                     //服务器上传失败
-                    
+
                     file.status = plupload.FAILED;
                     file.$error.show();
                     file.$progress.hide().children().css("width", 0);
@@ -489,7 +493,7 @@
                     file.$progress.hide().children().css('width', 0);
                     if (file.status == plupload.DONE) {
                         file.$success.show();
-                        toggleDelUploadServerBtn(up, file, "FileUploadedSuccess");
+                        toggleDelUploadSLBtn(up, file, "FileUploadedSuccess");
                         file.$error.hide();
                     } else if (file.status == plupload.FAILED) {
                         //失败的时候
@@ -500,7 +504,7 @@
                 });
                 !!opt.uploadComplete && opt.uploadComplete.call(up, files);
 
-                
+
 
 
             });
@@ -510,7 +514,10 @@
                 console.group("FilesRemoved事件");
                 $.each(files, function(index, file) {
                     file.$li.remove();
-                })
+                    !!opt.fileRemoved && opt.fileRemoved.call(up,file)
+                });
+
+               //在这里files 依然是存在的
 
             });
 
@@ -521,7 +528,7 @@
 
             uploader.bind('OptionChanged', function(up, name, value, oldValue) {
                 console.group("OptionChanged事件");
-                
+
             });
 
 
@@ -561,7 +568,7 @@
 
                 }
 
-
+                alert(details);
                 // layer.msg(details);
 
             });
@@ -593,14 +600,14 @@
         max_retries: 0,
         multi_selection: true,
         multipart_params: {},
-        delServerBtn: true,
-        uploadInfo:{
-            required:true,
-            containerClass:""
+        delSLBtn:true,
+        isCheck:false,
+        type:1,
+        uploadInfo: {
+            required: true,
+            container: false
         },
-        inputHidden: {
-            name: "photo_url[]"
-        },
+        
         filters: {
             max_file_count: 3,
             prevent_duplicates: true,
