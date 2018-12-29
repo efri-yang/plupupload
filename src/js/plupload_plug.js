@@ -558,11 +558,11 @@
                         break;
 
                     case plupload.IMAGE_FORMAT_ERROR:
-                        details = _("Image format either wrong or not supported.");
+                        details = _("图片格式错误或者不支持");
                         break;
 
                     case plupload.IMAGE_MEMORY_ERROR:
-                        details = _("Runtime ran out of available memory.");
+                        details = _("运行时已消耗所有可用内存。.");
                         break;
 
 
@@ -632,4 +632,4 @@
 
 
 
-})(Zepto || jQuery, plupload);
+})(window.Zepto || window.jQuery, plupload);

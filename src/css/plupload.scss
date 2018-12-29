@@ -345,8 +345,6 @@
     .item-upload-btn {
         width: 152px;
         height: 152px;
-
-
         a {
             display: block;
             width: 100%;
@@ -356,7 +354,7 @@
             background: url("../images/webuploader/retry_upload_60.png") no-repeat center center;
 
             &.disabled {
-                opacity: 0.35;
+                opacity: 0.25;
                 cursor: default;
             }
         }
