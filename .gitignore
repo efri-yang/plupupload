@@ -19,3 +19,4 @@ php/upload/*
 plupload/uploads/*
 upload
 *.zip
+package.json
