@@ -4,6 +4,7 @@ node_modules/
 build/
 src/uploads/
 gulp/
+package.json
 A小鱼日常/
 .tmp/
 dev/
