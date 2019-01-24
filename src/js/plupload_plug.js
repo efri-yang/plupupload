@@ -1,7 +1,7 @@
 (function($, plupload) {
     plupload.FILE_COUNT_ERROR = -9001;
     plupload.addFileFilter("max_file_count", function(maxFileCount, file, cb) {
-        console.group('max_file_count事件');
+        // console.group('max_file_count事件');
         // if (maxFileCount <= this.files.length - (this.total.uploaded + this.total.failed)) {
         if (maxFileCount <= this.files.length) {
             this.disableBrowse(true);
@@ -229,15 +229,15 @@
 
                 $(document).on("click", ".coms-upload-info .ignore", function(event) {
                     event.preventDefault();
-                    console.dir("ignore 点击xxxxxxxxxxxxxx");
-                    console.dir(uploader.files);
+                    // console.dir("ignore 点击xxxxxxxxxxxxxx");
+                    // console.dir(uploader.files);
                     for (var i = 0; i < uploader.files.length; i++) {
                         if (uploader.files[i].status == plupload.FAILED) {
                             uploader.removeFile(uploader.files[i]);
                             i--;
                         }
                     }
-                    console.dir(uploader.files);
+                    // console.dir(uploader.files);
 
                 })
 
@@ -247,7 +247,7 @@
 
             //多个文件上传按钮
             uploader.$btnStartload.on("click", function() {
-                console.dir("btnStartload点击事件");
+                // console.dir("btnStartload点击事件");
                 var $this = $(this);
                 if ($this.hasClass('disabled')) return;
                 // 编辑files 对于那些
@@ -262,7 +262,7 @@
             });
 
             uploader.$btnStopload.on("click", function() {
-                console.dir("btnStopload点击事件");
+                // console.dir("btnStopload点击事件");
                 uploader.stop();
                 toggleStartUpload(uploader, "Pausing");
                 toggleStopUpload(uploader, "Pausing");
@@ -271,27 +271,27 @@
 
 
             uploader.bind("Init", function(uploader) {
-                console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
+                // console.group("Init事件:当Plupload初始化完成后触发监听函数参数：(uploader)");
                 !!opt.initLoad && !!opt.initLoad(uploader);
             });
 
             uploader.bind("PostInit", function() {
-                console.group("PostInit事件:当Init事件发生后触发监听函数参数：(uploader)");
+                // console.group("PostInit事件:当Init事件发生后触发监听函数参数：(uploader)");
             });
 
             uploader.bind("Browse", function(up) {
-                console.group("Browse事件")
+                // console.group("Browse事件")
             });
 
             uploader.bind('FileFiltered', function(up, file) {
-                console.group("FileFiltered事件");
+                // console.group("FileFiltered事件");
 
             });
 
 
             //这里的files是指每次添加的，而不是总的
             uploader.bind('FilesAdded', function(up, files) {
-                console.group("FilesAdded事件");
+                // console.group("FilesAdded事件");
                 plupload.each(files, function(file) {
                     var str = '<li id="' + file.id + '">' +
                         '<div class="img-wrap">' +
@@ -356,13 +356,13 @@
 
                     //单个文件上传按钮
                     file.$uploadQueuedBtn.on("click", function() {
-                        console.dir("uploadQueuedBtn点击事件")
+                        // console.dir("uploadQueuedBtn点击事件")
                         var $this = $(this);
                         // console.dir(file);
                         if ($this.hasClass('retry-btn')) {
                             file.status = plupload.QUEUED;
                         }
-                        console.dir(up.total)
+                        // console.dir(up.total)
                         up.start();
                     });
 
@@ -381,7 +381,7 @@
 
 
             uploader.bind('QueueChanged', function(up) {
-                console.group("QueueChanged事件");
+                // console.group("QueueChanged事件");
                 //FilesAdded事件和FilesRemoved事件也会触发这个事件
                 
             });
@@ -392,8 +392,8 @@
 
                 //执行两次，一个是开始上传的时候
                 //然后是上传后FileUploaded 后执行 或者是在Error事件后执行StateChanged，但是两次的执行竟然up.total是一样的
-                console.group("StateChanged事件");
-                console.dir(up.total);
+                // console.group("StateChanged事件");
+                // console.dir(up.total);
 
 
             });
@@ -403,7 +403,7 @@
             //但是到refresh的时候，这个failed 就变成了0，所以toggleStartUpload 为什么放这里而不放StateChanged
 
             uploader.bind('Refresh', function(up) {
-                console.group("Refresh事件");
+                // console.group("Refresh事件");
 
                 //QueueChanged都会触发refresh函数，如果有上传的获取是有队列的时候,那么默认的图片就应该隐藏
                 if (up.total.uploaded || up.total.failed || (up.files.length - (up.total.uploaded + up.total.failed)) > 0) {
@@ -421,7 +421,7 @@
 
 
             uploader.bind('BeforeUpload', function(up, file) {
-                console.group("BeforeUpload事件");
+                // console.group("BeforeUpload事件");
                 file.$progress.show();
                 file.$error.hide();
                 toggleHanderBar(up, file, "BeforeUpload");
@@ -434,7 +434,7 @@
             });
 
             uploader.bind('UploadFile', function(up, file) {
-                console.group("UploadFile事件");
+                // console.group("UploadFile事件");
             });
 
 
@@ -443,20 +443,20 @@
 
 
             uploader.bind('UploadProgress', function(up, file) {
-                console.group("UploadProgress事件");
-                console.dir(file)
+                // console.group("UploadProgress事件");
+                // console.dir(file)
 
                 file.$progress.children().css("width", file.percent + "%");
                 toggleUploadInfo(up, "UploadProgress");
             });
 
             uploader.bind('ChunkUploaded', function(up, file, info) {
-                console.group("ChunkUploaded事件")
+                // console.group("ChunkUploaded事件")
             });
 
             //文件上传成功才会触发
             uploader.bind('FileUploaded', function(up, file, info) {
-                console.group("FileUploaded事件");
+                // console.group("FileUploaded事件");
                 
                 var response = $.parseJSON(info.response);
                 // console.dir(response);
@@ -485,7 +485,7 @@
 
             //固定会触发的
             uploader.bind('UploadComplete', function(up, files) {
-                console.group("UploadComplete事件");
+                // console.group("UploadComplete事件");
                 toggleStartUpload(up, "UploadComplete");
                 toggleStopUpload(up, "UploadComplete");
                 toggleUploadInfo(up, "UploadComplete");
@@ -511,7 +511,7 @@
 
 
             uploader.bind('FilesRemoved', function(up, files) {
-                console.group("FilesRemoved事件");
+                // console.group("FilesRemoved事件");
                 $.each(files, function(index, file) {
                     file.$li.remove();
                     !!opt.fileRemoved && opt.fileRemoved.call(up,file)
@@ -523,18 +523,18 @@
 
 
             uploader.bind('Destroy', function() {
-                console.group("Destroy事件")
+                // console.group("Destroy事件")
             });
 
             uploader.bind('OptionChanged', function(up, name, value, oldValue) {
-                console.group("OptionChanged事件");
+                // console.group("OptionChanged事件");
 
             });
 
 
 
             uploader.bind('Error', function(up, err) {
-                console.group("Error事件");
+                // console.group("Error事件");
                 switch (err.code) {
                     case plupload.FILE_EXTENSION_ERROR:
                         details = err.file.name + "文件不符合格式要求！";
