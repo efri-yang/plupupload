@@ -1,1 +1,564 @@
-.ckeditor-imgupload-dialog{float:left;width:700px;background:#fff;border:1px solid #e5e5e5;height:450px;overflow:hidden;display:none}.ckeditor-imgupload-dialog .imgupload-tab-hd{background:#f8f8f8;height:42px;line-height:42px;position:relative;border-bottom:1px solid #eee}.ckeditor-imgupload-dialog .imgupload-tab-hd li{float:left}.ckeditor-imgupload-dialog .imgupload-tab-hd li a{padding:0 20px;font-size:14px;color:#333;min-width:80px;max-width:260px;line-height:41px;text-align:center;display:block;text-decoration:none}.ckeditor-imgupload-dialog .imgupload-tab-hd li.active{height:43px;border-left:1px solid #eee;border-right:1px solid #eee;background-color:#fff}.ckeditor-imgupload-dialog .imgupload-tab-hd li.move-seat{position:absolute;right:0;left:245px;height:100%}.ckeditor-uploadfile-container{position:relative}.ckeditor-uploadfile-container .ckeditor-uploadfile-errortip{position:absolute;left:0;bottom:62px;right:0;padding:10px 15px;border:1px solid #cd0a0a;background:#fef1ec;font-size:12px;display:none}.ckeditor-uploadfile-container .ckeditor-uploadfile-errortip .close{width:14px;height:14px;position:absolute;overflow:hidden;right:5px;top:5px;background:url(../images/webuploader/del_small.png) no-repeat center #cd0a0a;border-radius:50%}.ckeditor-uploadfile-no{font-size:16px;text-align:center;color:#999;padding:180px 0 0;width:100%;position:absolute;left:0;top:0}.ckeditor-uploadfile-list{overflow-x:hidden;overflow-y:auto;position:relative;height:300px;clear:both;width:730px;padding:0 10px;border-bottom:1px solid #e6e6e6}.ckeditor-uploadfile-list:after{content:".";display:block;height:0;clear:both;visibility:hidden}.ckeditor-uploadfile-list li{float:left;width:112px;height:112px;margin:15px 12px 0;overflow:hidden;position:relative}.ckeditor-uploadfile-list li.selected .img-wrap{border-color:#00b7ee}.ckeditor-uploadfile-list li .img-wrap{border:1px solid #e6e6e6;font-size:0;width:110px;height:110px;overflow:hidden;text-align:center;color:#000}.ckeditor-uploadfile-list li .preview-pic{display:none;line-height:110px;overflow:hidden}.ckeditor-uploadfile-list li .preview-pic .uploadimg,.ckeditor-uploadfile-list li .preview-pic canvas{max-width:100%!important;max-height:100%;display:inline-block;vertical-align:middle}.ckeditor-uploadfile-list li .preview-name,.ckeditor-uploadfile-list li .preview-tip{line-height:110px;padding:0 10px;overflow:hidden;font-size:12px}.ckeditor-uploadfile-list li .preview-name span,.ckeditor-uploadfile-list li .preview-tip span{word-wrap:break-word;word-break:break-all;line-height:21px;display:inline-block;vertical-align:middle}.ckeditor-uploadfile-list li .preview-tip{font-size:14px;color:#999;background:url(../images/webuploader/bg.png) repeat top center}.ckeditor-uploadfile-list li .preview-name{display:none;background:url(../images/webuploader/bg.png) repeat top center}.ckeditor-uploadfile-list li .handle-bar{position:absolute;top:0;left:0;right:0;padding:0 5px;height:22px;font-size:14px;line-height:22px;background-color:rgba(0,0,0,.8);display:none}.ckeditor-uploadfile-list li .upbtn-del{float:right;margin-left:15px;color:#fff;text-decoration:none;cursor:pointer}.ckeditor-uploadfile-list li .upbtn-del:hover{text-decoration:underline}.ckeditor-uploadfile-list li .upbtn-del-server{position:absolute;width:25px;height:25px;line-height:25px;overflow:hidden;position:absolute;right:10px;top:10px;background-color:rgba(0,0,0,.7);border-radius:100%;text-align:center;display:none;background-image:url(../images/webuploader/del.png);background-repeat:no-repeat;background-position:center center;cursor:pointer}.ckeditor-uploadfile-list li .upbtn-del-server:hover{background-color:#000}.ckeditor-uploadfile-list li .error{position:absolute;left:0;right:0;bottom:0;height:25px;line-height:25px;text-align:center;background:#f60;color:#fff;font-size:12px;display:none}.ckeditor-uploadfile-list li .successing{width:40px;height:40px;background:url(../images/webuploader/success.png) no-repeat top center;position:absolute;right:0;bottom:0;display:none}.ckeditor-uploadfile-list li .progressing{position:absolute;width:100%;bottom:0;left:0;height:15px;overflow:hidden;z-index:50;margin-bottom:0;display:none}.ckeditor-uploadfile-list li .progressing span{overflow:hidden;width:0;height:100%;display:block;background:url(../images/webuploader/progress.png) repeat-x #1483d8;transition:width .2s linear;animation:progressmove 2s linear infinite;-webkit-transform:translateZ(0)}.ckeditor-uploadfile-hd{height:45px;border-bottom:1px solid #dadada;margin:0 10px;padding:0;line-height:45px;background:#fff;vertical-align:middle;position:relative;clear:both}.ckeditor-uploadfile-hd .img-upload-btn{margin-top:6px;background:#00b7ee;color:#fff;text-decoration:none;padding:0 15px;display:inline-block;border-radius:3px;margin-left:10px;cursor:pointer;font-size:14px;float:right;height:35px;line-height:35px}.ckeditor-uploadfile-hd .img-upload-btn.disabled{opacity:.5;background:#d1d1d1;cursor:not-allowed}.ckeditor-uploadfile-hd .img-pause-btn{background:#fff;border:1px solid #cfcfcf;color:#565656;padding:0 15px;border-radius:3px;cursor:pointer;float:right;height:33px;line-height:33px;text-decoration:none;margin-top:6px;margin-right:10px;display:none}.ckeditor-uploadfile-hd .img-add-btn{background:#fff;border:1px solid #cfcfcf;color:#565656;padding:0 15px;border-radius:3px;cursor:pointer;float:right;height:33px;line-height:33px;text-decoration:none;margin-top:6px}.ckeditor-uploadfile-hd .img-add-btn:hover{background:#f0f0f0}.ckeditor-uploadfile-hd .img-add-btn.disabled{opacity:.5;background:#d1d1d1;cursor:not-allowed;color:#fff}.ckeditor-uploadfile-hd .img-upload-info{float:left;font-size:14px;color:#666;line-height:46px}.ckeditor-uploadfile-hd .img-upload-info .info-txt{float:left}.ckeditor-uploadfile-hd .img-upload-info .info-progress{border:1px solid #1483d8;width:198px;display:none;background:#fff;height:18px;margin-top:13px;float:left;position:relative;text-align:center;line-height:20px;color:#6dbfff;position:relative;margin-right:10px}.ckeditor-uploadfile-hd .img-upload-info .info-progress .txt{position:relative;z-index:10}.ckeditor-uploadfile-hd .img-upload-info .info-progress .percentage{width:0;height:100%;left:0;top:0;background:#1483d8;position:absolute}.ckeditor-uploadfile-ft{padding:12px 15px}.ckeditor-uploadfile-ft:after{content:".";display:block;height:0;clear:both;visibility:hidden}.ckeditor-uploadfile-ft .ft-btn-cancel{background:#fff;border:1px solid #cfcfcf;color:#565656;padding:0 30px;border-radius:3px;cursor:pointer;float:right;height:35px;line-height:35px;text-decoration:none}.ckeditor-uploadfile-ft .ft-btn-cancel:hover{background:#f0f0f0}.ckeditor-uploadfile-ft .ft-btn-insert{float:right;background:#00b7ee;color:#fff;text-decoration:none;padding:0 30px;display:inline-block;border-radius:3px;margin-left:10px;cursor:pointer;font-size:14px;float:right;height:35px;line-height:35px}.ckeditor-uploadfile-ft .ft-btn-insert:hover{background:#00a2d4}.ckeditor-uploadfile-ft .ft-btn-insert.disabled{opacity:.5;background:#d1d1d1;cursor:not-allowed}.ckeditor-uploadfile-ft .ft-save-checkbox{float:left;padding:5px 0;margin-right:10px}.ckeditor-uploadfile-ft .ft-save-checkbox input{vertical-align:middle}.ckeditor-uploadfile-ft .ft-gallery-sel{float:left;border:1px solid #cfcfcf;padding:5px 10px}.ckeditor-gallery-nodata{text-align:center;font-size:16px;color:#666;padding-top:120px}.ckeditor-localupload-container{display:none}.ckeditor-localupload-container.active{display:block}.ckeditor-gallery-container{display:none}.ckeditor-gallery-container.active{display:block}.ckeditor-gallery-hasdata{display:none}.ckeditor-gallery-list{height:315px;padding:15px 10px;overflow-x:hidden;overflow-y:auto;position:relative;clear:both}.ckeditor-gallery-list li{width:112px;height:112px;float:left;margin:10px 10px 0;overflow:hidden;position:relative}.ckeditor-gallery-list li .pic{display:block;height:110px;overflow:hidden;line-height:110px;font-size:0;border:1px solid #ccc;text-align:center}.ckeditor-gallery-list li .pic img{max-width:100%;max-height:100%;overflow:hidden;vertical-align:middle;display:inline-block}.ckeditor-gallery-list li .status-check{display:none;position:absolute;right:0;bottom:0;height:40px;width:40px;z-index:200;background:url(../images/webuploader/success.png) no-repeat right bottom}.ckeditor-gallery-list li.selected .pic{border-color:#00b7ee}.ckeditor-gallery-list li.selected .status-check{display:block}.ckeditor-gallery-ft{border-top:1px solid #eee;padding:12px 15px}.ckeditor-gallery-ft:after{content:".";display:block;height:0;clear:both;visibility:hidden}.ckeditor-gallery-ft .ft-galleryall-sel{float:left;border:1px solid #cfcfcf;padding:5px 10px;margin-top:5px}.ckeditor-gallery-ft .ft-galleryall-cancel{background:#fff;border:1px solid #cfcfcf;color:#565656;padding:0 30px;border-radius:3px;cursor:pointer;float:right;height:35px;line-height:35px;text-decoration:none}.ckeditor-gallery-ft .ft-galleryall-cancel:hover{background:#f0f0f0}.ckeditor-gallery-ft .ft-galleryall-insert{float:right;background:#00b7ee;color:#fff;text-decoration:none;padding:0 30px;display:inline-block;border-radius:3px;margin-left:10px;cursor:pointer;font-size:14px;float:right;height:35px;line-height:35px}.ckeditor-gallery-ft .ft-galleryall-insert:hover{background:#00a2d4}.ckeditor-gallery-ft .ft-galleryall-insert.disabled{opacity:.5;background:#d1d1d1;cursor:not-allowed;color:#fff}.filePicker-btn-1{float:right;background:#00b7ee;color:#fff;text-decoration:none;padding:0 30px;display:inline-block;border-radius:3px;margin-left:10px;cursor:pointer;font-size:14px;float:right;height:35px;line-height:35px}.ckeditor-imgedit-dialog{display:none;padding-top:15px}.ckeditor-imgedit-dialog .item-cell{position:relative;padding-bottom:10px}.ckeditor-imgedit-dialog .item-cell .lab{float:left;line-height:40px;width:60px;padding-right:10px;text-align:right}.ckeditor-imgedit-dialog .item-cell .ipt-text{border:1px solid #c7c7c7;padding:7px 5px;height:18px;line-height:18px}.ckeditor-imgedit-dialog .item-ratio{position:absolute;height:30px;overflow:hidden;right:80px;top:40px}.ckeditor-imgedit-dialog .item-ratio .btnlock{width:28px;height:28px;float:left;margin-right:5px;background:url(../images/lock_1.png) no-repeat center center;display:block;border:1px solid #fff;cursor:pointer}.ckeditor-imgedit-dialog .item-ratio .btnlock.unlock{background:url(../images/unlock_1.png) no-repeat center center}.ckeditor-imgedit-dialog .item-ratio .btnlock:hover{padding:0;border:1px solid #e5e5e5}.ckeditor-imgedit-dialog .item-ratio .btnreset{width:28px;height:28px;float:left;border:1px solid #fff;display:block;overflow:hidden;background:url(../images/refresh_1.png) no-repeat center center;cursor:pointer}.ckeditor-imgedit-dialog .item-ratio .btnreset:hover{border:1px solid #e5e5e5}.ckeditor-imgedit-ft{border-top:1px solid #eee;padding:12px 15px;text-align:center}.ckeditor-imgedit-ft .ft-btn-cancel{background:#fff;border:1px solid #cfcfcf;color:#565656;padding:0 30px;border-radius:3px;cursor:pointer;display:inline-block;height:35px;line-height:35px;margin:0 5px;text-decoration:none}.ckeditor-imgedit-ft .ft-btn-cancel:hover{background:#f0f0f0}.ckeditor-imgedit-ft .ft-btn-insert{display:inline-block;background:#00b7ee;color:#fff;text-decoration:none;padding:0 30px;display:inline-block;border-radius:3px;margin:0 5px;cursor:pointer;font-size:14px;height:35px;line-height:35px}.ckeditor-imgedit-ft .ft-btn-insert:hover{background:#00a2d4}.ckeditor-imgedit-ft .ft-btn-insert.disabled{opacity:.5;cursor:not-allowed}
+.ckeditor-imgupload-dialog {
+  float: left;
+  width: 700px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  height: 450px;
+  overflow: hidden;
+  display: none; }
+  .ckeditor-imgupload-dialog .imgupload-tab-hd {
+    background: #F8F8F8;
+    height: 42px;
+    line-height: 42px;
+    position: relative;
+    border-bottom: 1px solid #eee; }
+    .ckeditor-imgupload-dialog .imgupload-tab-hd li {
+      float: left; }
+      .ckeditor-imgupload-dialog .imgupload-tab-hd li a {
+        padding: 0 20px;
+        font-size: 14px;
+        color: #333;
+        min-width: 80px;
+        max-width: 260px;
+        line-height: 41px;
+        text-align: center;
+        display: block;
+        text-decoration: none; }
+      .ckeditor-imgupload-dialog .imgupload-tab-hd li.active {
+        height: 43px;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+        background-color: #fff; }
+      .ckeditor-imgupload-dialog .imgupload-tab-hd li.move-seat {
+        position: absolute;
+        right: 0;
+        left: 245px;
+        height: 100%; }
+
+.ckeditor-uploadfile-container {
+  position: relative; }
+  .ckeditor-uploadfile-container .ckeditor-uploadfile-errortip {
+    position: absolute;
+    left: 0;
+    bottom: 62px;
+    right: 0;
+    padding: 10px 15px;
+    border: 1px solid #cd0a0a;
+    background: #fef1ec;
+    font-size: 12px;
+    display: none; }
+    .ckeditor-uploadfile-container .ckeditor-uploadfile-errortip .close {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      overflow: hidden;
+      right: 5px;
+      top: 5px;
+      background: url("../images/webuploader/del_small.png") no-repeat center #cd0a0a;
+      border-radius: 50%; }
+
+.ckeditor-uploadfile-no {
+  font-size: 16px;
+  text-align: center;
+  color: #999;
+  padding: 180px 0 0;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+
+.ckeditor-uploadfile-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  height: 300px;
+  clear: both;
+  width: 730px;
+  padding: 0 10px;
+  border-bottom: 1px solid #e6e6e6; }
+  .ckeditor-uploadfile-list:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  .ckeditor-uploadfile-list li {
+    float: left;
+    width: 112px;
+    height: 112px;
+    margin: 15px 12px 0;
+    overflow: hidden;
+    position: relative; }
+    .ckeditor-uploadfile-list li.selected .img-wrap {
+      border-color: #00b7ee; }
+    .ckeditor-uploadfile-list li .img-wrap {
+      border: 1px solid #e6e6e6;
+      font-size: 0;
+      width: 110px;
+      height: 110px;
+      overflow: hidden;
+      text-align: center;
+      color: #000; }
+    .ckeditor-uploadfile-list li .preview-pic {
+      display: none;
+      line-height: 110px;
+      overflow: hidden; }
+      .ckeditor-uploadfile-list li .preview-pic .uploadimg,
+      .ckeditor-uploadfile-list li .preview-pic canvas {
+        max-width: 100% !important;
+        max-height: 100%;
+        display: inline-block;
+        vertical-align: middle; }
+    .ckeditor-uploadfile-list li .preview-tip,
+    .ckeditor-uploadfile-list li .preview-name {
+      line-height: 110px;
+      padding: 0 10px;
+      overflow: hidden;
+      font-size: 12px; }
+      .ckeditor-uploadfile-list li .preview-tip span,
+      .ckeditor-uploadfile-list li .preview-name span {
+        word-wrap: break-word;
+        word-break: break-all;
+        line-height: 21px;
+        display: inline-block;
+        vertical-align: middle; }
+    .ckeditor-uploadfile-list li .preview-tip {
+      font-size: 14px;
+      color: #999;
+      background: url("../images/webuploader/bg.png") repeat top center; }
+    .ckeditor-uploadfile-list li .preview-name {
+      display: none;
+      background: url("../images/webuploader/bg.png") repeat top center; }
+    .ckeditor-uploadfile-list li .handle-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 0 5px;
+      height: 22px;
+      font-size: 14px;
+      line-height: 22px;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: none; }
+    .ckeditor-uploadfile-list li .upbtn-del {
+      float: right;
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer; }
+      .ckeditor-uploadfile-list li .upbtn-del:hover {
+        text-decoration: underline; }
+    .ckeditor-uploadfile-list li .upbtn-del-server {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      overflow: hidden;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 100%;
+      text-align: center;
+      display: none;
+      background-image: url("../images/webuploader/del.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      cursor: pointer; }
+      .ckeditor-uploadfile-list li .upbtn-del-server:hover {
+        background-color: black; }
+    .ckeditor-uploadfile-list li .error {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+      background: #f60;
+      color: #fff;
+      font-size: 12px;
+      display: none; }
+    .ckeditor-uploadfile-list li .successing {
+      width: 40px;
+      height: 40px;
+      background: url("../images/webuploader/success.png") no-repeat top center;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      display: none; }
+    .ckeditor-uploadfile-list li .progressing {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      height: 15px;
+      overflow: hidden;
+      z-index: 50;
+      margin-bottom: 0;
+      display: none; }
+      .ckeditor-uploadfile-list li .progressing span {
+        overflow: hidden;
+        width: 0;
+        height: 100%;
+        display: block;
+        background: url("../images/webuploader/progress.png") repeat-x #1483d8;
+        transition: width 200ms linear;
+        animation: progressmove 2s linear infinite;
+        -webkit-transform: translateZ(0); }
+
+.ckeditor-uploadfile-hd {
+  height: 45px;
+  border-bottom: 1px solid #dadada;
+  margin: 0 10px;
+  padding: 0;
+  line-height: 45px;
+  background: #fff;
+  vertical-align: middle;
+  position: relative;
+  clear: both; }
+  .ckeditor-uploadfile-hd .img-upload-btn {
+    margin-top: 6px;
+    background: #00b7ee;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 15px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    height: 35px;
+    line-height: 35px; }
+    .ckeditor-uploadfile-hd .img-upload-btn.disabled {
+      opacity: 0.5;
+      background: #d1d1d1;
+      cursor: not-allowed; }
+  .ckeditor-uploadfile-hd .img-pause-btn {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    height: 33px;
+    line-height: 33px;
+    text-decoration: none;
+    margin-top: 6px;
+    margin-right: 10px;
+    display: none; }
+  .ckeditor-uploadfile-hd .img-add-btn {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    height: 33px;
+    line-height: 33px;
+    text-decoration: none;
+    margin-top: 6px; }
+    .ckeditor-uploadfile-hd .img-add-btn:hover {
+      background: #f0f0f0; }
+    .ckeditor-uploadfile-hd .img-add-btn.disabled {
+      opacity: 0.5;
+      background: #d1d1d1;
+      cursor: not-allowed;
+      color: #fff; }
+  .ckeditor-uploadfile-hd .img-upload-info {
+    float: left;
+    font-size: 14px;
+    color: #666666;
+    line-height: 46px; }
+    .ckeditor-uploadfile-hd .img-upload-info .info-txt {
+      float: left; }
+    .ckeditor-uploadfile-hd .img-upload-info .info-progress {
+      border: 1px solid #1483d8;
+      width: 198px;
+      display: none;
+      background: #fff;
+      height: 18px;
+      margin-top: 13px;
+      float: left;
+      position: relative;
+      text-align: center;
+      line-height: 20px;
+      color: #6dbfff;
+      position: relative;
+      margin-right: 10px; }
+      .ckeditor-uploadfile-hd .img-upload-info .info-progress .txt {
+        position: relative;
+        z-index: 10; }
+      .ckeditor-uploadfile-hd .img-upload-info .info-progress .percentage {
+        width: 0;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: #1483d8;
+        position: absolute; }
+
+.ckeditor-uploadfile-ft {
+  padding: 12px 15px; }
+  .ckeditor-uploadfile-ft:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  .ckeditor-uploadfile-ft .ft-btn-cancel {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    height: 35px;
+    line-height: 35px;
+    text-decoration: none; }
+    .ckeditor-uploadfile-ft .ft-btn-cancel:hover {
+      background: #f0f0f0; }
+  .ckeditor-uploadfile-ft .ft-btn-insert {
+    float: right;
+    background: #00b7ee;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 30px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    height: 35px;
+    line-height: 35px; }
+    .ckeditor-uploadfile-ft .ft-btn-insert:hover {
+      background: #00a2d4; }
+    .ckeditor-uploadfile-ft .ft-btn-insert.disabled {
+      opacity: 0.5;
+      background: #d1d1d1;
+      cursor: not-allowed; }
+  .ckeditor-uploadfile-ft .ft-save-checkbox {
+    float: left;
+    padding: 5px 0;
+    margin-right: 10px; }
+    .ckeditor-uploadfile-ft .ft-save-checkbox input {
+      vertical-align: middle; }
+  .ckeditor-uploadfile-ft .ft-gallery-sel {
+    float: left;
+    border: 1px solid #cfcfcf;
+    padding: 5px 10px; }
+
+.ckeditor-gallery-nodata {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding-top: 120px; }
+
+.ckeditor-localupload-container {
+  display: none; }
+  .ckeditor-localupload-container.active {
+    display: block; }
+
+.ckeditor-gallery-container {
+  display: none; }
+  .ckeditor-gallery-container.active {
+    display: block; }
+
+.ckeditor-gallery-hasdata {
+  display: none; }
+
+.ckeditor-gallery-list {
+  height: 315px;
+  padding: 15px 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  clear: both; }
+  .ckeditor-gallery-list li {
+    width: 112px;
+    height: 112px;
+    float: left;
+    margin: 10px 10px 0;
+    overflow: hidden;
+    position: relative; }
+    .ckeditor-gallery-list li .pic {
+      display: block;
+      height: 110px;
+      overflow: hidden;
+      line-height: 110px;
+      font-size: 0;
+      border: 1px solid #ccc;
+      text-align: center; }
+      .ckeditor-gallery-list li .pic img {
+        max-width: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        vertical-align: middle;
+        display: inline-block; }
+    .ckeditor-gallery-list li .status-check {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 40px;
+      width: 40px;
+      z-index: 200;
+      background: url("../images/webuploader/success.png") no-repeat right bottom; }
+    .ckeditor-gallery-list li.selected .pic {
+      border-color: #00b7ee; }
+    .ckeditor-gallery-list li.selected .status-check {
+      display: block; }
+
+.ckeditor-gallery-ft {
+  border-top: 1px solid #eee;
+  padding: 12px 15px; }
+  .ckeditor-gallery-ft:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  .ckeditor-gallery-ft .ft-galleryall-sel {
+    float: left;
+    border: 1px solid #cfcfcf;
+    padding: 5px 10px;
+    margin-top: 5px; }
+  .ckeditor-gallery-ft .ft-galleryall-cancel {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    height: 35px;
+    line-height: 35px;
+    text-decoration: none; }
+    .ckeditor-gallery-ft .ft-galleryall-cancel:hover {
+      background: #f0f0f0; }
+  .ckeditor-gallery-ft .ft-galleryall-insert {
+    float: right;
+    background: #00b7ee;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 30px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    height: 35px;
+    line-height: 35px; }
+    .ckeditor-gallery-ft .ft-galleryall-insert:hover {
+      background: #00a2d4; }
+    .ckeditor-gallery-ft .ft-galleryall-insert.disabled {
+      opacity: 0.5;
+      background: #d1d1d1;
+      cursor: not-allowed;
+      color: #fff; }
+
+.filePicker-btn-1 {
+  float: right;
+  background: #00b7ee;
+  color: #fff;
+  text-decoration: none;
+  padding: 0 30px;
+  display: inline-block;
+  border-radius: 3px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  float: right;
+  height: 35px;
+  line-height: 35px; }
+
+.ckeditor-imgedit-dialog {
+  display: none;
+  padding-top: 15px; }
+  .ckeditor-imgedit-dialog .item-cell {
+    position: relative;
+    padding-bottom: 10px; }
+    .ckeditor-imgedit-dialog .item-cell .lab {
+      float: left;
+      line-height: 40px;
+      width: 60px;
+      padding-right: 10px;
+      text-align: right; }
+    .ckeditor-imgedit-dialog .item-cell .ipt-text {
+      border: 1px solid #c7c7c7;
+      padding: 7px 5px;
+      height: 18px;
+      line-height: 18px; }
+  .ckeditor-imgedit-dialog .item-ratio {
+    position: absolute;
+    height: 30px;
+    overflow: hidden;
+    right: 80px;
+    top: 40px; }
+    .ckeditor-imgedit-dialog .item-ratio .btnlock {
+      width: 28px;
+      height: 28px;
+      float: left;
+      margin-right: 5px;
+      background: url("../images/lock_1.png") no-repeat center center;
+      display: block;
+      border: 1px solid #fff;
+      cursor: pointer; }
+      .ckeditor-imgedit-dialog .item-ratio .btnlock.unlock {
+        background: url("../images/unlock_1.png") no-repeat center center; }
+      .ckeditor-imgedit-dialog .item-ratio .btnlock:hover {
+        padding: 0;
+        border: 1px solid #e5e5e5; }
+    .ckeditor-imgedit-dialog .item-ratio .btnreset {
+      width: 28px;
+      height: 28px;
+      float: left;
+      border: 1px solid #fff;
+      display: block;
+      overflow: hidden;
+      background: url("../images/refresh_1.png") no-repeat center center;
+      cursor: pointer; }
+      .ckeditor-imgedit-dialog .item-ratio .btnreset:hover {
+        border: 1px solid #e5e5e5; }
+
+.ckeditor-imgedit-ft {
+  border-top: 1px solid #eee;
+  padding: 12px 15px;
+  text-align: center; }
+  .ckeditor-imgedit-ft .ft-btn-cancel {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    margin: 0 5px;
+    text-decoration: none; }
+    .ckeditor-imgedit-ft .ft-btn-cancel:hover {
+      background: #f0f0f0; }
+  .ckeditor-imgedit-ft .ft-btn-insert {
+    display: inline-block;
+    background: #00b7ee;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 30px;
+    display: inline-block;
+    border-radius: 3px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    height: 35px;
+    line-height: 35px; }
+    .ckeditor-imgedit-ft .ft-btn-insert:hover {
+      background: #00a2d4; }
+    .ckeditor-imgedit-ft .ft-btn-insert.disabled {
+      opacity: 0.5;
+      cursor: not-allowed; }

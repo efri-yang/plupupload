@@ -77,9 +77,33 @@
   background: url("../images/webuploader/not_file_image.png") no-repeat center center; }
 
 .coms-upload-info {
-  float: left;
-  padding: 10px 0;
-  display: none; }
+  padding: 15px 0;
+  overflow: hidden; }
+  .coms-upload-info .info-txt {
+    float: left; }
+  .coms-upload-info .info-progress {
+    border: 1px solid #1483d8;
+    width: 198px;
+    display: none;
+    background: #fff;
+    height: 18px;
+    float: left;
+    position: relative;
+    text-align: center;
+    line-height: 20px;
+    color: #6dbfff;
+    position: relative;
+    margin-right: 10px; }
+    .coms-upload-info .info-progress .txt {
+      position: relative;
+      z-index: 10; }
+    .coms-upload-info .info-progress .percentage {
+      width: 0;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: #1483d8;
+      position: absolute; }
 
 .coms-upload-list li {
   float: left;
@@ -97,6 +121,44 @@
     overflow: hidden;
     text-align: center;
     color: #000; }
+  .coms-upload-list li .upbtn-del-sl {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 100%;
+    text-align: center;
+    display: none;
+    background-image: url("../images/webuploader/del.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer; }
+    .coms-upload-list li .upbtn-del-sl:hover {
+      background-color: black; }
+  .coms-upload-list li.disabled {
+    display: none; }
+  .coms-upload-list li .retry-upload-btn {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    left: 50%;
+    top: 50%;
+    margin: -35px 0 0 -35px;
+    border-radius: 100%;
+    display: none;
+    background: url("../images/webuploader/retry_upload_40.png") no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.8); }
+    .coms-upload-list li .retry-upload-btn a {
+      display: block;
+      width: 100%;
+      height: 100%; }
+      .coms-upload-list li .retry-upload-btn a.disabled {
+        display: none; }
   .coms-upload-list li .preview-pic {
     display: none;
     line-height: 150px;
@@ -138,15 +200,6 @@
     line-height: 30px;
     background-color: rgba(0, 0, 0, 0.8);
     display: none; }
-  .coms-upload-list li .upbtn-upload {
-    float: right;
-    margin-left: 15px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    display: none; }
-    .coms-upload-list li .upbtn-upload:hover {
-      text-decoration: underline; }
   .coms-upload-list li .upbtn-del {
     float: right;
     margin-left: 15px;
@@ -155,25 +208,6 @@
     cursor: pointer; }
     .coms-upload-list li .upbtn-del:hover {
       text-decoration: underline; }
-  .coms-upload-list li .upbtn-del-server {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 100%;
-    text-align: center;
-    display: none;
-    background-image: url("../images/webuploader/del.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    cursor: pointer; }
-    .coms-upload-list li .upbtn-del-server:hover {
-      background-color: black; }
   .coms-upload-list li .error {
     position: absolute;
     left: 0;
@@ -213,3 +247,17 @@
       transition: width 200ms linear;
       animation: progressmove 2s linear infinite;
       -webkit-transform: translateZ(0); }
+
+.coms-upload-list .item-upload-btn {
+  width: 152px;
+  height: 152px; }
+  .coms-upload-list .item-upload-btn a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #cdcdcd;
+    box-sizing: border-box;
+    background: url("../images/webuploader/retry_upload_60.png") no-repeat center center; }
+    .coms-upload-list .item-upload-btn a.disabled {
+      opacity: 0.25;
+      cursor: default; }

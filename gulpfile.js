@@ -15,7 +15,7 @@ const cleans = require('./gulp/clean');
 
 
 
-gulp.task('default', gulp.series(cleans, gulp.parallel(htmls.html,scripts.script,styles.style,images.image,others.other,watchs,servers.server)));
+gulp.task('default', gulp.series(cleans, gulp.parallel(htmls.html,htmls.cHtml,scripts.script,scripts.cScript,styles.style,styles.cStyle,images.image,others.other,watchs,servers.server)));
 
 
 

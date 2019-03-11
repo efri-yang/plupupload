@@ -1,1 +1,18 @@
-.ckeditor-iframebox-dialog{display:none}.ckeditor-iframebox-dialog .lab{width:80px;padding-right:10px;line-height:34px;float:left;text-align:right}.ckeditor-iframebox-dialog .item-cell{padding-top:15px}.ckeditor-iframebox-ft{border-top:1px solid #eee;padding:12px 15px;margin-top:15px;text-align:right}.ckeditor-iframebox-ft a{margin-left:10px}
+.ckeditor-iframebox-dialog {
+  display: none; }
+  .ckeditor-iframebox-dialog .lab {
+    width: 80px;
+    padding-right: 10px;
+    line-height: 34px;
+    float: left;
+    text-align: right; }
+  .ckeditor-iframebox-dialog .item-cell {
+    padding-top: 15px; }
+
+.ckeditor-iframebox-ft {
+  border-top: 1px solid #eee;
+  padding: 12px 15px;
+  margin-top: 15px;
+  text-align: right; }
+  .ckeditor-iframebox-ft a {
+    margin-left: 10px; }
