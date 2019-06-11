@@ -612,10 +612,10 @@
             max_file_count: 3,
             prevent_duplicates: true,
             max_file_size: '30mb',
-            mime_types: [
-                { title: "Image files", extensions: "jpg,gif,png" },
-                { title: "Zip files", extensions: "zip" }
-            ]
+            // mime_types: [
+            //     { title: "Image files", extensions: "jpg,gif,png" },
+            //     { title: "Zip files", extensions: "zip" }
+            // ]
         },
         resize: {
             // width: 100,
