@@ -472,7 +472,7 @@
                 // console.dir(response);
                 // console.dir(up.total);
                 //服务器上传成功
-                if (!!response.status && response.status == 1) {
+                if (!!response.code && response.code == 1) {
                     toggleDelUploadSLBtn(up, file, "FileUploadedSuccess");
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
