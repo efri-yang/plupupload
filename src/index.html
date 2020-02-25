@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>文件上传Demo</title>
-    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script> -->
-    <!-- <script type="text/javascript" src="js/layer/layer.js"></script> -->
-    <script type="text/javascript" src="js/zepto.js"></script>
-    <!--  -->
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <!-- <script type="text/javascript" src="js/zepto.js"></script> -->
     <script type="text/javascript" src="js/flexible2.0.js"></script>
-
     <script type="text/javascript" src="js/plupload/moxie.min.js"></script>
     <script type="text/javascript" src="js/plupload/plupload.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/base-h5.css">
@@ -19,11 +16,18 @@
     .btn-1 {
         margin: 15px 0 0;
     }
+    .cap-1{
+        font-size:0.6rem;
+        margin:0.5rem 0 0.2rem;
+    }
+    .demo-uploaded-list .coms-plupload-container {
+        float: left;
+    }
     </style>
 </head>
 
 <body style="padding: 20px 50px;">
-    <h1 style="margin:40px 0 15px;">上传图片1</h1>
+    <h1  class="cap-1">上传图片1</h1>
     <div class="coms-plupload-container">
         <div class="coms-plupload-nofile"></div>
         <ul class="coms-upload-list clearfix">
@@ -36,7 +40,7 @@
         <input type="hidden" name="plupload01[]" id="J_plupload01">
         <button class="btn-1">改变选项值(初始化参数值)</button>
     </div>
-    <h1 style="margin:40px 0 15px;">上传图片2</h1>
+    <h1  class="cap-1">上传图片2</h1>
     <div class="coms-plupload-container">
         <ul class="coms-upload-list clearfix">
             <li class="item-upload-btn">
@@ -44,20 +48,15 @@
             </li>
         </ul>
     </div>
-    <h1 style="margin:40px 0 15px;">上传图片后的审核(假设最多上传6张)</h1>
-    <style type="text/css">
-    .demo-uploaded-list .coms-plupload-container {
-        float: left;
-    }
-    </style>
+    <h1 class="cap-1">上传图片后的审核(假设最多上传4张)</h1>
     <div class="demo-uploaded-list clearfix">
         <div class="coms-plupload-container">
-            <ul class="coms-upload-list clearfix">
+            <ul class="coms-upload-list has-data clearfix">
                 <li>
                     <div class="img-wrap preview">
                         <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
                         <div class="preview-pic" style="display:block">
-                            <img src="images/demo/01.jpg" class="uploadimg" />
+                            <img src="https://wnworld.com/images/1.jpg" class="uploadimg" />
                             </div>
                             <span class="error" style="display:block">上传失败，请重试</span>
                             <div class="retry-upload-btn" style="display:block;"><a href="#" class="J_btn-pickfiles3" data-id="1"></a></div>
@@ -67,11 +66,11 @@
             </ul>
         </div>
         <div class="coms-plupload-container">
-            <ul class="coms-upload-list clearfix">
+            <ul class="coms-upload-list has-data clearfix">
                 <li>
                     <div class="img-wrap preview">
                         <div class="preview-pic" style="display:block">
-                            <img src="images/demo/01.jpg" class="uploadimg" />
+                            <img src="https://wnworld.com/images/2.jpg" class="uploadimg" />
                             </div>
                             <span class="error">上传失败，请重试</span>
                             <div class="retry-upload-btn"><a href="#" class="J_btn-pickfiles3" data-id="2"></a></div>
@@ -81,11 +80,11 @@
             </ul>
         </div>
         <div class="coms-plupload-container">
-            <ul class="coms-upload-list clearfix">
+            <ul class="coms-upload-list has-data clearfix">
                 <li>
                     <div class="img-wrap preview">
                         <div class="preview-pic" style="display:block">
-                            <img src="images/demo/01.jpg" class="uploadimg" />
+                            <img src="https://wnworld.com/images/3.jpg" class="uploadimg" />
                             </div>
                             <span class="error" style="display:block">上传失败，请重试</span>
                             <div class="retry-upload-btn" style="display:block;"><a href="#" class="J_btn-pickfiles3" data-id="3"></a></div>
@@ -95,7 +94,7 @@
             </ul>
         </div>
         <div class="coms-plupload-container">
-            <ul class="coms-upload-list clearfix">
+            <ul class="coms-upload-list has-data clearfix">
                 <li class="item-upload-btn">
                     <a href="#" class="btn-pickfiles J_btn-pickfiles3"></a>
                 </li>
@@ -106,7 +105,6 @@
     <script type="text/javascript" src="js/plupload_plug.js"></script>
     <script type="text/javascript">
     function arrayHandler(dataList) {
-
         this.dataStore = dataList;
         this.dataStoreOld=JSON.parse(JSON.stringify(dataList));
         this.listSize = dataList.length;
@@ -133,8 +131,6 @@
         this.dataStore[this.listSize++] = value;
     }
 
-   
-
     arrayHandler.prototype.splice = function(key, value,replaceKey,replaceVal) {
         var foundAt = this.find(key,value);
         if (foundAt > -1) {
@@ -149,23 +145,22 @@
             return arr.join("|");
     }
 
-   
+     
     $(function() {
         var $up1Hidden = $("#J_plupload01");
         var up1DataHandler = new arrayHandler([]);
         var uploader1 = $("#J_pickfiles1").plupload({
-            delSLBtn: true,
             type: 1,
-
+            url: './php/upload.php',
             filters: {
-                max_file_count: 2
+                max_file_count:2
             },
             uploadInfo: {
                 required: true,
                 container: ""
             },
             multipart_params: {
-                uid: 10
+                uid: 10 //用户的id
             },
             initLoad: function(up) {
                 up.$container.find(".btn-1").on("click", function() {
@@ -196,11 +191,8 @@
                 console.dir(up1DataHandler.dataStore)
             },
             //plupload 执行全部的上传事件后触发该函数，只触发一次
-            uploadComplete: function(up, files) {
-
-            }
+            uploadComplete: function(up, files) {}
         });
-
     });
     
 
@@ -208,9 +200,7 @@
         var $up2Hidden = $("#J_plupload02");
         var up2DataHandler = new arrayHandler([]);
         uploader2 = $("#J_pickfiles2").plupload({
-            delSLBtn: true,
             type: 2,
-
             filters: {
                 max_file_count: 2
             },
@@ -219,7 +209,7 @@
                 container: ""
             },
             multipart_params: {
-                uid: 10
+                uid: 10  //用户的id
             },
             initLoad: function(up) {
                 up.$container.find(".btn-1").on("click", function() {
@@ -258,18 +248,17 @@
 
     $(function(){
         var up3Data = [
-            { "id": 1,  "path": "/uploads/20181228/01.jpg", "status": -1 },
-            { "id": 2,  "path": "/uploads/20181228/02.jpg", "status": 0 },
-            { "id": 3,  "path": "/uploads/20181228/03.jpg", "status": 1 }
+            { "id": 1,  "path": "https://wnworld.com/images/1.jpg", "status": -1 },
+            { "id": 2,  "path": "https://wnworld.com/images/2.jpg", "status": 0 },
+            { "id": 3,  "path": "https://wnworld.com/images/3.jpg", "status": 1 }
         ]
         var up3DataHandler = new arrayHandler(up3Data);
         var $up3Hidden = $("#J_plupload03");
         var uploader3 = $(".J_btn-pickfiles3").plupload({
-            delSLBtn: true,
             type: 2,
-
+            url: './php/upload.php',
             filters: {
-                max_file_count: 2
+                max_file_count: 6
             },
             uploadInfo: {
                 required: true,

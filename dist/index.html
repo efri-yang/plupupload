@@ -3,115 +3,343 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>文件上传Demo</title>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="js/layer/layer.js"></script>
-    <!--  -->
-    <script type="text/javascript" src="js/plupload/moxie.js"></script>
-    <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
-    <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/base.css">
-    <link rel="stylesheet" type="text/css" href="css/plugin.css">
-    <link rel="stylesheet" type="text/css" href="../dev/css/plugin.css">
-    
+    <!-- <script type="text/javascript" src="js/zepto.js"></script> -->
+    <script type="text/javascript" src="js/flexible2.0.js"></script>
+    <script type="text/javascript" src="js/plupload/moxie.min.js"></script>
+    <script type="text/javascript" src="js/plupload/plupload.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/base-h5.css">
+    <link rel="stylesheet" type="text/css" href="css/plupload-h5.css">
+    <style type="text/css">
+    .btn-1 {
+        margin: 15px 0 0;
+    }
+    .cap-1{
+        font-size:0.6rem;
+        margin:0.5rem 0 0.2rem;
+    }
+    .demo-uploaded-list .coms-plupload-container {
+        float: left;
+    }
+    </style>
 </head>
-  
+
 <body style="padding: 20px 50px;">
-    <div class="coms-plupload-container ">
-        <div class="coms-upload-info">
-            <div class="info-txt"></div>
-            <div class="info-progress">
-                <span class="txt"></span>
-                <span class="percentage"></span>
-            </div>
-        </div>
+    <h1  class="cap-1">上传图片1</h1>
+    <div class="coms-plupload-container">
         <div class="coms-plupload-nofile"></div>
-        
         <ul class="coms-upload-list clearfix">
-             
         </ul>
         <div class="coms-btn-choice  clearfix">
             <a id="J_pickfiles1" class="btn-pickfiles" href="javascript:;">选择文件</a>
             <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
             <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
-            
         </div>
-        
-
-        <button class="btn-1">改变选项值(传给后天参数值)</button>
-        
-        
-
+        <input type="hidden" name="plupload01[]" id="J_plupload01">
+        <button class="btn-1">改变选项值(初始化参数值)</button>
     </div>
-    
-        <div style="margin-top: 50px;"></div>
-
-     <div class="coms-plupload-container">
-        <div class="coms-plupload-nofile"></div>
-        
+    <h1  class="cap-1">上传图片2</h1>
+    <div class="coms-plupload-container">
         <ul class="coms-upload-list clearfix">
-             
+            <li class="item-upload-btn">
+                <a href="#" class="btn-pickfiles" id="J_pickfiles2"></a>
+            </li>
         </ul>
-        <div class="coms-btn-choice">
-            <a id="J_pickfiles2" class="btn-pickfiles" href="javascript:;">选择文件</a>
-            <a href="javascript:void(0);" class="btn-startload-file">上传文件</a>
-            <a href="javascript:void(0);" class="btn-stopload-file">暂停上传</a>
-        </div>
-
-
     </div>
-    <script type="text/javascript" src="../dev/js/uploadfile.js"></script>
+    <h1 class="cap-1">上传图片后的审核(假设最多上传4张)</h1>
+    <div class="demo-uploaded-list clearfix">
+        <div class="coms-plupload-container">
+            <ul class="coms-upload-list has-data clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-name"><span>2018-2018-2018-2018-04-05.zip</span></div>
+                        <div class="preview-pic" style="display:block">
+                            <img src="https://wnworld.com/images/1.jpg" class="uploadimg" />
+                            </div>
+                            <span class="error" style="display:block">上传失败，请重试</span>
+                            <div class="retry-upload-btn" style="display:block;"><a href="#" class="J_btn-pickfiles3" data-id="1"></a></div>
+                            <span class="successing"></span>
+                        </div>
+                </li>
+            </ul>
+        </div>
+        <div class="coms-plupload-container">
+            <ul class="coms-upload-list has-data clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-pic" style="display:block">
+                            <img src="https://wnworld.com/images/2.jpg" class="uploadimg" />
+                            </div>
+                            <span class="error">上传失败，请重试</span>
+                            <div class="retry-upload-btn"><a href="#" class="J_btn-pickfiles3" data-id="2"></a></div>
+                            <span class="successing"  style="display:block"></span>
+                        </div>
+                </li>
+            </ul>
+        </div>
+        <div class="coms-plupload-container">
+            <ul class="coms-upload-list has-data clearfix">
+                <li>
+                    <div class="img-wrap preview">
+                        <div class="preview-pic" style="display:block">
+                            <img src="https://wnworld.com/images/3.jpg" class="uploadimg" />
+                            </div>
+                            <span class="error" style="display:block">上传失败，请重试</span>
+                            <div class="retry-upload-btn" style="display:block;"><a href="#" class="J_btn-pickfiles3" data-id="3"></a></div>
+                            <span class="successing"></span>
+                        </div>
+                </li>
+            </ul>
+        </div>
+        <div class="coms-plupload-container">
+            <ul class="coms-upload-list has-data clearfix">
+                <li class="item-upload-btn">
+                    <a href="#" class="btn-pickfiles J_btn-pickfiles3"></a>
+                </li>
+            </ul>
+        </div>
+        <input type="hidden" name="plupload03[]" id="J_plupload03">
+    </div>
+    <script type="text/javascript" src="js/plupload_plug.js"></script>
     <script type="text/javascript">
-        $(function(){
-            uploader1=$("#J_pickfiles1").plupload({
-                delServerBtn:false,
-                inputHidden:{
-                    name:"xxx[]"
-                },
-                filters: {
-                    max_file_count:2
-                },
-                multipart_params: {
-                    uid:10
-                },
-                initLoad:function(up){
-                    up.$container.find(".btn-1").on("click",function(){
-                        var params=up.getOption("multipart_params");
-                        params["ablum"]=10;
-                        up.setOption("multipart_params",params);
-                        console.dir(up);
+    function arrayHandler(dataList) {
+        this.dataStore = dataList;
+        this.dataStoreOld=JSON.parse(JSON.stringify(dataList));
+        this.listSize = dataList.length;
+    }
+    arrayHandler.prototype.find = function(key, value) {
+        for (var i = 0; i < this.dataStore.length; i++) {
+            if (this.dataStore[i][key] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    arrayHandler.prototype.remove = function(key, value) {
+        var foundAt = this.find(key,value);
+        if (foundAt > -1) {
+            this.dataStore.splice(foundAt, 1);
+            --this.listSize;
+            return true;
+        }
+        return false;
+    }
 
+    arrayHandler.prototype.append = function(value) {
+        this.dataStore[this.listSize++] = value;
+    }
+
+    arrayHandler.prototype.splice = function(key, value,replaceKey,replaceVal) {
+        var foundAt = this.find(key,value);
+        if (foundAt > -1) {
+            this.dataStore[foundAt][replaceKey]=replaceVal;
+        }
+    }
+    arrayHandler.prototype.arrToStr = function(key) {
+            var arr = [];
+            for (var i = 0; i < this.dataStore.length; i++) {
+                arr.push(this.dataStore[i][key]);
+            }
+            return arr.join("|");
+    }
+
+     
+    $(function() {
+        var $up1Hidden = $("#J_plupload01");
+        var up1DataHandler = new arrayHandler([]);
+        var uploader1 = $("#J_pickfiles1").plupload({
+            type: 1,
+            url: './php/upload.php',
+            filters: {
+                max_file_count:2
+            },
+            uploadInfo: {
+                required: true,
+                container: ""
+            },
+            multipart_params: {
+                uid: 10 //用户的id
+            },
+            initLoad: function(up) {
+                up.$container.find(".btn-1").on("click", function() {
+                    var params = up.getOption("multipart_params");
+                    params["test"] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+                    up.setOption({
+                        "multipart_params": params,
+                        "filters": {
+                            max_file_count: 1
+                        }
                     });
+                    console.dir(up.settings);
+                });
+            },
+            //每个文件上传成功触发回调函数
+            fileUploaded: function(file, response) {
+                response.data.id = file.id;
+                up1DataHandler.append(response.data);
+                $up1Hidden.val(up1DataHandler.arrToStr("path"))
 
-                     
-                    
-                   
-                },
-                //每个文件上传成功毁掉函数
-                fileUploaded:function(up,file){
-                    file.$inputHidden.val("asdfasdfasdfasdfasdf");
-                },
-                //plupload 执行全部的上传事件后触发该函数，只触发一次
-                uploadComplete:function(up,files){
+                console.dir(up1DataHandler.dataStore);
 
-                }
-            });
-            
-            // $("#J_pickfiles2").plupload({
-            //     filters: {
-            //         max_file_count:3
-            //     }
-            // });
-
-            // $("#btn-1").on("click",function(){
-
-            // })
-
-        })
-    </script>
-
-
+            },
+            //每个文件删除以后触发回调函数
+            fileRemoved: function(file) {
+                up1DataHandler.remove("id", file.id);
+                $up1Hidden.val(up1DataHandler.arrToStr("path"))
+                console.dir(up1DataHandler.dataStore)
+            },
+            //plupload 执行全部的上传事件后触发该函数，只触发一次
+            uploadComplete: function(up, files) {}
+        });
+    });
     
+
+    $(function() {
+        var $up2Hidden = $("#J_plupload02");
+        var up2DataHandler = new arrayHandler([]);
+        uploader2 = $("#J_pickfiles2").plupload({
+            type: 2,
+            filters: {
+                max_file_count: 2
+            },
+            uploadInfo: {
+                required: true,
+                container: ""
+            },
+            multipart_params: {
+                uid: 10  //用户的id
+            },
+            initLoad: function(up) {
+                up.$container.find(".btn-1").on("click", function() {
+                    var params = up.getOption("multipart_params");
+                    params["test"] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+                    up.setOption({
+                        "multipart_params": params,
+                        "filters": {
+                            max_file_count: 1
+                        }
+                    });
+                    console.dir(up.settings);
+                });
+            },
+            //每个文件上传成功触发回调函数
+            fileUploaded: function(file, response) {
+                response.data.id = file.id;
+                up2DataHandler.append(response.data);
+                $up2Hidden.val(up2DataHandler.arrToStr("path"))
+
+                console.dir(up2DataHandler.dataStore);
+
+            },
+            //每个文件删除以后触发回调函数
+            fileRemoved: function(file) {
+                up2DataHandler.remove("id", file.id);
+                $up2Hidden.val(up2DataHandler.arrToStr("path"))
+                console.dir(up2DataHandler.dataStore)
+            },
+            //plupload 执行全部的上传事件后触发该函数，只触发一次
+            uploadComplete: function(up, files) {
+
+            }
+        });
+    });
+
+    $(function(){
+        var up3Data = [
+            { "id": 1,  "path": "https://wnworld.com/images/1.jpg", "status": -1 },
+            { "id": 2,  "path": "https://wnworld.com/images/2.jpg", "status": 0 },
+            { "id": 3,  "path": "https://wnworld.com/images/3.jpg", "status": 1 }
+        ]
+        var up3DataHandler = new arrayHandler(up3Data);
+        var $up3Hidden = $("#J_plupload03");
+        var uploader3 = $(".J_btn-pickfiles3").plupload({
+            type: 2,
+            url: './php/upload.php',
+            filters: {
+                max_file_count: 6
+            },
+            uploadInfo: {
+                required: true,
+                container: ""
+            },
+            multipart_params: {
+                uid: 10
+            },
+            initLoad: function(up) {
+
+                up.$container.find(".btn-1").on("click", function() {
+                    var params = up.getOption("multipart_params");
+                    params["test"] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+                    up.setOption({
+                        "multipart_params": params,
+                        "filters": {
+                            max_file_count: 1
+                        }
+                    });
+                   
+                    
+                    console.dir(up.settings);
+                   
+                });
+                $up3Hidden.val(up3DataHandler.arrToStr("path"))
+            },
+            //每个文件上传成功触发回调函数
+            fileUploaded: function(file, response) {
+                //判断是替换还是添加
+                var id=this.$choiceBtn.data("id");
+                if(id){
+                    up3DataHandler.splice("id",id,"path",response.data.path)
+                }else{
+                    response.data.id = file.id;
+                    up3DataHandler.append(response.data);
+                }
+
+                $up3Hidden.val(up3DataHandler.arrToStr("path"))
+                
+
+                console.dir(up3DataHandler.dataStore);
+
+            },
+            //每个文件删除以后触发回调函数
+            fileRemoved: function(file) {
+                var id=this.$choiceBtn.data("id");
+                if(id){
+                    //存在id，那么删除上传图片就要变回 服务端保存脱氨
+                    var foundAt=up3DataHandler.find("id",id);
+                   
+                    up3DataHandler.splice("id",id,"path",up3DataHandler.dataStoreOld[foundAt].path);
+                }else{
+                    //不存在直接通过file.id 来删除图片就可以了
+                    up3DataHandler.remove("id", file.id);
+                }
+                
+                $up3Hidden.val(up3DataHandler.arrToStr("path"))
+                
+            },
+            //plupload 执行全部的上传事件后触发该函数，只触发一次
+            uploadComplete: function(up, files) {
+
+            }
+        });
+        if(up3DataHandler.dataStore.length){
+            $.each(uploader3, function(index, up) {
+                console.dir(up.uploader)
+                up.uploader.setOption({
+                    uploadInfo: {
+                        required:false,
+                    },
+                    isCheck:true,
+                    filters: {
+                        max_file_count:1
+                    },
+                })
+            });
+           
+        }
+    })
+    </script>
 </body>
 
 </html>

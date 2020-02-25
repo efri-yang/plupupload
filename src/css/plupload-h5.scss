@@ -165,15 +165,17 @@ line-height:px2rem(28px);
 
 
 .coms-upload-list {
-
-    // display:none;
+    &.has-data{
+        li:nth-child(2){
+            display: none;
+        }
+    }
     li {
         float: left;
         width: px2rem(250px);
         height:px2rem(250px);
-        margin-right:px2rem(20px);
-        margin-bottom:px2rem(20px);
-        overflow: hidden;
+        margin-right:px2rem(40px);
+        margin-bottom:px2rem(40px);
         position: relative;
 
         .img-wrap {
@@ -188,30 +190,7 @@ line-height:px2rem(28px);
             color: #000;
         }
 
-        .upbtn-del-sl {
-            position: absolute;
-            width: px2rem(40px);
-            height: px2rem(40px);
-            line-height: px2rem(40px);
-            overflow: hidden;
-            position: absolute;
-            right:px2rem(15px);
-            top: px2rem(15px);
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 100%;
-            text-align: center;
-            display: none;
-            background-image: url("../images/webuploader/del.png");
-            background-repeat: no-repeat;
-            background-position: center center;
-            
-
-            cursor: pointer;
-
-            &:hover {
-                background-color: darken(#000, 5%);
-            }
-        }
+        
         &.disabled{
             display:none;
         }
@@ -289,17 +268,23 @@ line-height:px2rem(28px);
             height:px2rem(45px);
             font-size:px2rem(26px);
             line-height:px2rem(45px);
-            background-color: rgba(0, 0, 0, 0.8);
+           
             display: none;
         }
 
         .upbtn-del {
-            float: right;
+            position: absolute;
             margin-left:px2rem(25px);
             color: #fff;
             text-decoration: none;
             cursor: pointer;
-
+            width:px2rem(50px);
+            right:px2rem(-25px);
+            top:px2rem(-25px);
+            height:px2rem(50px);
+            overflow: hidden;
+            background: url("../images/webuploader/icon_close_2.png") no-repeat top center;
+            background-size: 100% 100%;
             &:hover {
                 text-decoration: underline;
             }
