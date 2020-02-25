@@ -151,7 +151,7 @@
         var up1DataHandler = new arrayHandler([]);
         var uploader1 = $("#J_pickfiles1").plupload({
             type: 1,
-            url: './php/upload.php',
+            url: '/plupload/php/upload.php',
             filters: {
                 max_file_count:2
             },
@@ -201,6 +201,7 @@
         var up2DataHandler = new arrayHandler([]);
         uploader2 = $("#J_pickfiles2").plupload({
             type: 2,
+            url: '/plupload/php/upload.php',
             filters: {
                 max_file_count: 2
             },
@@ -256,7 +257,7 @@
         var $up3Hidden = $("#J_plupload03");
         var uploader3 = $(".J_btn-pickfiles3").plupload({
             type: 2,
-            url: './php/upload.php',
+            url: '/plupload/php/upload.php',
             filters: {
                 max_file_count: 6
             },

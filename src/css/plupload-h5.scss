@@ -19,7 +19,7 @@
         cursor: pointer;
         background: #00b7ee;
         padding:px2rem(15px) px2rem(20px);
-        min-width: px2rem(250px);
+        min-width: px2rem(150px);
         color: #fff;
         text-align: center;
         border-radius:px2rem(6px);
@@ -49,7 +49,7 @@
         cursor: pointer;
         background: #00b7ee;
         padding:px2rem(15px) px2rem(20px);
-        min-width: px2rem(210px);
+        min-width: px2rem(150px);
         color: #fff;
         text-align: center;
          border-radius:px2rem(6px);
@@ -108,8 +108,8 @@
 }
 
 .coms-plupload-nofile {
-    width:px2rem(250px);
-    height:px2rem(250px);
+    width:px2rem(150px);
+    height:px2rem(150px);
     overflow: hidden;
     margin-bottom: px2rem(30px);
     border: px2rem(2px) solid #e6e6e6;
@@ -172,8 +172,8 @@ line-height:px2rem(28px);
     }
     li {
         float: left;
-        width: px2rem(250px);
-        height:px2rem(250px);
+        width: px2rem(150px);
+        height:px2rem(150px);
         margin-right:px2rem(40px);
         margin-bottom:px2rem(40px);
         position: relative;
@@ -182,8 +182,8 @@ line-height:px2rem(28px);
             border: px2rem(2px) solid #e6e6e6;
             font-size: 0;
          
-            width:px2rem(250px); 
-            height:px2rem(250px); 
+            width:px2rem(150px); 
+            height:px2rem(150px); 
             overflow: hidden;
             text-align: center;
 
@@ -196,11 +196,11 @@ line-height:px2rem(28px);
         }
         .retry-upload-btn {
             position: absolute;
-            width: px2rem(100px);
-            height:px2rem(100px);
+            width: px2rem(70px);
+            height:px2rem(70px);
             left: 50%;
             top: 50%;
-            margin: px2rem(-50px) 0 0 px2rem(-50px);
+            margin: px2rem(-35px) 0 0 px2rem(-35px);
             border-radius: 100%;
             display: none;
             background: url("../images/webuploader/retry_upload_40.png") no-repeat center center;
@@ -219,7 +219,7 @@ line-height:px2rem(28px);
 
         .preview-pic {
             display: none;
-            line-height:px2rem(250px);
+            line-height:px2rem(150px);
             overflow: hidden;
             text-align:center;
 
@@ -235,7 +235,7 @@ line-height:px2rem(28px);
 
         .preview-tip,
         .preview-name {
-            line-height:px2rem(250px);
+            line-height:px2rem(150px);
             padding: 0 px2rem(20px);
             overflow: hidden;
             font-size:px2rem(22px);
@@ -278,10 +278,10 @@ line-height:px2rem(28px);
             color: #fff;
             text-decoration: none;
             cursor: pointer;
-            width:px2rem(50px);
-            right:px2rem(-25px);
-            top:px2rem(-25px);
-            height:px2rem(50px);
+            width:px2rem(36px);
+            right:px2rem(-18px);
+            top:px2rem(-18px);
+            height:px2rem(36px);
             overflow: hidden;
             background: url("../images/webuploader/icon_close_2.png") no-repeat top center;
             background-size: 100% 100%;
@@ -297,12 +297,12 @@ line-height:px2rem(28px);
             left: 0;
             right: 0;
             bottom: 0;
-            height: px2rem(40px);
-            line-height: px2rem(40px);
+            height: px2rem(30px);
+            line-height: px2rem(30px);
             text-align: center;
             background: #f60;
             color: #fff;
-            font-size: px2rem(22px);
+            font-size: px2rem(20px);
             display: none;
         }
 
@@ -356,8 +356,8 @@ line-height:px2rem(28px);
 
 .coms-upload-list {
     .item-upload-btn {
-        width:px2rem(250px);
-        height: px2rem(250px);
+        width:px2rem(150px);
+        height: px2rem(150px);
         a {
             display: block;
             width: 100%;

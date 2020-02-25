@@ -14,7 +14,7 @@ $ph->sendCORSHeaders();
 if ($result = $ph->handleUpload()) {
 
     die(json_encode(array(
-        'status' => 1,
+        'status' => 200,
         'data' => $result,
     )));
 } else {

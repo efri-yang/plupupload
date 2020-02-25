@@ -408,7 +408,7 @@
                 // console.group("FileUploaded事件");
                 var response = $.parseJSON(info.response);
                 //服务器上传成功
-                if ((!!response.status && response.status == 1 ) ||  response.code ==200) {
+                if ((!!response.status && response.status == 200 ) ||  response.code ==200) {
                     // toggleDelUploadSLBtn(up, file, "FileUploadedSuccess");
                     file.$success.show();
                     file.$progress.hide().children().css("width", 0);
@@ -536,7 +536,7 @@
     $.fn.plupload.defaultConfig = {
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: 'J_pickfiles', // you can pass an id...
-        url: './php/upload.php',
+        url: '/plupload/php/upload.php',
         delUrl: './php/delfile.php',
         flash_swf_url: './js/plupload/Moxie.swf',
         silverlight_xap_url: './js/plupload/Moxie.xap',
